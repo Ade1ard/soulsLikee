@@ -15,11 +15,16 @@ public class PlayerController : MonoBehaviour
     private float _fallVelociti = 0;
 
     private CharacterController _characterController;
+    private Camera _camera;
 
     // Start is called before the first frame update
     void Start()
     {
+        _camera = FindObjectOfType<Camera>();
         _characterController = GetComponent<CharacterController>();
+
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
     }
 
     void Update()
