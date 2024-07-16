@@ -9,13 +9,17 @@ public class PlayerController : MonoBehaviour
     public float JumpForce;
     public float speed;
 
+    public float speedWalk;
+    public float speedRun;
+
     private Vector3 _moveVector;
 
     public float gravity = 9.8f;
     private float _fallVelociti = 0;
 
     private CharacterController _characterController;
-    private Camera _camera;
+    public Camera _camera;
+    public Transform posTarget;
 
     // Start is called before the first frame update
     void Start()
@@ -29,30 +33,63 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
+        if (Input.GetKey(KeyCode.LeftShift))
+        {
+            speed = speedRun;
+        }
+        else
+        {
+            speed = speedWalk;
+        }
+
+
         _moveVector = Vector3.zero;
         animator.SetFloat("speed", 0);
-        animator.SetFloat("speed2", 0);
 
         if (Input.GetKey(KeyCode.A))
         {
-            _moveVector -= transform.right;
-            animator.SetFloat("speed2", -1);
+            Vector3 dir = posTarget.position - transform.position;
+            dir.y = 0;
+            transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(dir), 10 * Time.deltaTime);
+            Ray ray = new Ray(transform.position, -_camera.transform.right);
+            posTarget.position = ray.GetPoint(15);
+
+            _moveVector += transform.forward;
+            animator.SetFloat("speed", 1);
         }
 
         if (Input.GetKey(KeyCode.D))
         {
-            _moveVector += transform.right;
-            animator.SetFloat("speed2", 1);
+            Vector3 dir = posTarget.position - transform.position;
+            dir.y = 0;
+            transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(dir), 10 * Time.deltaTime);
+            Ray ray = new Ray(transform.position, _camera.transform.right);
+            posTarget.position = ray.GetPoint(15);
+
+            _moveVector += transform.forward;
+            animator.SetFloat("speed", 1);
         }
 
         if (Input.GetKey(KeyCode.S))
         {
-            _moveVector -= transform.forward;
-            animator.SetFloat("speed", -1);
+            Vector3 dir = posTarget.position - transform.position;
+            dir.y = 0;
+            transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(dir), 10 * Time.deltaTime);
+            Ray ray = new Ray(_camera.transform.position, -_camera.transform.forward);
+            posTarget.position = ray.GetPoint(15);
+
+            _moveVector += transform.forward;
+            animator.SetFloat("speed", 1);
         }
 
         if (Input.GetKey(KeyCode.W))
         {
+            Vector3 dir = posTarget.position - transform.position;
+            dir.y = 0;
+            transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(dir), 10 * Time.deltaTime);
+            Ray ray = new Ray(_camera.transform.position, _camera.transform.forward);
+            posTarget.position = ray.GetPoint(15);
+
             _moveVector += transform.forward;
             animator.SetFloat("speed", 1);
         }
