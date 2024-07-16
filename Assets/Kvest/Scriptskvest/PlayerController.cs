@@ -33,20 +33,75 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
+        if(_moveVector == Vector3.zero)
+        {
+            animator.SetFloat("speed", -1);
+        }
+
         if (Input.GetKey(KeyCode.LeftShift))
         {
             speed = speedRun;
+            if (_moveVector != Vector3.zero)
+            {
+                animator.SetFloat("speed", 2);
+            }
         }
         else
         {
             speed = speedWalk;
+            if(_moveVector != Vector3.zero)
+            {
+                animator.SetFloat("speed", 1);
+            }
         }
 
-
         _moveVector = Vector3.zero;
-        animator.SetFloat("speed", 0);
 
-        if (Input.GetKey(KeyCode.A))
+        if (Input.GetKey(KeyCode.W) && Input.GetKey(KeyCode.A))
+        {
+            Vector3 dir = posTarget.position - transform.position;
+            dir.y = 0;
+            transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(dir), 10 * Time.deltaTime);
+            Ray ray = new Ray(transform.position + (transform.position - _camera.transform.position) + (transform.position - _camera.transform.position) + (transform.position - _camera.transform.position), -_camera.transform.right);
+            posTarget.position = ray.GetPoint(15);
+
+            _moveVector += transform.forward;
+        }
+
+        if (Input.GetKey(KeyCode.W) && Input.GetKey(KeyCode.D))
+        {
+            Vector3 dir = posTarget.position - transform.position;
+            dir.y = 0;
+            transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(dir), 10 * Time.deltaTime);
+            Ray ray = new Ray(transform.position + (transform.position - _camera.transform.position) + (transform.position - _camera.transform.position) + (transform.position - _camera.transform.position), _camera.transform.right);
+            posTarget.position = ray.GetPoint(15);
+
+            _moveVector += transform.forward;
+        }
+
+        if (Input.GetKey(KeyCode.S) && Input.GetKey(KeyCode.A))
+        {
+            Vector3 dir = posTarget.position - transform.position;
+            dir.y = 0;
+            transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(dir), 10 * Time.deltaTime);
+            Ray ray = new Ray(transform.position - (transform.position - _camera.transform.position) - (transform.position - _camera.transform.position) - (transform.position - _camera.transform.position), -_camera.transform.right);
+            posTarget.position = ray.GetPoint(15);
+
+            _moveVector += transform.forward;
+        }
+
+        if (Input.GetKey(KeyCode.S) && Input.GetKey(KeyCode.D))
+        {
+            Vector3 dir = posTarget.position - transform.position;
+            dir.y = 0;
+            transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(dir), 10 * Time.deltaTime);
+            Ray ray = new Ray(transform.position - (transform.position - _camera.transform.position) - (transform.position - _camera.transform.position) - (transform.position - _camera.transform.position), _camera.transform.right);
+            posTarget.position = ray.GetPoint(15);
+
+            _moveVector += transform.forward;
+        }
+
+        if (Input.GetKey(KeyCode.A) && Input.GetKey(KeyCode.D) == false && Input.GetKey(KeyCode.W) == false && Input.GetKey(KeyCode.S) == false)
         {
             Vector3 dir = posTarget.position - transform.position;
             dir.y = 0;
@@ -55,10 +110,9 @@ public class PlayerController : MonoBehaviour
             posTarget.position = ray.GetPoint(15);
 
             _moveVector += transform.forward;
-            animator.SetFloat("speed", 1);
         }
 
-        if (Input.GetKey(KeyCode.D))
+        if (Input.GetKey(KeyCode.D) && Input.GetKey(KeyCode.W) == false && Input.GetKey(KeyCode.A) == false && Input.GetKey(KeyCode.S) == false)
         {
             Vector3 dir = posTarget.position - transform.position;
             dir.y = 0;
@@ -67,10 +121,9 @@ public class PlayerController : MonoBehaviour
             posTarget.position = ray.GetPoint(15);
 
             _moveVector += transform.forward;
-            animator.SetFloat("speed", 1);
         }
 
-        if (Input.GetKey(KeyCode.S))
+        if (Input.GetKey(KeyCode.S) && Input.GetKey(KeyCode.D) == false && Input.GetKey(KeyCode.A) == false && Input.GetKey(KeyCode.W) == false)
         {
             Vector3 dir = posTarget.position - transform.position;
             dir.y = 0;
@@ -79,10 +132,9 @@ public class PlayerController : MonoBehaviour
             posTarget.position = ray.GetPoint(15);
 
             _moveVector += transform.forward;
-            animator.SetFloat("speed", 1);
         }
 
-        if (Input.GetKey(KeyCode.W))
+        if (Input.GetKey(KeyCode.W) && Input.GetKey(KeyCode.D) == false && Input.GetKey(KeyCode.A) == false && Input.GetKey(KeyCode.S) == false)
         {
             Vector3 dir = posTarget.position - transform.position;
             dir.y = 0;
@@ -91,7 +143,6 @@ public class PlayerController : MonoBehaviour
             posTarget.position = ray.GetPoint(15);
 
             _moveVector += transform.forward;
-            animator.SetFloat("speed", 1);
         }
 
         if (Input.GetKeyDown(KeyCode.Space) && _characterController.isGrounded)

@@ -313,7 +313,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 165438543}
-  m_LocalRotation: {x: 0.2989194, y: 0.000000016419678, z: -0.0000000051433213, w: 0.9542784}
+  m_LocalRotation: {x: 0.2989194, y: -0.00000001641968, z: 0.0000000051433218, w: 0.9542784}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -648,7 +648,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1214445950}
-  m_LocalRotation: {x: 0.2815582, y: -0.000000023349067, z: 0.0000000068512946, w: 0.9595442}
+  m_LocalRotation: {x: 0.2815582, y: 0.000000023349067, z: -0.0000000068512946, w: 0.9595442}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -1180,7 +1180,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   animator: {fileID: 1179851986}
-  JumpForce: 5
+  JumpForce: 3
   speed: 0
   speedWalk: 4
   speedRun: 7
@@ -1377,7 +1377,12 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Controller
       value: 
-      objectReference: {fileID: 9100000, guid: a3bae6cec6920904cb4f4e9908d28d71, type: 2}
+      objectReference: {fileID: 9100000, guid: a6a0173e4eb1d9e449e60fb35d0c847c, type: 2}
+    - target: {fileID: 5866666021909216657, guid: bf1a7e1edbb426843b10bdf267c969d9,
+        type: 3}
+      propertyPath: m_ApplyRootMotion
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: bf1a7e1edbb426843b10bdf267c969d9, type: 3}
 --- !u!224 &6046018845748233690
