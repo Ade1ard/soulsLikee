@@ -57,7 +57,7 @@ public class PlayerController : MonoBehaviour
 
         _moveVector = Vector3.zero;
 
-        if (Input.GetKey(KeyCode.W) && Input.GetKey(KeyCode.A))
+        if (Input.GetKey(KeyCode.W) && Input.GetKey(KeyCode.A) && Input.GetKey(KeyCode.S) == false && Input.GetKey(KeyCode.D) == false)
         {
             Vector3 dir = posTarget.position - transform.position;
             dir.y = 0;
@@ -68,7 +68,7 @@ public class PlayerController : MonoBehaviour
             _moveVector += transform.forward;
         }
 
-        if (Input.GetKey(KeyCode.W) && Input.GetKey(KeyCode.D))
+        if (Input.GetKey(KeyCode.W) && Input.GetKey(KeyCode.D) && Input.GetKey(KeyCode.S) == false && Input.GetKey(KeyCode.A) == false)
         {
             Vector3 dir = posTarget.position - transform.position;
             dir.y = 0;
@@ -79,7 +79,7 @@ public class PlayerController : MonoBehaviour
             _moveVector += transform.forward;
         }
 
-        if (Input.GetKey(KeyCode.S) && Input.GetKey(KeyCode.A))
+        if (Input.GetKey(KeyCode.S) && Input.GetKey(KeyCode.A) && Input.GetKey(KeyCode.W) == false && Input.GetKey(KeyCode.D) == false)
         {
             Vector3 dir = posTarget.position - transform.position;
             dir.y = 0;
@@ -90,7 +90,7 @@ public class PlayerController : MonoBehaviour
             _moveVector += transform.forward;
         }
 
-        if (Input.GetKey(KeyCode.S) && Input.GetKey(KeyCode.D))
+        if (Input.GetKey(KeyCode.S) && Input.GetKey(KeyCode.D) && Input.GetKey(KeyCode.W) == false && Input.GetKey(KeyCode.A) == false)
         {
             Vector3 dir = posTarget.position - transform.position;
             dir.y = 0;
@@ -101,7 +101,7 @@ public class PlayerController : MonoBehaviour
             _moveVector += transform.forward;
         }
 
-        if (Input.GetKey(KeyCode.A) && Input.GetKey(KeyCode.D) == false && Input.GetKey(KeyCode.W) == false && Input.GetKey(KeyCode.S) == false)
+        if (Input.GetKey(KeyCode.A) && Input.GetKey(KeyCode.D) == false && Input.GetKey(KeyCode.W) == false && Input.GetKey(KeyCode.S) == false || Input.GetKey(KeyCode.A) && Input.GetKey(KeyCode.W) && Input.GetKey(KeyCode.S) && Input.GetKey(KeyCode.D) == false)
         {
             Vector3 dir = posTarget.position - transform.position;
             dir.y = 0;
@@ -112,7 +112,7 @@ public class PlayerController : MonoBehaviour
             _moveVector += transform.forward;
         }
 
-        if (Input.GetKey(KeyCode.D) && Input.GetKey(KeyCode.W) == false && Input.GetKey(KeyCode.A) == false && Input.GetKey(KeyCode.S) == false)
+        if (Input.GetKey(KeyCode.D) && Input.GetKey(KeyCode.W) == false && Input.GetKey(KeyCode.A) == false && Input.GetKey(KeyCode.S) == false || Input.GetKey(KeyCode.D) && Input.GetKey(KeyCode.S) && Input.GetKey(KeyCode.W) && Input.GetKey(KeyCode.A) == false)
         {
             Vector3 dir = posTarget.position - transform.position;
             dir.y = 0;
@@ -123,7 +123,7 @@ public class PlayerController : MonoBehaviour
             _moveVector += transform.forward;
         }
 
-        if (Input.GetKey(KeyCode.S) && Input.GetKey(KeyCode.D) == false && Input.GetKey(KeyCode.A) == false && Input.GetKey(KeyCode.W) == false)
+        if (Input.GetKey(KeyCode.S) && Input.GetKey(KeyCode.D) == false && Input.GetKey(KeyCode.A) == false && Input.GetKey(KeyCode.W) == false || Input.GetKey(KeyCode.A) && Input.GetKey(KeyCode.S) && Input.GetKey(KeyCode.D) && Input.GetKey(KeyCode.W) == false)
         {
             Vector3 dir = posTarget.position - transform.position;
             dir.y = 0;
@@ -134,7 +134,7 @@ public class PlayerController : MonoBehaviour
             _moveVector += transform.forward;
         }
 
-        if (Input.GetKey(KeyCode.W) && Input.GetKey(KeyCode.D) == false && Input.GetKey(KeyCode.A) == false && Input.GetKey(KeyCode.S) == false)
+        if (Input.GetKey(KeyCode.W) && Input.GetKey(KeyCode.D) == false && Input.GetKey(KeyCode.A) == false && Input.GetKey(KeyCode.S) == false || Input.GetKey(KeyCode.A) && Input.GetKey(KeyCode.W) && Input.GetKey(KeyCode.D) && Input.GetKey(KeyCode.S) == false)
         {
             Vector3 dir = posTarget.position - transform.position;
             dir.y = 0;
