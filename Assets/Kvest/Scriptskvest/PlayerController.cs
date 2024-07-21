@@ -14,6 +14,7 @@ public class PlayerController : MonoBehaviour
 
     private float timeAttack1;
     private float timeAttack2;
+    private float timelastclicked;
 
     private Vector3 _moveVector;
 
@@ -36,13 +37,10 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButtonDown(0) && Time.time - timelastclicked >= 0.76f && Input.GetKey(KeyCode.LeftShift) == false)
         {
-            if (Time.time - timeAttack2 <= 1.66f && Time.time - timeAttack2 > 0.86f)
-            {
-                animator.SetTrigger("attack3");
-            }
-            if (Time.time - timeAttack1 <= 1.6f && Time.time - timeAttack1 > 0.7)
+            timelastclicked = Time.time;
+            if (Time.time - timeAttack1 <= 1.6f && Time.time - timeAttack1 > 0.7 && animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 0.5f)
             {
                 animator.SetTrigger("attack2");
                 timeAttack2 = Time.time;
@@ -53,13 +51,19 @@ public class PlayerController : MonoBehaviour
                 timeAttack1 = Time.time;
             }
         }
+        if (Input.GetMouseButtonDown(0) && Time.time - timelastclicked >= 0.76f && Input.GetKey(KeyCode.LeftShift))
+        {
+            timelastclicked = Time.time;
+            animator.SetTrigger("attack3");
+        }
 
-        if (_moveVector == Vector3.zero)
+
+            if (_moveVector == Vector3.zero)
         {
             animator.SetFloat("speed", -1);
         }
 
-        if (Input.GetKey(KeyCode.LeftShift))
+        if (Input.GetKey(KeyCode.Space))
         {
             speed = speedRun;
             if (_moveVector != Vector3.zero)
@@ -166,7 +170,7 @@ public class PlayerController : MonoBehaviour
             _moveVector += transform.forward;
         }
 
-        if (Input.GetKeyDown(KeyCode.Space) && _characterController.isGrounded)
+        if (Input.GetKeyDown(KeyCode.C) && _characterController.isGrounded)
         {
             _fallVelociti = -JumpForce;
         }
@@ -177,7 +181,7 @@ public class PlayerController : MonoBehaviour
             animator.SetBool("Is Grounded", false);
         }
 
-        if (Input.GetKeyDown(KeyCode.Space) && _characterController.isGrounded)
+        if (Input.GetKeyDown(KeyCode.C) && _characterController.isGrounded)
         {
             animator.SetTrigger("Jump");
         }
