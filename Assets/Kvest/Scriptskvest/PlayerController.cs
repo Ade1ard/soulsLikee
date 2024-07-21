@@ -12,6 +12,9 @@ public class PlayerController : MonoBehaviour
     public float speedWalk;
     public float speedRun;
 
+    private float timeAttack1;
+    private float timeAttack2;
+
     private Vector3 _moveVector;
 
     public float gravity = 9.8f;
@@ -33,7 +36,25 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
-        if(_moveVector == Vector3.zero)
+        if (Input.GetMouseButtonDown(0))
+        {
+            if (Time.time - timeAttack2 <= 1.66f && Time.time - timeAttack2 > 0.86f)
+            {
+                animator.SetTrigger("attack3");
+            }
+            if (Time.time - timeAttack1 <= 1.6f && Time.time - timeAttack1 > 0.7)
+            {
+                animator.SetTrigger("attack2");
+                timeAttack2 = Time.time;
+            }
+            else
+            {
+                animator.SetTrigger("attack1");
+                timeAttack1 = Time.time;
+            }
+        }
+
+        if (_moveVector == Vector3.zero)
         {
             animator.SetFloat("speed", -1);
         }
