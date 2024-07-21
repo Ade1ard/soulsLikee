@@ -12,11 +12,8 @@ public class PlayerController : MonoBehaviour
     public float speedWalk;
     public float speedRun;
 
-    public float cooldownTime = 2f;
-    private float nextFireTime = 0f;
-    public static int noClicks = 0;
-    float lastClickedTime = 0;
-    float maxComboDelay = 1.5f;
+    private float timeAttack1;
+    private float timeAttack2;
 
     private Vector3 _moveVector;
 
@@ -39,27 +36,22 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
-        if(animator.GetCurrentAnimatorStateInfo(0).normalizedTime > 0.7f && animator.GetCurrentAnimatorStateInfo(0).IsName("hit1"))
-        {
-            animator.SetBool("attack1", false);
-        }
-        if (animator.GetCurrentAnimatorStateInfo(0).normalizedTime > 0.7f && animator.GetCurrentAnimatorStateInfo(0).IsName("hit2"))
-        {
-            animator.SetBool("attack2", false);
-        }
-        if (animator.GetCurrentAnimatorStateInfo(0).normalizedTime > 0.7f && animator.GetCurrentAnimatorStateInfo(0).IsName("hit3"))
-        {
-            animator.SetBool("attack3", false);
-            noClicks = 0;
-        }
-
-        if(Time.time - lastClickedTime > maxComboDelay)
-        {
-            noClicks = 0;
-        }
         if (Input.GetMouseButtonDown(0))
         {
-            OnClick();
+            if (Time.time - timeAttack2 <= 1.66f && Time.time - timeAttack2 > 0.86f)
+            {
+                animator.SetTrigger("attack3");
+            }
+            if (Time.time - timeAttack1 <= 1.6f && Time.time - timeAttack1 > 0.7)
+            {
+                animator.SetTrigger("attack2");
+                timeAttack2 = Time.time;
+            }
+            else
+            {
+                animator.SetTrigger("attack1");
+                timeAttack1 = Time.time;
+            }
         }
 
         if (_moveVector == Vector3.zero)
@@ -208,29 +200,6 @@ public class PlayerController : MonoBehaviour
         if (_characterController.isGrounded)
         {
             _fallVelociti = 0;
-        }
-    }
-
-    void OnClick()
-    {
-        lastClickedTime = Time.time;
-        noClicks += 1;
-        if(noClicks == 1)
-        {
-            animator.SetBool("attack1", true);
-        }
-        noClicks = Mathf.Clamp(noClicks, 0, 3);
-
-        if(noClicks >= 2 && animator.GetCurrentAnimatorStateInfo(0).normalizedTime > 0.7f && animator.GetCurrentAnimatorStateInfo(0).IsName("hit1"))
-        {
-            animator.SetBool("attack1", false);
-            animator.SetBool("attack2", true);
-        }
-
-        if(noClicks >= 3 && animator.GetCurrentAnimatorStateInfo(0).normalizedTime > 0.7f && animator.GetCurrentAnimatorStateInfo(0).IsName("hit2"))
-        {
-            animator.SetBool("attack2", false);
-            animator.SetBool("attack3", true);
         }
     }
 }
