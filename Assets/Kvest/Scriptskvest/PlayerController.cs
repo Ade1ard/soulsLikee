@@ -35,6 +35,7 @@ public class PlayerController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        animator = FindObjectOfType<Animator>();
         _camera = FindObjectOfType<Camera>();
         _characterController = GetComponent<CharacterController>();
 
@@ -70,6 +71,16 @@ public class PlayerController : MonoBehaviour
             inRoll = true;
         }
 
+        if (Input.GetMouseButton(1) && inRoll == false && inAttack == false)
+        {
+            speed = 0;
+            animator.SetBool("block", true);
+        }
+        else
+        {
+            animator.SetBool("block", false);
+        }
+
         if (_moveVector == Vector3.zero)
         {
             animator.SetFloat("speed", -1);
@@ -88,8 +99,7 @@ public class PlayerController : MonoBehaviour
                 }
             }
         }
-        Debug.Log(timeToRun);
-        if (Input.GetKey(KeyCode.Space) == false && inAttack == false)
+        if (Input.GetKey(KeyCode.Space) == false && inAttack == false && animator.GetCurrentAnimatorStateInfo(0).IsName("block") == false)
         {
             speed = speedWalk;
             if(_moveVector != Vector3.zero)
@@ -100,6 +110,11 @@ public class PlayerController : MonoBehaviour
         if(inAttack == true)
         {
             speed = 0.5f;
+        }
+
+        if (animator.GetCurrentAnimatorStateInfo(0).IsName("hit1") || animator.GetCurrentAnimatorStateInfo(0).IsName("hit2") || animator.GetCurrentAnimatorStateInfo(0).IsName("hit3"))
+        {
+            inAttack = true;
         }
 
         if(Input.GetKey(KeyCode.Space) == false && canRoll == true)
