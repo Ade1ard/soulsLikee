@@ -17,6 +17,9 @@ public class PlayerController : MonoBehaviour
     private float timelastclicked;
     private bool inAttack;
 
+    private float timeToRun;
+    private bool canRoll;
+
     private float timeRollMove;
     private bool inRoll;
 
@@ -67,26 +70,48 @@ public class PlayerController : MonoBehaviour
             inRoll = true;
         }
 
-            if (_moveVector == Vector3.zero)
+        if (_moveVector == Vector3.zero)
         {
             animator.SetFloat("speed", -1);
         }
 
-        if (Input.GetKey(KeyCode.Space))
+        if (Input.GetKey(KeyCode.Space) && inAttack == false)
         {
-            speed = speedRun;
-            if (_moveVector != Vector3.zero)
+            timeToRun += 1 * Time.deltaTime;
+            if(timeToRun >= 1.7f)
             {
-                animator.SetFloat("speed", 2);
+                speed = speedRun;
+                if (_moveVector != Vector3.zero)
+                {
+                    animator.SetFloat("speed", 2);
+                }
             }
         }
-        else
+        Debug.Log(timeToRun);
+        if (Input.GetKey(KeyCode.Space) == false && inAttack == false)
         {
             speed = speedWalk;
             if(_moveVector != Vector3.zero)
             {
                 animator.SetFloat("speed", 1);
             }
+        }
+        if(inAttack == true)
+        {
+            speed = 0.5f;
+        }
+
+        if(Input.GetKey(KeyCode.Space) == false)
+        {
+            if(timeToRun < 1.7f)
+            {
+                canRoll = true;
+            }
+            else
+            {
+                canRoll = false;
+            }
+            timeToRun = 0;
         }
 
         _moveVector = Vector3.zero;
@@ -96,7 +121,7 @@ public class PlayerController : MonoBehaviour
             _moveVector += transform.forward;
         }
 
-        if (Input.GetKey(KeyCode.W) && Input.GetKey(KeyCode.A) && Input.GetKey(KeyCode.S) == false && Input.GetKey(KeyCode.D) == false && inAttack == false)
+        if (Input.GetKey(KeyCode.W) && Input.GetKey(KeyCode.A) && Input.GetKey(KeyCode.S) == false && Input.GetKey(KeyCode.D) == false)
         {
             Vector3 dir = posTarget.position - transform.position;
             dir.y = 0;
@@ -105,7 +130,7 @@ public class PlayerController : MonoBehaviour
             posTarget.position = ray.GetPoint(15);
 
             _moveVector += transform.forward;
-            if (Input.GetKeyDown(KeyCode.Space) && inRoll == false && Time.time - timeRollMove > 1.8f)
+            if (Input.GetKeyDown(KeyCode.Space) && inRoll == false && Time.time - timeRollMove > 1.8f && canRoll == true)
             {
                 inRoll = true;
                 animator.SetTrigger("roll");
@@ -113,7 +138,7 @@ public class PlayerController : MonoBehaviour
             }
         }
 
-        if (Input.GetKey(KeyCode.W) && Input.GetKey(KeyCode.D) && Input.GetKey(KeyCode.S) == false && Input.GetKey(KeyCode.A) == false && inAttack == false)
+        if (Input.GetKey(KeyCode.W) && Input.GetKey(KeyCode.D) && Input.GetKey(KeyCode.S) == false && Input.GetKey(KeyCode.A) == false)
         {
             Vector3 dir = posTarget.position - transform.position;
             dir.y = 0;
@@ -122,7 +147,7 @@ public class PlayerController : MonoBehaviour
             posTarget.position = ray.GetPoint(15);
 
             _moveVector += transform.forward;
-            if (Input.GetKeyDown(KeyCode.Space) && inRoll == false && Time.time - timeRollMove > 1.8f)
+            if (Input.GetKeyDown(KeyCode.Space) && inRoll == false && Time.time - timeRollMove > 1.8f && canRoll == true)
             {
                 inRoll = true;
                 animator.SetTrigger("roll");
@@ -130,7 +155,7 @@ public class PlayerController : MonoBehaviour
             }
         }
 
-        if (Input.GetKey(KeyCode.S) && Input.GetKey(KeyCode.A) && Input.GetKey(KeyCode.W) == false && Input.GetKey(KeyCode.D) == false && inAttack == false)
+        if (Input.GetKey(KeyCode.S) && Input.GetKey(KeyCode.A) && Input.GetKey(KeyCode.W) == false && Input.GetKey(KeyCode.D) == false)
         {
             Vector3 dir = posTarget.position - transform.position;
             dir.y = 0;
@@ -139,7 +164,7 @@ public class PlayerController : MonoBehaviour
             posTarget.position = ray.GetPoint(15);
 
             _moveVector += transform.forward;
-            if (Input.GetKeyDown(KeyCode.Space) && inRoll == false && Time.time - timeRollMove > 1.8f)
+            if (Input.GetKeyDown(KeyCode.Space) && inRoll == false && Time.time - timeRollMove > 1.8f && canRoll == true)
             {
                 inRoll = true;
                 animator.SetTrigger("roll");
@@ -147,7 +172,7 @@ public class PlayerController : MonoBehaviour
             }
         }
 
-        if (Input.GetKey(KeyCode.S) && Input.GetKey(KeyCode.D) && Input.GetKey(KeyCode.W) == false && Input.GetKey(KeyCode.A) == false && inAttack == false)
+        if (Input.GetKey(KeyCode.S) && Input.GetKey(KeyCode.D) && Input.GetKey(KeyCode.W) == false && Input.GetKey(KeyCode.A) == false)
         {
             Vector3 dir = posTarget.position - transform.position;
             dir.y = 0;
@@ -156,7 +181,7 @@ public class PlayerController : MonoBehaviour
             posTarget.position = ray.GetPoint(15);
 
             _moveVector += transform.forward;
-            if (Input.GetKeyDown(KeyCode.Space) && inRoll == false && Time.time - timeRollMove > 1.8f)
+            if (Input.GetKeyDown(KeyCode.Space) && inRoll == false && Time.time - timeRollMove > 1.8f && canRoll == true)
             {
                 inRoll = true;
                 animator.SetTrigger("roll");
@@ -164,7 +189,7 @@ public class PlayerController : MonoBehaviour
             }
         }
 
-        if (Input.GetKey(KeyCode.A) && Input.GetKey(KeyCode.D) == false && Input.GetKey(KeyCode.W) == false && Input.GetKey(KeyCode.S) == false && inAttack == false || Input.GetKey(KeyCode.A) && Input.GetKey(KeyCode.W) && Input.GetKey(KeyCode.S) && Input.GetKey(KeyCode.D) == false && inAttack == false)
+        if (Input.GetKey(KeyCode.A) && Input.GetKey(KeyCode.D) == false && Input.GetKey(KeyCode.W) == false && Input.GetKey(KeyCode.S) == false || Input.GetKey(KeyCode.A) && Input.GetKey(KeyCode.W) && Input.GetKey(KeyCode.S) && Input.GetKey(KeyCode.D) == false)
         {
             Vector3 dir = posTarget.position - transform.position;
             dir.y = 0;
@@ -173,7 +198,7 @@ public class PlayerController : MonoBehaviour
             posTarget.position = ray.GetPoint(15);
 
             _moveVector += transform.forward;
-            if (Input.GetKeyDown(KeyCode.Space) && inRoll == false && Time.time - timeRollMove > 1.8f)
+            if (Input.GetKeyDown(KeyCode.Space) && inRoll == false && Time.time - timeRollMove > 1.8f && canRoll == true)
             {
                 inRoll = true;
                 animator.SetTrigger("roll");
@@ -181,7 +206,7 @@ public class PlayerController : MonoBehaviour
             }
         }
 
-        if (Input.GetKey(KeyCode.D) && Input.GetKey(KeyCode.W) == false && Input.GetKey(KeyCode.A) == false && Input.GetKey(KeyCode.S) == false && inAttack == false || Input.GetKey(KeyCode.D) && Input.GetKey(KeyCode.S) && Input.GetKey(KeyCode.W) && Input.GetKey(KeyCode.A) == false && inAttack == false)
+        if (Input.GetKey(KeyCode.D) && Input.GetKey(KeyCode.W) == false && Input.GetKey(KeyCode.A) == false && Input.GetKey(KeyCode.S) == false || Input.GetKey(KeyCode.D) && Input.GetKey(KeyCode.S) && Input.GetKey(KeyCode.W) && Input.GetKey(KeyCode.A) == false)
         {
             Vector3 dir = posTarget.position - transform.position;
             dir.y = 0;
@@ -190,7 +215,7 @@ public class PlayerController : MonoBehaviour
             posTarget.position = ray.GetPoint(15);
 
             _moveVector += transform.forward;
-            if (Input.GetKeyDown(KeyCode.Space) && inRoll == false && Time.time - timeRollMove > 1.8f)
+            if (Input.GetKeyDown(KeyCode.Space) && inRoll == false && Time.time - timeRollMove > 1.8f && canRoll == true)
             {
                 inRoll = true;
                 animator.SetTrigger("roll");
@@ -198,7 +223,7 @@ public class PlayerController : MonoBehaviour
             }
         }
 
-        if (Input.GetKey(KeyCode.S) && Input.GetKey(KeyCode.D) == false && Input.GetKey(KeyCode.A) == false && Input.GetKey(KeyCode.W) == false && inAttack == false || Input.GetKey(KeyCode.A) && Input.GetKey(KeyCode.S) && Input.GetKey(KeyCode.D) && Input.GetKey(KeyCode.W) == false && inAttack == false)
+        if (Input.GetKey(KeyCode.S) && Input.GetKey(KeyCode.D) == false && Input.GetKey(KeyCode.A) == false && Input.GetKey(KeyCode.W) == false || Input.GetKey(KeyCode.A) && Input.GetKey(KeyCode.S) && Input.GetKey(KeyCode.D) && Input.GetKey(KeyCode.W) == false)
         {
             Vector3 dir = posTarget.position - transform.position;
             dir.y = 0;
@@ -207,7 +232,7 @@ public class PlayerController : MonoBehaviour
             posTarget.position = ray.GetPoint(15);
 
             _moveVector += transform.forward;
-            if (Input.GetKeyDown(KeyCode.Space) && inRoll == false && Time.time - timeRollMove > 1.8f)
+            if (Input.GetKeyDown(KeyCode.Space) && inRoll == false && Time.time - timeRollMove > 1.8f && canRoll == true)
             {
                 inRoll = true;
                 animator.SetTrigger("roll");
@@ -215,7 +240,7 @@ public class PlayerController : MonoBehaviour
             }
         }
 
-        if (Input.GetKey(KeyCode.W) && Input.GetKey(KeyCode.D) == false && Input.GetKey(KeyCode.A) == false && Input.GetKey(KeyCode.S) == false && inAttack == false || Input.GetKey(KeyCode.A) && Input.GetKey(KeyCode.W) && Input.GetKey(KeyCode.D) && Input.GetKey(KeyCode.S) == false && inAttack == false)
+        if (Input.GetKey(KeyCode.W) && Input.GetKey(KeyCode.D) == false && Input.GetKey(KeyCode.A) == false && Input.GetKey(KeyCode.S) == false || Input.GetKey(KeyCode.A) && Input.GetKey(KeyCode.W) && Input.GetKey(KeyCode.D) && Input.GetKey(KeyCode.S) == false)
         {
             Vector3 dir = posTarget.position - transform.position;
             dir.y = 0;
@@ -224,7 +249,7 @@ public class PlayerController : MonoBehaviour
             posTarget.position = ray.GetPoint(15);
 
             _moveVector += transform.forward;
-            if (Input.GetKeyDown(KeyCode.Space) && inRoll == false && Time.time - timeRollMove > 1.7f)
+            if (Input.GetKeyDown(KeyCode.Space) && inRoll == false && Time.time - timeRollMove > 1.7f && canRoll == true)
             {
                 inRoll = true;
                 animator.SetTrigger("roll");
@@ -255,7 +280,11 @@ public class PlayerController : MonoBehaviour
 
         if (inAttack == true)
         {
-            Invoke("OffAttack", 1.5f);
+            if(animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 0.75f)
+            {
+                inAttack = false;
+            }
+            //Invoke("OffAttack", 1.5f);
         }
 
         if (inRoll == true)
