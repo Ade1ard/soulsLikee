@@ -32,7 +32,6 @@ public class PlayerController : MonoBehaviour
     public Camera _camera;
     public Transform posTarget;
 
-    // Start is called before the first frame update
     void Start()
     {
         animator = FindObjectOfType<Animator>();
@@ -47,23 +46,31 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetMouseButtonDown(0) && Time.time - timelastclicked >= 0.86f && Input.GetKey(KeyCode.LeftShift) == false && inRoll == false && Time.time - timeRollMove > 1.5f)
+        if (Input.GetMouseButtonDown(0) && Time.time - timelastclicked >= 0.8f && Input.GetKey(KeyCode.LeftShift) == false && inRoll == false && Time.time - timeRollMove > 1.1f)
         {
             timelastclicked = Time.time;
-            if (Time.time - timeAttack1 <= 1.6f && Time.time - timeAttack1 > 0.7 && animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 0.5f)
+            if(animator.GetCurrentAnimatorStateInfo(0).IsName("Stand To Roll") && animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 0.65f || animator.GetCurrentAnimatorStateInfo(0).IsName("Sword And Shield Run") && animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 0.7f)
             {
-                animator.SetTrigger("attack2");
-                timeAttack2 = Time.time;
                 inAttack = true;
+                animator.SetTrigger("attack4");
             }
             else
             {
-                animator.SetTrigger("attack1");
-                timeAttack1 = Time.time;
-                inAttack = true;
+                if (animator.GetCurrentAnimatorStateInfo(0).IsName("hit1") && animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 0.45f)
+                {
+                    inAttack = true;
+                    animator.SetTrigger("attack2");
+                    timeAttack2 = Time.time;
+                }
+                else
+                {
+                    inAttack = true;
+                    animator.SetTrigger("attack1");
+                    timeAttack1 = Time.time;
+                }
             }
         }
-        if (Input.GetMouseButtonDown(0) && Time.time - timelastclicked >= 1.6f && Input.GetKey(KeyCode.LeftShift) && inRoll == false && Time.time - timeRollMove > 1.5f)
+        if (Input.GetMouseButtonDown(0) && Time.time - timelastclicked >= 1.4f && Input.GetKey(KeyCode.LeftShift) && inRoll == false && Time.time - timeRollMove > 0.6f)
         {
             timelastclicked = Time.time;
             animator.SetTrigger("attack3");
@@ -71,7 +78,7 @@ public class PlayerController : MonoBehaviour
             inRoll = true;
         }
 
-        if (Input.GetMouseButton(1) && inRoll == false && inAttack == false)
+        if (Input.GetMouseButton(1) && inRoll == false && inAttack == false && animator.GetCurrentAnimatorStateInfo(0).IsName("hit1") == false)
         {
             speed = 0;
             animator.SetBool("block", true);
@@ -90,7 +97,7 @@ public class PlayerController : MonoBehaviour
         {
             canRoll = true;
             timeToRun += 1 * Time.deltaTime;
-            if(timeToRun >= 1.3f)
+            if(timeToRun >= 1.1f)
             {
                 speed = speedRun;
                 if (_moveVector != Vector3.zero)
@@ -119,7 +126,7 @@ public class PlayerController : MonoBehaviour
 
         if(Input.GetKey(KeyCode.Space) == false && canRoll == true)
         {
-            if(timeToRun < 1.3f)
+            if(timeToRun < 1.1f)
             {
                 if (inRoll == false && Time.time - timeRollMove > 1.8f)
                 {
@@ -139,7 +146,7 @@ public class PlayerController : MonoBehaviour
             _moveVector += transform.forward;
         }
 
-        if (Input.GetKey(KeyCode.W) && Input.GetKey(KeyCode.A) && Input.GetKey(KeyCode.S) == false && Input.GetKey(KeyCode.D) == false)
+        if (Input.GetKey(KeyCode.W) && Input.GetKey(KeyCode.A) && Input.GetKey(KeyCode.S) == false && Input.GetKey(KeyCode.D) == false && animator.GetCurrentAnimatorStateInfo(0).IsName("block") == false)
         {
             Vector3 dir = posTarget.position - transform.position;
             dir.y = 0;
@@ -150,7 +157,7 @@ public class PlayerController : MonoBehaviour
             _moveVector += transform.forward;
         }
 
-        if (Input.GetKey(KeyCode.W) && Input.GetKey(KeyCode.D) && Input.GetKey(KeyCode.S) == false && Input.GetKey(KeyCode.A) == false)
+        if (Input.GetKey(KeyCode.W) && Input.GetKey(KeyCode.D) && Input.GetKey(KeyCode.S) == false && Input.GetKey(KeyCode.A) == false && animator.GetCurrentAnimatorStateInfo(0).IsName("block") == false)
         {
             Vector3 dir = posTarget.position - transform.position;
             dir.y = 0;
@@ -161,7 +168,7 @@ public class PlayerController : MonoBehaviour
             _moveVector += transform.forward;
         }
 
-        if (Input.GetKey(KeyCode.S) && Input.GetKey(KeyCode.A) && Input.GetKey(KeyCode.W) == false && Input.GetKey(KeyCode.D) == false)
+        if (Input.GetKey(KeyCode.S) && Input.GetKey(KeyCode.A) && Input.GetKey(KeyCode.W) == false && Input.GetKey(KeyCode.D) == false && animator.GetCurrentAnimatorStateInfo(0).IsName("block") == false)
         {
             Vector3 dir = posTarget.position - transform.position;
             dir.y = 0;
@@ -172,7 +179,7 @@ public class PlayerController : MonoBehaviour
             _moveVector += transform.forward;
         }
 
-        if (Input.GetKey(KeyCode.S) && Input.GetKey(KeyCode.D) && Input.GetKey(KeyCode.W) == false && Input.GetKey(KeyCode.A) == false)
+        if (Input.GetKey(KeyCode.S) && Input.GetKey(KeyCode.D) && Input.GetKey(KeyCode.W) == false && Input.GetKey(KeyCode.A) == false && animator.GetCurrentAnimatorStateInfo(0).IsName("block") == false)
         {
             Vector3 dir = posTarget.position - transform.position;
             dir.y = 0;
@@ -183,7 +190,7 @@ public class PlayerController : MonoBehaviour
             _moveVector += transform.forward;
         }
 
-        if (Input.GetKey(KeyCode.A) && Input.GetKey(KeyCode.D) == false && Input.GetKey(KeyCode.W) == false && Input.GetKey(KeyCode.S) == false || Input.GetKey(KeyCode.A) && Input.GetKey(KeyCode.W) && Input.GetKey(KeyCode.S) && Input.GetKey(KeyCode.D) == false)
+        if (Input.GetKey(KeyCode.A) && Input.GetKey(KeyCode.D) == false && Input.GetKey(KeyCode.W) == false && Input.GetKey(KeyCode.S) == false && animator.GetCurrentAnimatorStateInfo(0).IsName("block") == false || Input.GetKey(KeyCode.A) && Input.GetKey(KeyCode.W) && Input.GetKey(KeyCode.S) && Input.GetKey(KeyCode.D) == false && animator.GetCurrentAnimatorStateInfo(0).IsName("block") == false)
         {
             Vector3 dir = posTarget.position - transform.position;
             dir.y = 0;
@@ -194,7 +201,7 @@ public class PlayerController : MonoBehaviour
             _moveVector += transform.forward;
         }
 
-        if (Input.GetKey(KeyCode.D) && Input.GetKey(KeyCode.W) == false && Input.GetKey(KeyCode.A) == false && Input.GetKey(KeyCode.S) == false || Input.GetKey(KeyCode.D) && Input.GetKey(KeyCode.S) && Input.GetKey(KeyCode.W) && Input.GetKey(KeyCode.A) == false)
+        if (Input.GetKey(KeyCode.D) && Input.GetKey(KeyCode.W) == false && Input.GetKey(KeyCode.A) == false && Input.GetKey(KeyCode.S) == false && animator.GetCurrentAnimatorStateInfo(0).IsName("block") == false || Input.GetKey(KeyCode.D) && Input.GetKey(KeyCode.S) && Input.GetKey(KeyCode.W) && Input.GetKey(KeyCode.A) == false && animator.GetCurrentAnimatorStateInfo(0).IsName("block") == false)
         {
             Vector3 dir = posTarget.position - transform.position;
             dir.y = 0;
@@ -205,7 +212,7 @@ public class PlayerController : MonoBehaviour
             _moveVector += transform.forward;
         }
 
-        if (Input.GetKey(KeyCode.S) && Input.GetKey(KeyCode.D) == false && Input.GetKey(KeyCode.A) == false && Input.GetKey(KeyCode.W) == false || Input.GetKey(KeyCode.A) && Input.GetKey(KeyCode.S) && Input.GetKey(KeyCode.D) && Input.GetKey(KeyCode.W) == false)
+        if (Input.GetKey(KeyCode.S) && Input.GetKey(KeyCode.D) == false && Input.GetKey(KeyCode.A) == false && Input.GetKey(KeyCode.W) == false && animator.GetCurrentAnimatorStateInfo(0).IsName("block") == false || Input.GetKey(KeyCode.A) && Input.GetKey(KeyCode.S) && Input.GetKey(KeyCode.D) && Input.GetKey(KeyCode.W) == false && animator.GetCurrentAnimatorStateInfo(0).IsName("block") == false)
         {
             Vector3 dir = posTarget.position - transform.position;
             dir.y = 0;
@@ -216,7 +223,7 @@ public class PlayerController : MonoBehaviour
             _moveVector += transform.forward;
         }
 
-        if (Input.GetKey(KeyCode.W) && Input.GetKey(KeyCode.D) == false && Input.GetKey(KeyCode.A) == false && Input.GetKey(KeyCode.S) == false || Input.GetKey(KeyCode.A) && Input.GetKey(KeyCode.W) && Input.GetKey(KeyCode.D) && Input.GetKey(KeyCode.S) == false)
+        if (Input.GetKey(KeyCode.W) && Input.GetKey(KeyCode.D) == false && Input.GetKey(KeyCode.A) == false && Input.GetKey(KeyCode.S) == false && animator.GetCurrentAnimatorStateInfo(0).IsName("block") == false || Input.GetKey(KeyCode.A) && Input.GetKey(KeyCode.W) && Input.GetKey(KeyCode.D) && Input.GetKey(KeyCode.S) == false && animator.GetCurrentAnimatorStateInfo(0).IsName("block") == false)
         {
             Vector3 dir = posTarget.position - transform.position;
             dir.y = 0;
@@ -254,16 +261,17 @@ public class PlayerController : MonoBehaviour
             {
                 inAttack = false;
             }
-            //Invoke("OffAttack", 1.5f);
         }
 
         if (inRoll == true)
         {
-            Invoke("OffRoll", 1.7f);
+            if (animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 0.77f)
+            {
+                inRoll = false;
+            }
         }
     }
 
-    // Update is called once per frame
     void FixedUpdate()
     {
         _characterController.Move(_moveVector * speed * Time.fixedDeltaTime);
@@ -275,14 +283,5 @@ public class PlayerController : MonoBehaviour
         {
             _fallVelociti = 0;
         }
-    }
-
-    void OffAttack()
-    {
-        inAttack = false;
-    }
-    void OffRoll()
-    {
-        inRoll = false;
     }
 }
