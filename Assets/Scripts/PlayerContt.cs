@@ -4,13 +4,17 @@ using UnityEngine;
 
 public class PlayerContt : MonoBehaviour
 {
+    private Animator _animator;
+
     private Camera _camera;
     private CharacterController _characterController;
     [SerializeField] private Transform _targetPosition;
 
     [SerializeField] private float _gravity = 9.8f;
-    private float _currentSpeed = 2;
-    private float _fallVelociti = 0;
+    [SerializeField] private float _walkSpeed = 3.5f;
+    [SerializeField] private float _runSpeed = 6;
+    private float _currentSpeed;
+    private float _fallVelociti;
     private Vector3 _moveVector;
 
     private const string Horizontal = nameof(Horizontal);
@@ -20,6 +24,7 @@ public class PlayerContt : MonoBehaviour
     {
         _camera = FindObjectOfType<Camera>();
         _characterController = FindObjectOfType<CharacterController>();
+        _animator = FindObjectOfType<Animator>();
 
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
@@ -33,6 +38,9 @@ public class PlayerContt : MonoBehaviour
         {
             Movement();
         }
+
+        Animation();
+        PhysicsMove();
     }
 
     private void Movement()
@@ -44,16 +52,43 @@ public class PlayerContt : MonoBehaviour
         Ray ray = new Ray(transform.position, targetPositionDir);
         _targetPosition.position = ray.GetPoint(15);
         _moveVector += transform.forward;
+
+        if (Input.GetKey(KeyCode.Space))
+        {
+            _currentSpeed = _runSpeed;
+        }
+        else
+        {
+            _currentSpeed = _walkSpeed;
+        }
     }
 
-    void FixedUpdate()
+    private void Animation()
     {
-        _characterController.Move(_moveVector * _currentSpeed * Time.fixedDeltaTime);
+        if(_moveVector == Vector3.zero)
+        {
+            _animator.SetFloat("speed", -1);
+        }
+        else if(_currentSpeed == _walkSpeed)
+        {
+            _animator.SetFloat("speed", 1);
+        }
+        else
+        {
+            _animator.SetFloat("speed", 2);
+        }
+    }
 
-        _fallVelociti += _gravity * Time.fixedDeltaTime;
-        _characterController.Move(Vector3.down * _fallVelociti * Time.fixedDeltaTime);
+    private void PhysicsMove()
+    {
+        _characterController.Move(_moveVector * _currentSpeed * Time.deltaTime);
 
-        if (_characterController.isGrounded)
+        if (_characterController.isGrounded == false)
+        {
+            _fallVelociti += _gravity * Time.fixedDeltaTime;
+            _characterController.Move(Vector3.down * _fallVelociti * Time.deltaTime);
+        }
+        else
         {
             _fallVelociti = 0;
         }
