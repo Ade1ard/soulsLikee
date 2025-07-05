@@ -17,6 +17,10 @@ public class PlayerContt : MonoBehaviour
     private float _fallVelociti;
     private Vector3 _moveVector;
 
+    private float _timePressedButton;
+    [SerializeField] private float _rollDistanse = 10;
+    [SerializeField] private float _buttonPressDelay = 0.2f;
+
     private const string Horizontal = nameof(Horizontal);
     private const string Vertical = nameof(Vertical);
 
@@ -38,8 +42,11 @@ public class PlayerContt : MonoBehaviour
         {
             Movement();
         }
+        else
+        {
+            _animator.SetFloat("speed", -1);
+        }
 
-        Animation();
         PhysicsMove();
     }
 
@@ -53,29 +60,26 @@ public class PlayerContt : MonoBehaviour
         _targetPosition.position = ray.GetPoint(15);
         _moveVector += transform.forward;
 
-        if (Input.GetKey(KeyCode.Space))
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            _timePressedButton = Time.time;
+        }
+
+        if (Input.GetKey(KeyCode.Space) && Time.time - _timePressedButton >= _buttonPressDelay)
         {
             _currentSpeed = _runSpeed;
+            _animator.SetFloat("speed", 2);
+        }
+        else if (Input.GetKeyUp(KeyCode.Space) && Time.time - _timePressedButton < _buttonPressDelay)
+        {
+            _animator.SetTrigger("roll");
+            _moveVector += transform.forward * _rollDistanse;
+            _currentSpeed = 10;
         }
         else
         {
             _currentSpeed = _walkSpeed;
-        }
-    }
-
-    private void Animation()
-    {
-        if(_moveVector == Vector3.zero)
-        {
-            _animator.SetFloat("speed", -1);
-        }
-        else if(_currentSpeed == _walkSpeed)
-        {
             _animator.SetFloat("speed", 1);
-        }
-        else
-        {
-            _animator.SetFloat("speed", 2);
         }
     }
 
