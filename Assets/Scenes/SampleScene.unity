@@ -2170,6 +2170,8 @@ MonoBehaviour:
   _gravity: 9.8
   _walkSpeed: 3.5
   _runSpeed: 6
+  _rollDuration: 0.9
+  _buttonPressDelay: 0.2
 --- !u!54 &6046018844230716825
 Rigidbody:
   m_ObjectHideFlags: 0

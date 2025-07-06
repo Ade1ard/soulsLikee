@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerContt : MonoBehaviour
@@ -12,13 +11,14 @@ public class PlayerContt : MonoBehaviour
 
     [SerializeField] private float _gravity = 9.8f;
     [SerializeField] private float _walkSpeed = 3.5f;
-    [SerializeField] private float _runSpeed = 6;
+    [SerializeField] private float _runSpeed = 6f;
     private float _currentSpeed;
     private float _fallVelociti;
     private Vector3 _moveVector;
 
     private float _timePressedButton;
-    [SerializeField] private float _rollDistanse = 10;
+    [SerializeField] private float _rollDuration = 1f;
+    private bool _isRolling = false;
     [SerializeField] private float _buttonPressDelay = 0.2f;
 
     private const string Horizontal = nameof(Horizontal);
@@ -38,27 +38,26 @@ public class PlayerContt : MonoBehaviour
     {
         _moveVector = Vector3.zero;
 
-        if (Input.GetAxis(Vertical) != 0 || Input.GetAxis(Horizontal) != 0)
-        {
-            Movement();
-        }
-        else
-        {
-            _animator.SetFloat("speed", -1);
-        }
-
+        Movement();
         PhysicsMove();
     }
 
     private void Movement()
     {
-        Vector3 playerDir = _targetPosition.position - transform.position;
-        playerDir.y = 0;
-        transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(playerDir), 15 * Time.deltaTime);
-        Vector3 targetPositionDir = _camera.transform.forward * Input.GetAxis(Vertical) + _camera.transform.right * Input.GetAxis(Horizontal);
-        Ray ray = new Ray(transform.position, targetPositionDir);
-        _targetPosition.position = ray.GetPoint(15);
-        _moveVector += transform.forward;
+        if (Input.GetAxis(Vertical) != 0 || Input.GetAxis(Horizontal) != 0)
+        {
+            Vector3 playerDir = _targetPosition.position - transform.position;
+            playerDir.y = 0;
+            transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(playerDir), 15 * Time.deltaTime);
+            Vector3 targetPositionDir = _camera.transform.forward * Input.GetAxis(Vertical) + _camera.transform.right * Input.GetAxis(Horizontal);
+            Ray ray = new Ray(transform.position, targetPositionDir);
+            _targetPosition.position = ray.GetPoint(15);
+            _moveVector += transform.forward;
+        }
+        else
+        {
+            _animator.SetFloat("speed", -1);
+        }
 
         if (Input.GetKeyDown(KeyCode.Space))
         {
@@ -70,17 +69,33 @@ public class PlayerContt : MonoBehaviour
             _currentSpeed = _runSpeed;
             _animator.SetFloat("speed", 2);
         }
-        else if (Input.GetKeyUp(KeyCode.Space) && Time.time - _timePressedButton < _buttonPressDelay)
+        else if (Input.GetKeyUp(KeyCode.Space) && Time.time - _timePressedButton < _buttonPressDelay && !_isRolling)
         {
-            _animator.SetTrigger("roll");
-            _moveVector += transform.forward * _rollDistanse;
-            _currentSpeed = 10;
+            StartCoroutine(PerformRoll());
         }
-        else
+        else if (_moveVector != Vector3.zero)
         {
             _currentSpeed = _walkSpeed;
             _animator.SetFloat("speed", 1);
         }
+    }
+
+    private IEnumerator PerformRoll()
+    {
+        _isRolling = true;
+        float elapsed = 0;
+
+        _animator.SetTrigger("roll");
+
+        while (elapsed < _rollDuration)
+        {
+            float currentSpeed = Mathf.Lerp(_currentSpeed, 0, elapsed / _rollDuration);
+            _characterController.Move(_moveVector * currentSpeed * Time.deltaTime);
+
+            elapsed += Time.deltaTime;
+            yield return null;
+        }
+        _isRolling = false;
     }
 
     private void PhysicsMove()

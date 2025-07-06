@@ -90,7 +90,7 @@ public class PlayerController : MonoBehaviour
 
         if (_moveVector == Vector3.zero)
         {
-            animator.SetFloat("speed", -1);
+            animator.SetFloat("speed", -1); 
         }
 
         if (Input.GetKey(KeyCode.Space) && inAttack == false)
