@@ -5,21 +5,28 @@ public class PlayerContt : MonoBehaviour
 {
     private Animator _animator;
 
+    [Header("Transform")]
     private Camera _camera;
     private CharacterController _characterController;
     [SerializeField] private Transform _targetPosition;
 
+    [Header("Phisics")]
     [SerializeField] private float _gravity = 9.8f;
-    [SerializeField] private float _walkSpeed = 3.5f;
-    [SerializeField] private float _runSpeed = 6f;
-    private float _currentSpeed;
     private float _fallVelociti;
     private Vector3 _moveVector;
 
+    [Header("MoveSpeeds")]
+    private float _currentSpeed;
+    [SerializeField] private float _runSpeed = 6f;
+    [SerializeField] private float _walkSpeed = 3.5f;
+
+    [Header("RollAndRunSettings")]
     private float _timePressedButton;
     [SerializeField] private float _rollDuration = 1f;
     private bool _isRolling = false;
     [SerializeField] private float _buttonPressDelay = 0.2f;
+
+    private bool _inAttack = false;
 
     private const string Horizontal = nameof(Horizontal);
     private const string Vertical = nameof(Vertical);
@@ -39,12 +46,13 @@ public class PlayerContt : MonoBehaviour
         _moveVector = Vector3.zero;
 
         Movement();
+        Attachment();
         PhysicsMove();
     }
 
     private void Movement()
     {
-        if (Input.GetAxis(Vertical) != 0 || Input.GetAxis(Horizontal) != 0)
+        if ((Input.GetAxis(Vertical) != 0 || Input.GetAxis(Horizontal) != 0) && _inAttack == false)
         {
             Vector3 playerDir = _targetPosition.position - transform.position;
             playerDir.y = 0;
@@ -71,12 +79,45 @@ public class PlayerContt : MonoBehaviour
         }
         else if (Input.GetKeyUp(KeyCode.Space) && Time.time - _timePressedButton < _buttonPressDelay && !_isRolling)
         {
+            _inAttack = false; //interrupt attack
             StartCoroutine(PerformRoll());
         }
         else if (_moveVector != Vector3.zero)
         {
             _currentSpeed = _walkSpeed;
             _animator.SetFloat("speed", 1);
+        }
+    }
+
+    private void Attachment()
+    {
+        if(_animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 0.83f)
+        {
+            _inAttack = false;
+        }
+
+        if(_inAttack == false)
+        {
+            Attack();
+        }
+    }
+
+    private void Attack()
+    {
+        if (Input.GetMouseButtonDown(0) && Input.GetKey(KeyCode.LeftShift))
+        {
+            _inAttack = true;
+            _animator.SetTrigger("HeavyAttack");
+        }
+        else if (Input.GetMouseButtonDown(0) && _animator.GetCurrentAnimatorStateInfo(0).IsName("Attack1"))
+        {
+            _inAttack = true;
+            _animator.SetTrigger("Attack2");
+        }
+        else if (Input.GetMouseButtonDown(0))
+        {
+            _inAttack = true;
+            _animator.SetTrigger("Attack1");
         }
     }
 
