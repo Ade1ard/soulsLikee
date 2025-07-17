@@ -52,7 +52,7 @@ public class PlayerContt : MonoBehaviour
 
     private void Movement()
     {
-        if((Input.GetAxis(Vertical) != 0 || Input.GetAxis(Horizontal) != 0) && !_inAttack)
+        if ((Input.GetAxis(Vertical) != 0 || Input.GetAxis(Horizontal) != 0) && _inAttack == false)
         {
             Vector3 playerDir = _targetPosition.position - transform.position;
             playerDir.y = 0;
@@ -72,17 +72,17 @@ public class PlayerContt : MonoBehaviour
             _timePressedButton = Time.time;
         }
 
-        if(Input.GetKey(KeyCode.Space) && Time.time - _timePressedButton >= _buttonPressDelay)
+        if (Input.GetKey(KeyCode.Space) && Time.time - _timePressedButton >= _buttonPressDelay)
         {
             _currentSpeed = _runSpeed;
             _animator.SetFloat("speed", 2);
         }
-        else if(Input.GetKeyUp(KeyCode.Space) && Time.time - _timePressedButton < _buttonPressDelay && !_isRolling)
+        else if (Input.GetKeyUp(KeyCode.Space) && Time.time - _timePressedButton < _buttonPressDelay && !_isRolling)
         {
             _inAttack = false; //interrupt attack
             StartCoroutine(PerformRoll());
         }
-        else if(_moveVector != Vector3.zero)
+        else if (_moveVector != Vector3.zero)
         {
             _currentSpeed = _walkSpeed;
             _animator.SetFloat("speed", 1);
@@ -96,7 +96,7 @@ public class PlayerContt : MonoBehaviour
             _inAttack = false;
         }
 
-        if(Input.GetMouseButtonDown(0) && !_inAttack)
+        if(_inAttack == false)
         {
             Attack();
         }
@@ -104,17 +104,19 @@ public class PlayerContt : MonoBehaviour
 
     private void Attack()
     {
-        _inAttack = true;
-        if(Input.GetKey(KeyCode.LeftShift))
+        if (Input.GetMouseButtonDown(0) && Input.GetKey(KeyCode.LeftShift))
         {
+            _inAttack = true;
             _animator.SetTrigger("HeavyAttack");
         }
-        else if(_animator.GetCurrentAnimatorStateInfo(0).IsName("Attack1"))
+        else if (Input.GetMouseButtonDown(0) && _animator.GetCurrentAnimatorStateInfo(0).IsName("Attack1"))
         {
+            _inAttack = true;
             _animator.SetTrigger("Attack2");
         }
-        else
+        else if (Input.GetMouseButtonDown(0))
         {
+            _inAttack = true;
             _animator.SetTrigger("Attack1");
         }
     }
