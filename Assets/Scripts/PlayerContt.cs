@@ -91,12 +91,7 @@ public class PlayerContt : MonoBehaviour
 
     private void Attachment()
     {
-        if(_animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 0.83f)
-        {
-            _inAttack = false;
-        }
-
-        if(_inAttack == false)
+        if(Input.GetMouseButtonDown(0) && _inAttack == false)
         {
             Attack();
         }
@@ -104,21 +99,25 @@ public class PlayerContt : MonoBehaviour
 
     private void Attack()
     {
-        if (Input.GetMouseButtonDown(0) && Input.GetKey(KeyCode.LeftShift))
+        _inAttack = true;
+
+        if (Input.GetKey(KeyCode.LeftShift))
         {
-            _inAttack = true;
             _animator.SetTrigger("HeavyAttack");
         }
-        else if (Input.GetMouseButtonDown(0) && _animator.GetCurrentAnimatorStateInfo(0).IsName("Attack1"))
+        else if (_animator.GetCurrentAnimatorStateInfo(0).IsName("Attack1"))
         {
-            _inAttack = true;
             _animator.SetTrigger("Attack2");
         }
-        else if (Input.GetMouseButtonDown(0))
+        else
         {
-            _inAttack = true;
             _animator.SetTrigger("Attack1");
         }
+    }
+
+    private void EndAttack()
+    {
+        _inAttack = false;
     }
 
     private IEnumerator PerformRoll()
