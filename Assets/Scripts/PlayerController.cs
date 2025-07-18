@@ -1,7 +1,7 @@
 using System.Collections;
 using UnityEngine;
 
-public class PlayerContt : MonoBehaviour
+public class PlayerController : MonoBehaviour
 {
     private Animator _animator;
 
@@ -115,7 +115,7 @@ public class PlayerContt : MonoBehaviour
         }
     }
 
-    private void EndAttack()
+    private void EndAttack() //called by events in animations
     {
         _inAttack = false;
     }
