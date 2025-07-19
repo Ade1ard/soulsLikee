@@ -35,7 +35,7 @@ public class PlayerController : MonoBehaviour
     {
         _camera = FindObjectOfType<Camera>();
         _characterController = FindObjectOfType<CharacterController>();
-        _animator = FindObjectOfType<Animator>();
+        _animator = GetComponent<Animator>();
 
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;

@@ -30,7 +30,7 @@ public class enemyhealt : MonoBehaviour
 
     public void Dead()
     {
-        gameObject.GetComponent<enemyai>().enabled = false;
+        gameObject.GetComponent<EnemyController>().enabled = false;
         gameObject.GetComponent<enemyhealt>().enabled = false;
         gameObject.GetComponent<CapsuleCollider>().enabled = false;
         gameObject.GetComponent<NavMeshAgent>().speed = 0;
