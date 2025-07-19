@@ -38,7 +38,15 @@ public class EnemyController : MonoBehaviour
     void Update()
     {
         CheckPlayerNotice();
-        Movement();
+
+        if (_isPlayerNoticed)
+        {
+            MovementToPLayer();
+        }
+        else
+        {
+            Patrolling();
+        }
     }
 
     private void CheckPlayerNotice()
@@ -63,48 +71,46 @@ public class EnemyController : MonoBehaviour
         }
     }
 
-    private void Movement()
+    private void MovementToPLayer()
     {
-        if (_isPlayerNoticed)
-        {
-            var lookDirection = _player.transform.position - transform.position;
+        var lookDirection = _player.transform.position - transform.position;
             lookDirection.y = 0;
 
-            var DistanceToPLayer = Vector3.Distance(transform.position, _player.transform.position);
+        var DistanceToPLayer = (transform.position - _player.transform.position).sqrMagnitude;
 
-            if (DistanceToPLayer <= _fightDistance)
-            {
-                Debug.Log(DistanceToPLayer);
-                _navMeshAgent.speed = _WalkSpeed;
-                _navMeshAgent.ResetPath();
-                _animator.SetFloat("Speed", 3);
-                transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(lookDirection), 10 * Time.deltaTime);
-            }
-            else if (DistanceToPLayer < _attackDistance || _inAttack)
-            {
-                Debug.Log(DistanceToPLayer);
-                _navMeshAgent.speed = _runToPlayerSpeed;
-                _animator.SetFloat("Speed", 2);
-                _inAttack = true;
-                _navMeshAgent.destination = _player.transform.position;
-            }
-            else
-            {
-                _navMeshAgent.destination = transform.position;
-                _animator.SetFloat("Speed", -1);
-                transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(lookDirection), 10 * Time.deltaTime);
-            }
+        if (DistanceToPLayer <= _fightDistance * _fightDistance)
+        {
+            Debug.Log(DistanceToPLayer);
+            _navMeshAgent.speed = _WalkSpeed;
+            _navMeshAgent.ResetPath();
+            _animator.SetFloat("Speed", 3);
+            transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(lookDirection), 10 * Time.deltaTime);
+        }
+        else if (DistanceToPLayer < _attackDistance * _attackDistance || _inAttack)
+        {
+            Debug.Log(DistanceToPLayer);
+            _navMeshAgent.speed = _runToPlayerSpeed;
+            _animator.SetFloat("Speed", 2);
+            _inAttack = true;
+            _navMeshAgent.destination = _player.transform.position;
         }
         else
         {
-            _inAttack = false;
-            _navMeshAgent.speed = _WalkSpeed;
-            _animator.SetFloat("Speed", 1);
+            _navMeshAgent.destination = transform.position;
+            _animator.SetFloat("Speed", -1);
+            transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(lookDirection), 10 * Time.deltaTime);
+        }
+    }
 
-            if (_navMeshAgent.remainingDistance <= _navMeshAgent.stoppingDistance)
-            {
-                PickNewTarget();
-            }
+    private void Patrolling()
+    {
+        _inAttack = false;
+        _navMeshAgent.speed = _WalkSpeed;
+        _animator.SetFloat("Speed", 1);
+
+        if (_navMeshAgent.remainingDistance <= _navMeshAgent.stoppingDistance)
+        {
+            PickNewTarget();
         }
     }
 
