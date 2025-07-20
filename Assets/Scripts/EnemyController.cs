@@ -18,7 +18,6 @@ public class EnemyController : MonoBehaviour
     private bool _inAttack = false;
     private float _timeLastSeen;
     private Animator _animator;
-    private Rigidbody _enemy;
     
     [Header("PLayer")]
     private PlayerController _player;
@@ -31,7 +30,6 @@ public class EnemyController : MonoBehaviour
         _player = FindObjectOfType<PlayerController>();
         _navMeshAgent = GetComponent<NavMeshAgent>();
         _animator = GetComponent<Animator>();
-        _enemy = GetComponent<Rigidbody>();
         PickNewTarget();
     }
 
@@ -76,21 +74,21 @@ public class EnemyController : MonoBehaviour
         var lookDirection = _player.transform.position - transform.position;
             lookDirection.y = 0;
 
-        var DistanceToPLayer = (transform.position - _player.transform.position).sqrMagnitude;
+        var DistanceToPLayer = Vector3.Distance(transform.position, _player.transform.position);
 
-        if (DistanceToPLayer <= _fightDistance * _fightDistance)
+        if (DistanceToPLayer <= _fightDistance)
         {
-            Debug.Log(DistanceToPLayer);
             _navMeshAgent.speed = _WalkSpeed;
-            _navMeshAgent.ResetPath();
-            _animator.SetFloat("Speed", 3);
+            _animator.SetFloat("Speed", 1);
+
+            _navMeshAgent.destination = _player.transform.position;
             transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(lookDirection), 10 * Time.deltaTime);
         }
-        else if (DistanceToPLayer < _attackDistance * _attackDistance || _inAttack)
+        else if (DistanceToPLayer < _attackDistance || _inAttack)
         {
-            Debug.Log(DistanceToPLayer);
             _navMeshAgent.speed = _runToPlayerSpeed;
             _animator.SetFloat("Speed", 2);
+
             _inAttack = true;
             _navMeshAgent.destination = _player.transform.position;
         }
@@ -124,24 +122,6 @@ public class EnemyController : MonoBehaviour
         {
             _navMeshAgent.destination = transform.position;
             _animator.SetFloat("Speed", -1);
-        }
-    }
-
-    private void FixedUpdate()
-    {
-        if (_isPlayerNoticed && Vector3.Distance(transform.position, _player.transform.position) <= _fightDistance)
-        {
-            bool clockwise = true;
-            float circleSpeed = 2f;
-
-            Vector3 circleDirection = (transform.position - _player.transform.position).normalized;
-            float angle = Mathf.Atan2(circleDirection.z, circleDirection.x) + (clockwise ? -1 : 1) * circleSpeed * Time.deltaTime;
-
-            float x = _player.transform.position.x + Mathf.Cos(angle) * _fightDistance;
-            float z = _player.transform.position.z + Mathf.Sin(angle) * _fightDistance;
-
-            Vector3 targetPosition = new Vector3(x, transform.position.y, z);
-            _enemy.MovePosition(targetPosition);
         }
     }
 }
