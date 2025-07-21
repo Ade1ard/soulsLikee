@@ -74,7 +74,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: -203655887218126122, guid: 26101ee5ecc86e241b9c8a5660f945b2,
+  m_Motion: {fileID: -203655887218126122, guid: 36168646010eb334fbea4252f8e26f5f,
     type: 3}
   m_Tag: 
   m_SpeedParameter: 
@@ -354,7 +354,7 @@ AnimatorState:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: Great Sword Slash (2)
-  m_Speed: 1
+  m_Speed: 0.8
   m_CycleOffset: 0
   m_Transitions:
   - {fileID: -6616244495088967036}
@@ -395,7 +395,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: -203655887218126122, guid: ff7bb93cffaf13141aca9d0c3ca180b1,
+  m_Motion: {fileID: -203655887218126122, guid: 99bc9dcee8943504dbad130765a53587,
     type: 3}
   m_Tag: 
   m_SpeedParameter: 
@@ -441,19 +441,19 @@ AnimatorController:
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 0}
+    m_Controller: {fileID: 9100000}
   - m_Name: AttackFar
     m_Type: 1
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 0}
+    m_Controller: {fileID: 9100000}
   - m_Name: AttackNear
     m_Type: 1
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 0}
+    m_Controller: {fileID: 9100000}
   m_AnimatorLayers:
   - serializedVersion: 5
     m_Name: Base Layer
@@ -607,7 +607,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: -203655887218126122, guid: 1a604f6b8ec642446975b020fda37bc7,
+  m_Motion: {fileID: -203655887218126122, guid: 46b0bdee497c402478c5c79bee7dc000,
     type: 3}
   m_Tag: 
   m_SpeedParameter: 
@@ -990,7 +990,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: -203655887218126122, guid: 1a293fe0b707f904fa8e0e8c7d2bc1d3,
+  m_Motion: {fileID: -203655887218126122, guid: a6bf416e6979a3345a9cab1a21600610,
     type: 3}
   m_Tag: 
   m_SpeedParameter: 

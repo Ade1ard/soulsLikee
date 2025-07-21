@@ -111,7 +111,8 @@ public class EnemyController : MonoBehaviour
             }
             else
             {
-                _animator.SetFloat("AttackNear", Random.Range(1, 3));
+                //_animator.SetFloat("AttackNear", Random.Range(1, 3));
+                _animator.SetFloat("AttackFar", Random.Range(1, 5));
                 _timeLastAttack = Time.time;
             }
             _navMeshAgent.ResetPath();
