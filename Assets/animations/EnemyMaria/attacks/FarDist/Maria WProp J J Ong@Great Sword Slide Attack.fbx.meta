@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 36168646010eb334fbea4252f8e26f5f
+guid: 8c496efd11a42c8468c556d9729b5d68
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
@@ -17,14 +17,7 @@ ModelImporter:
     removeConstantScaleCurves: 0
     motionNodeName: 
     rigImportErrors: 
-    rigImportWarnings: "Copied Avatar Rig Configuration mis-match. Bone length in
-      copied configuration does not match position in animation file:\n\t'mixamorig:LeftUpLeg'
-      : position error = 26.750809 mm\n\t'mixamorig:LeftLeg' : position error = 12.451948
-      mm\n\t'mixamorig:LeftFoot' : position error = 39.283615 mm\n\t'mixamorig:LeftToeBase'
-      : position error = 31.781857 mm\n\t'mixamorig:RightUpLeg' : position error
-      = 34.376945 mm\n\t'mixamorig:RightLeg' : position error = 12.795773 mm\n\t'mixamorig:RightFoot'
-      : position error = 38.503170 mm\n\t'mixamorig:RightToeBase' : position error
-      = 31.254396 mm\n"
+    rigImportWarnings: 
     animationImportErrors: 
     animationImportWarnings: 
     animationRetargetingWarnings: 
@@ -40,11 +33,11 @@ ModelImporter:
     extraUserProperties: []
     clipAnimations:
     - serializedVersion: 16
-      name: Great Sword Jump Attack
+      name: Great Sword Slide Attack
       takeName: mixamo.com
       internalID: -203655887218126122
       firstFrame: 0
-      lastFrame: 130
+      lastFrame: 127
       wrapMode: 0
       orientationOffsetY: 0
       level: 0

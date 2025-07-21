@@ -102,31 +102,28 @@ public class EnemyController : MonoBehaviour
 
     private void Fight()
     {
-        if (Time.time - _timeLastAttack > _attackDelay)
+        if (Time.time - _timeLastAttack > _attackDelay && _navMeshAgent.remainingDistance < _navMeshAgent.stoppingDistance + 1)
         {
-            if (_navMeshAgent.remainingDistance > _navMeshAgent.stoppingDistance + 0.2f)
-            {
-                _animator.SetFloat("AttackFar", Random.Range(1, 5));
-                _timeLastAttack = Time.time;
-            }
-            else
-            {
-                //_animator.SetFloat("AttackNear", Random.Range(1, 3));
-                _animator.SetFloat("AttackFar", Random.Range(1, 5));
-                _timeLastAttack = Time.time;
-            }
+            _animator.SetFloat("Attack", Random.Range(1, 7));
+            _timeLastAttack = Time.time;
             _navMeshAgent.ResetPath();
         }
         else
         {
-            if (_animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1)
+            if (_animator.GetCurrentAnimatorStateInfo(0).IsName("Great Sword Walk"))
             {
                 _navMeshAgent.destination = _player.transform.position;
                 _navMeshAgent.speed = _WalkSpeed;
-                _animator.SetFloat("Speed", 1);
+                if (_navMeshAgent.remainingDistance <= _navMeshAgent.stoppingDistance)
+                {
+                    _animator.SetFloat("Speed", -1);
+                }
+                else
+                {
+                    _animator.SetFloat("Speed", 1);
+                }
             }
-            _animator.SetFloat("AttackFar", -1);
-            _animator.SetFloat("AttackNear", -1);
+            _animator.SetFloat("Attack", -1);
             
             var lookDirection = _player.transform.position - transform.position;
             lookDirection.y = 0;
