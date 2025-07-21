@@ -15,21 +15,25 @@ public class EnemyController : MonoBehaviour
     [SerializeField] private float _noticeDistance;
     [SerializeField] private float _fightDistance;
 
+    [SerializeField] private float _attackDelay;
     private bool _inAttack = false;
+    private float _timeLastAttack;
     private float _timeLastSeen;
     private Animator _animator;
     
+    private NavMeshAgent _navMeshAgent;
+
     [Header("PLayer")]
     private PlayerController _player;
     private bool _isPlayerNoticed;
 
-    private NavMeshAgent _navMeshAgent;
 
     void Start()
     {
         _player = FindObjectOfType<PlayerController>();
         _navMeshAgent = GetComponent<NavMeshAgent>();
         _animator = GetComponent<Animator>();
+
         PickNewTarget();
     }
 
@@ -74,15 +78,11 @@ public class EnemyController : MonoBehaviour
         var lookDirection = _player.transform.position - transform.position;
             lookDirection.y = 0;
 
-        var DistanceToPLayer = Vector3.Distance(transform.position, _player.transform.position);
+        var DistanceToPLayer = _navMeshAgent.remainingDistance;
 
         if (DistanceToPLayer <= _fightDistance)
         {
-            _navMeshAgent.speed = _WalkSpeed;
-            _animator.SetFloat("Speed", 1);
-
-            _navMeshAgent.destination = _player.transform.position;
-            transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(lookDirection), 10 * Time.deltaTime);
+            Fight();
         }
         else if (DistanceToPLayer < _attackDistance || _inAttack)
         {
@@ -96,6 +96,39 @@ public class EnemyController : MonoBehaviour
         {
             _navMeshAgent.destination = transform.position;
             _animator.SetFloat("Speed", -1);
+            transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(lookDirection), 10 * Time.deltaTime);
+        }
+    }
+
+    private void Fight()
+    {
+        if (Time.time - _timeLastAttack > _attackDelay)
+        {
+            if (_navMeshAgent.remainingDistance > _navMeshAgent.stoppingDistance + 0.2f)
+            {
+                _animator.SetFloat("AttackFar", Random.Range(1, 5));
+                _timeLastAttack = Time.time;
+            }
+            else
+            {
+                _animator.SetFloat("AttackNear", Random.Range(1, 3));
+                _timeLastAttack = Time.time;
+            }
+            _navMeshAgent.ResetPath();
+        }
+        else
+        {
+            if (_animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1)
+            {
+                _navMeshAgent.destination = _player.transform.position;
+                _navMeshAgent.speed = _WalkSpeed;
+                _animator.SetFloat("Speed", 1);
+            }
+            _animator.SetFloat("AttackFar", -1);
+            _animator.SetFloat("AttackNear", -1);
+            
+            var lookDirection = _player.transform.position - transform.position;
+            lookDirection.y = 0;
             transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(lookDirection), 10 * Time.deltaTime);
         }
     }
