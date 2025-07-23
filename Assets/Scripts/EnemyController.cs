@@ -102,11 +102,19 @@ public class EnemyController : MonoBehaviour
 
     private void Fight()
     {
-        if (Time.time - _timeLastAttack > _attackDelay && _navMeshAgent.remainingDistance < _navMeshAgent.stoppingDistance + 1)
+        if (Time.time - _timeLastAttack > _attackDelay)
         {
-            _animator.SetFloat("Attack", Random.Range(1, 7));
+            if(_navMeshAgent.remainingDistance < _navMeshAgent.stoppingDistance + 0.15f)
+            {
+                _navMeshAgent.ResetPath();
+                _animator.SetFloat("AttackNear", Random.Range(1, 3));
+            }
+            else
+            {
+                _navMeshAgent.ResetPath();
+                _animator.SetFloat("AttackFar", Random.Range(1, 5));
+            }
             _timeLastAttack = Time.time;
-            _navMeshAgent.ResetPath();
         }
         else
         {
@@ -123,7 +131,8 @@ public class EnemyController : MonoBehaviour
                     _animator.SetFloat("Speed", 1);
                 }
             }
-            _animator.SetFloat("Attack", -1);
+            _animator.SetFloat("AttackFar", -1);
+            _animator.SetFloat("AttackNear", -1);
             
             var lookDirection = _player.transform.position - transform.position;
             lookDirection.y = 0;

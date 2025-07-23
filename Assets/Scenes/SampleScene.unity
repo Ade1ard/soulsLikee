@@ -1616,7 +1616,7 @@ MonoBehaviour:
   _attackDistance: 20
   _noticeDistance: 30
   _fightDistance: 7
-  _attackDelay: 4
+  _attackDelay: 3
 --- !u!195 &1525170452
 NavMeshAgent:
   m_ObjectHideFlags: 0
