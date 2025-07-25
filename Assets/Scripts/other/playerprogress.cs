@@ -11,13 +11,11 @@ public class playerprogress : MonoBehaviour
     private int _levelValue = 1;
     private float _expCurrentValue = 0;
     public float _expTargetValue = 100;
-    // Start is called before the first frame update
     void Start()
     {
         DrawUI();
     }
 
-    // Update is called once per frame
     void Update()
     {
         
@@ -31,9 +29,8 @@ public class playerprogress : MonoBehaviour
             _levelValue += 1;
             _expCurrentValue = 0;
             _expTargetValue = _expTargetValue * 1.5f;
-            //GetComponent<fireballcaster>().damage += 10;
-            GetComponent<playerHealt>().value += 25;
-            GetComponent<playerHealt>()._maxValue += 25;
+            //GetComponent<PlayerHealth>().value += 25;
+            //GetComponent<PlayerHealth>()._maxValue += 25;
             
         }
         DrawUI();

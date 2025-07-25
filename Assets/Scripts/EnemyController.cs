@@ -26,11 +26,13 @@ public class EnemyController : MonoBehaviour
     [Header("PLayer")]
     private PlayerController _player;
     private bool _isPlayerNoticed;
+    private PlayerHealth _playerHealth;
 
 
     void Start()
     {
         _player = FindObjectOfType<PlayerController>();
+        _playerHealth = FindObjectOfType<PlayerHealth>();
         _navMeshAgent = GetComponent<NavMeshAgent>();
         _animator = GetComponent<Animator>();
 
