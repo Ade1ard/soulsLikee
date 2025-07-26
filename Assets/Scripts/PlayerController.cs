@@ -8,7 +8,7 @@ public class PlayerController : MonoBehaviour
     [Header("Transform")]
     private Camera _camera;
     private CharacterController _characterController;
-    [SerializeField] private Transform _targetPositionPoint;
+    [SerializeField] private Transform _targetPosition;
 
     [Header("Phisics")]
     [SerializeField] private float _gravity = 9.8f;
@@ -54,24 +54,12 @@ public class PlayerController : MonoBehaviour
     {
         if ((Input.GetAxis(Vertical) != 0 || Input.GetAxis(Horizontal) != 0) && _inAttack == false)
         {
-            Vector3 playerDir = _targetPositionPoint.position - transform.position;
+            Vector3 playerDir = _targetPosition.position - transform.position;
             playerDir.y = 0;
-            if (Vector3.Dot(transform.forward, playerDir) <= -0.95f)
-            {
-                Vector3 deltaPos = _animator.deltaPosition;
-                Quaternion delatRot = _animator.deltaRotation;
-                _characterController.Move(deltaPos);
-                transform.rotation = delatRot;
-                _animator.SetTrigger("Turn");
-            }
-            else
-            {
-                transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(playerDir), 15 * Time.deltaTime);
-            }
-
-            Vector3 targetPositionPointDir = _camera.transform.forward * Input.GetAxis(Vertical) + _camera.transform.right * Input.GetAxis(Horizontal);
-            Ray ray = new Ray(transform.position, targetPositionPointDir);
-            _targetPositionPoint.position = ray.GetPoint(15);
+            transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(playerDir), 15 * Time.deltaTime);
+            Vector3 targetPositionDir = _camera.transform.forward * Input.GetAxis(Vertical) + _camera.transform.right * Input.GetAxis(Horizontal);
+            Ray ray = new Ray(transform.position, targetPositionDir);
+            _targetPosition.position = ray.GetPoint(15);
             _moveVector += transform.forward;
         }
         else
