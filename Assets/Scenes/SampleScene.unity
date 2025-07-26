@@ -1060,7 +1060,7 @@ GameObject:
   m_Component:
   - component: {fileID: 841458486}
   m_Layer: 0
-  m_Name: TargetPosition
+  m_Name: TargetPositionPoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1772,7 +1772,7 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: 5997e8eb216917949b5c53fe235d3298,
         type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 5997e8eb216917949b5c53fe235d3298,
         type: 3}
@@ -3083,7 +3083,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 441602681b62dc046ba2beea9b6fb6ef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _targetPosition: {fileID: 841458486}
+  _targetPositionPoint: {fileID: 841458486}
   _gravity: 9.8
   _runSpeed: 6
   _walkSpeed: 3.5
@@ -3125,7 +3125,7 @@ Animator:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6046018844230716822}
   m_Enabled: 1
-  m_Avatar: {fileID: 9000000, guid: bf1a7e1edbb426843b10bdf267c969d9, type: 3}
+  m_Avatar: {fileID: 9000000, guid: c8be8bb32f81dd3409817edde8c4100d, type: 3}
   m_Controller: {fileID: 9100000, guid: 1a6523e047d9c3041bbc5605fa622be1, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
@@ -3154,6 +3154,7 @@ MonoBehaviour:
   _mediumHealthValueImage: {fileID: 1839485778}
   _mainBarSpeed: 0.05
   _mediumBarSpeed: 0.005
+  _playerAnimator: {fileID: 6046018844230716826}
   _gameplayUI: {fileID: 0}
   _gameoverscreen: {fileID: 0}
 --- !u!4 &6046018844635725962
