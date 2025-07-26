@@ -1,11 +1,17 @@
-﻿using TMPro;
+﻿using System.Collections;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerHealth : MonoBehaviour
 {
     [SerializeField] private float _value = 100;
     private float _maxValue;
-    [SerializeField] private RectTransform _healthValueAnchor_Max_X;
+    [SerializeField] private Image _mainHealthValueImage;
+    [SerializeField] private Image _mediumHealthValueImage;
+    [SerializeField] private float _mainBarSpeed;
+    [SerializeField] private float _mediumBarSpeed;
+
+    [SerializeField] private Animator _playerAnimator;
 
     [SerializeField] private GameObject _gameplayUI;
     [SerializeField] private GameObject _gameoverscreen;
@@ -14,7 +20,7 @@ public class PlayerHealth : MonoBehaviour
     {
         _maxValue = _value;
 
-        DrawHealtBar();
+        StartCoroutine(DrawHealtBar());
     }
 
     void Update()
@@ -34,18 +40,28 @@ public class PlayerHealth : MonoBehaviour
     {
         _value -= Mathf.Abs(damage);
         _value = Mathf.Clamp(_value, 0, _maxValue);
+        _playerAnimator.SetTrigger("Hit");
 
         if (_value <= 0)
         {
             //PlayerIsDead();
         }
 
-        DrawHealtBar();
+        StartCoroutine(DrawHealtBar());
     }
 
-    private void DrawHealtBar()
+    private IEnumerator DrawHealtBar()
     {
-        _healthValueAnchor_Max_X.anchorMax = new Vector2(_value / _maxValue, 1);
+        while (_mediumHealthValueImage.fillAmount - (_value / _maxValue) > 0.001f)
+        {
+            _mainHealthValueImage.fillAmount = Mathf.Lerp(_mainHealthValueImage.fillAmount, _value / _maxValue, _mainBarSpeed);
+
+            if (_mainHealthValueImage.fillAmount - (_value / _maxValue) <= 0.001f)
+            {
+                _mediumHealthValueImage.fillAmount = Mathf.Lerp(_mediumHealthValueImage.fillAmount, _mainHealthValueImage.fillAmount, _mediumBarSpeed);
+            }
+            yield return null;
+        }
     }
 
     private void PlayerIsDead() 
@@ -59,12 +75,12 @@ public class PlayerHealth : MonoBehaviour
     {
         _value += Mathf.Abs(amount);
         _value = Mathf.Clamp(_value, 0, _maxValue);
-        DrawHealtBar();
+        StartCoroutine(DrawHealtBar());
     }
 
     public void AddMaxHealth(float amount)
     {
         _maxValue += Mathf.Abs(amount);
-        DrawHealtBar();
+        StartCoroutine(DrawHealtBar());
     }
 }
