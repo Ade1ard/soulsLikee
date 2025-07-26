@@ -1,4 +1,3 @@
-using System.Collections;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour
@@ -22,10 +21,9 @@ public class PlayerController : MonoBehaviour
 
     [Header("RollAndRunSettings")]
     private float _timePressedButton;
-    [SerializeField] private float _rollDuration = 1f;
-    private bool _isRolling = false;
     [SerializeField] private float _buttonPressDelay = 0.2f;
 
+    private bool _isRolling = false;
     private bool _inAttack = false;
 
     private const string Horizontal = nameof(Horizontal);
@@ -56,18 +54,7 @@ public class PlayerController : MonoBehaviour
         {
             Vector3 playerDir = _targetPositionPoint.position - transform.position;
             playerDir.y = 0;
-            if (Vector3.Dot(transform.forward, playerDir) <= -0.95f)
-            {
-                Vector3 deltaPos = _animator.deltaPosition;
-                Quaternion delatRot = _animator.deltaRotation;
-                _characterController.Move(deltaPos);
-                transform.rotation = delatRot;
-                _animator.SetTrigger("Turn");
-            }
-            else
-            {
-                transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(playerDir), 15 * Time.deltaTime);
-            }
+            transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(playerDir), 15 * Time.deltaTime);
 
             Vector3 targetPositionPointDir = _camera.transform.forward * Input.GetAxis(Vertical) + _camera.transform.right * Input.GetAxis(Horizontal);
             Ray ray = new Ray(transform.position, targetPositionPointDir);
@@ -89,10 +76,10 @@ public class PlayerController : MonoBehaviour
             _currentSpeed = _runSpeed;
             _animator.SetFloat("speed", 2);
         }
-        else if (Input.GetKeyUp(KeyCode.Space) && Time.time - _timePressedButton < _buttonPressDelay && !_isRolling)
+        else if (Input.GetKeyUp(KeyCode.Space) && Time.time - _timePressedButton < _buttonPressDelay && !_isRolling && _moveVector != Vector3.zero)
         {
-            _inAttack = false; //interrupt attack
-            StartCoroutine(PerformRoll());
+            _isRolling = true;
+            _animator.SetTrigger("roll");
         }
         else if (_moveVector != Vector3.zero)
         {
@@ -103,7 +90,7 @@ public class PlayerController : MonoBehaviour
 
     private void Attachment()
     {
-        if(Input.GetMouseButtonDown(0) && _inAttack == false)
+        if(Input.GetMouseButtonDown(0) && !_inAttack && !_isRolling)
         {
             Attack();
         }
@@ -130,23 +117,10 @@ public class PlayerController : MonoBehaviour
     private void EndAttack() //called by events in animations
     {
         _inAttack = false;
-    }
-
-    private IEnumerator PerformRoll()
+    }   
+    
+    private void EndRoll() //called by events in animations
     {
-        _isRolling = true;
-        float elapsed = 0;
-
-        _animator.SetTrigger("roll");
-
-        while (elapsed < _rollDuration)
-        {
-            float currentSpeed = Mathf.Lerp(_currentSpeed, 0, elapsed / _rollDuration);
-            _characterController.Move(_moveVector * currentSpeed * Time.deltaTime);
-
-            elapsed += Time.deltaTime;
-            yield return null;
-        }
         _isRolling = false;
     }
 

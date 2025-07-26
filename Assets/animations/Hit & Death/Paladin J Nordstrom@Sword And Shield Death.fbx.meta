@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 8ab1ae9cf6eca894aa695cce919e35e6
+guid: 7f8079aa97ef4ed40be2b81b17e36581
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
@@ -33,11 +33,11 @@ ModelImporter:
     extraUserProperties: []
     clipAnimations:
     - serializedVersion: 16
-      name: Sword And Shield 180 Turn
+      name: Sword And Shield Death
       takeName: mixamo.com
       internalID: -203655887218126122
       firstFrame: 0
-      lastFrame: 47
+      lastFrame: 234
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
@@ -46,7 +46,7 @@ ModelImporter:
       hasAdditiveReferencePose: 0
       loopTime: 0
       loopBlend: 0
-      loopBlendOrientation: 0
+      loopBlendOrientation: 1
       loopBlendPositionY: 1
       loopBlendPositionXZ: 0
       keepOriginalOrientation: 1
