@@ -8,14 +8,20 @@ public class EnemyController : MonoBehaviour
     [SerializeField] private List<Transform> _targetPoints;
     [SerializeField] private float _viewAngle;
 
+    [Header("Speeds")]
     [SerializeField] private float _runToPlayerSpeed;
     [SerializeField] private float _WalkSpeed;
 
+    [Header("Distances")]
     [SerializeField] private float _attackDistance;
     [SerializeField] private float _noticeDistance;
     [SerializeField] private float _fightDistance;
 
-    [SerializeField] private float _attackDelay;
+    [Header("Attack")]
+    [SerializeField] private float _lowRangeAttackDelay;
+    [SerializeField] private float _highRangeAttackDelay;
+    private float _attackDelay;
+
     private bool _inAttack = false;
     private float _timeLastAttack;
     private float _timeLastSeen;
@@ -26,13 +32,11 @@ public class EnemyController : MonoBehaviour
     [Header("PLayer")]
     private PlayerController _player;
     private bool _isPlayerNoticed;
-    private PlayerHealth _playerHealth;
 
 
     void Start()
     {
         _player = FindObjectOfType<PlayerController>();
-        _playerHealth = FindObjectOfType<PlayerHealth>();
         _navMeshAgent = GetComponent<NavMeshAgent>();
         _animator = GetComponent<Animator>();
 
@@ -117,6 +121,7 @@ public class EnemyController : MonoBehaviour
                 _animator.SetFloat("AttackFar", Random.Range(1, 5));
             }
             _timeLastAttack = Time.time;
+            _attackDelay = Random.Range(_lowRangeAttackDelay, _highRangeAttackDelay);
         }
         else
         {

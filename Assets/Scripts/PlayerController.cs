@@ -5,9 +5,9 @@ public class PlayerController : MonoBehaviour
     private Animator _animator;
 
     [Header("Transform")]
+    [SerializeField] private Transform _targetPositionPoint;
     private Camera _camera;
     private CharacterController _characterController;
-    [SerializeField] private Transform _targetPositionPoint;
 
     [Header("Phisics")]
     [SerializeField] private float _gravity = 9.8f;
@@ -15,13 +15,13 @@ public class PlayerController : MonoBehaviour
     private Vector3 _moveVector;
 
     [Header("MoveSpeeds")]
-    private float _currentSpeed;
     [SerializeField] private float _runSpeed = 6f;
     [SerializeField] private float _walkSpeed = 3.5f;
+    private float _currentSpeed;
 
     [Header("RollAndRunSettings")]
-    private float _timePressedButton;
     [SerializeField] private float _buttonPressDelay = 0.2f;
+    private float _timePressedButton;
 
     private bool _isRolling = false;
     private bool _inAttack = false;
@@ -50,7 +50,7 @@ public class PlayerController : MonoBehaviour
 
     private void Movement()
     {
-        if ((Input.GetAxis(Vertical) != 0 || Input.GetAxis(Horizontal) != 0) && _inAttack == false)
+        if ((Input.GetAxis(Vertical) != 0 || Input.GetAxis(Horizontal) != 0) && !_inAttack)
         {
             Vector3 playerDir = _targetPositionPoint.position - transform.position;
             playerDir.y = 0;
@@ -128,7 +128,7 @@ public class PlayerController : MonoBehaviour
     {
         _characterController.Move(_moveVector * _currentSpeed * Time.deltaTime);
 
-        if (_characterController.isGrounded == false)
+        if (!_characterController.isGrounded)
         {
             _fallVelociti += _gravity * Time.fixedDeltaTime;
             _characterController.Move(Vector3.down * _fallVelociti * Time.deltaTime);

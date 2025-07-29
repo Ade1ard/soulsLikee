@@ -896,7 +896,8 @@ MonoBehaviour:
   _attackDistance: 20
   _noticeDistance: 30
   _fightDistance: 7
-  _attackDelay: 4
+  _lowRangeAttackDelay: 0
+  _highRangeAttackDelay: 0
 --- !u!195 &416305524
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -1835,7 +1836,8 @@ MonoBehaviour:
   _attackDistance: 20
   _noticeDistance: 30
   _fightDistance: 7
-  _attackDelay: 3
+  _lowRangeAttackDelay: 2
+  _highRangeAttackDelay: 5
 --- !u!195 &1525170452
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -1898,7 +1900,7 @@ CapsuleCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.5
+  m_Radius: 0.3
   m_Height: 1.7
   m_Direction: 1
   m_Center: {x: 0, y: 0.9, z: 0}
@@ -1925,7 +1927,7 @@ Rigidbody:
   m_ImplicitCom: 1
   m_ImplicitTensor: 1
   m_UseGravity: 1
-  m_IsKinematic: 0
+  m_IsKinematic: 1
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
@@ -3044,7 +3046,7 @@ CharacterController:
   m_Enabled: 1
   serializedVersion: 3
   m_Height: 1.7
-  m_Radius: 0.4
+  m_Radius: 0.3
   m_SlopeLimit: 45
   m_StepOffset: 0.3
   m_SkinWidth: 0.08
@@ -3063,7 +3065,6 @@ GameObject:
   - component: {fileID: 6046018844230716824}
   - component: {fileID: 6046018844230716827}
   - component: {fileID: 6046018844230716826}
-  - component: {fileID: 6046018844230716825}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -3087,35 +3088,7 @@ MonoBehaviour:
   _gravity: 9.8
   _runSpeed: 6
   _walkSpeed: 3.5
-  _rollDuration: 0.9
   _buttonPressDelay: 0.2
---- !u!54 &6046018844230716825
-Rigidbody:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6046018844230716822}
-  serializedVersion: 4
-  m_Mass: 2
-  m_Drag: 0
-  m_AngularDrag: 0.05
-  m_CenterOfMass: {x: 0, y: 0, z: 0}
-  m_InertiaTensor: {x: 1, y: 1, z: 1}
-  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ImplicitCom: 1
-  m_ImplicitTensor: 1
-  m_UseGravity: 1
-  m_IsKinematic: 0
-  m_Interpolate: 0
-  m_Constraints: 0
-  m_CollisionDetection: 0
 --- !u!95 &6046018844230716826
 Animator:
   serializedVersion: 5
@@ -3149,12 +3122,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5cce5506ae2d0c6449b9d766c61fcc8a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _value: 100
   _mainHealthValueImage: {fileID: 2119583810}
   _mediumHealthValueImage: {fileID: 1839485778}
+  _value: 100
   _mainBarSpeed: 0.05
   _mediumBarSpeed: 0.005
   _playerAnimator: {fileID: 6046018844230716826}
+  _enemyAnimator: {fileID: 1525170454}
   _gameplayUI: {fileID: 0}
   _gameoverscreen: {fileID: 0}
 --- !u!4 &6046018844635725962

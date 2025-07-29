@@ -4,23 +4,31 @@ using UnityEngine.UI;
 
 public class PlayerHealth : MonoBehaviour
 {
-    [SerializeField] private float _value = 100;
-    private float _maxValue;
+    [Header("BarsUI")]
     [SerializeField] private Image _mainHealthValueImage;
     [SerializeField] private Image _mediumHealthValueImage;
+    [SerializeField] private float _value = 100;
+    private float _maxValue;
+
+    [Header("BarsSpeeds")]
     [SerializeField] private float _mainBarSpeed;
     [SerializeField] private float _mediumBarSpeed;
 
+    [Header("Animators")]
     [SerializeField] private Animator _playerAnimator;
+    [SerializeField] private Animator _enemyAnimator;
 
+    [Header("GlobalUI")]
     [SerializeField] private GameObject _gameplayUI;
     [SerializeField] private GameObject _gameoverscreen;
+
+    private Coroutine _drawHealthBarCorutine;
 
     void Start()
     {
         _maxValue = _value;
 
-        StartCoroutine(DrawHealtBar());
+        StartDrawBarCorutine();
     }
 
     void Update()
@@ -30,9 +38,12 @@ public class PlayerHealth : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.CompareTag("EnemySword"))
+        if (!_enemyAnimator.GetCurrentAnimatorStateInfo(0).IsName("Great Sword Walk") && !_enemyAnimator.GetCurrentAnimatorStateInfo(0).IsName("Great Sword Idle"))
         {
-            DealDamage(Random.Range(30, 40));
+            if (other.gameObject.CompareTag("EnemySword"))
+            {
+                DealDamage(Random.Range(20, 40));
+            }
         }
     }
 
@@ -47,7 +58,7 @@ public class PlayerHealth : MonoBehaviour
             //PlayerIsDead();
         }
 
-        StartCoroutine(DrawHealtBar());
+        StartDrawBarCorutine();
     }
 
     private IEnumerator DrawHealtBar()
@@ -62,6 +73,7 @@ public class PlayerHealth : MonoBehaviour
             }
             yield return null;
         }
+        _drawHealthBarCorutine = null;
     }
 
     private void PlayerIsDead() 
@@ -75,12 +87,20 @@ public class PlayerHealth : MonoBehaviour
     {
         _value += Mathf.Abs(amount);
         _value = Mathf.Clamp(_value, 0, _maxValue);
-        StartCoroutine(DrawHealtBar());
+        StartDrawBarCorutine();
     }
 
     public void AddMaxHealth(float amount)
     {
         _maxValue += Mathf.Abs(amount);
-        StartCoroutine(DrawHealtBar());
+        StartDrawBarCorutine();
+    }
+
+    private void StartDrawBarCorutine()
+    {
+        if (_drawHealthBarCorutine == null)
+        {
+            _drawHealthBarCorutine = StartCoroutine(DrawHealtBar());
+        }
     }
 }
