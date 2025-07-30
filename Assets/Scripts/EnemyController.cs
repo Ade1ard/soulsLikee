@@ -140,11 +140,11 @@ public class EnemyController : MonoBehaviour
             }
             _animator.SetFloat("AttackFar", -1);
             _animator.SetFloat("AttackNear", -1);
-            
-            var lookDirection = _player.transform.position - transform.position;
-            lookDirection.y = 0;
-            transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(lookDirection), 10 * Time.deltaTime);
         }
+
+        var lookDirection = _player.transform.position - transform.position;
+        lookDirection.y = 0;
+        transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(lookDirection), 10 * Time.deltaTime);
     }
 
     private void Patrolling()
