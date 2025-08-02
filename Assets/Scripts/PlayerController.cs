@@ -4,10 +4,11 @@ public class PlayerController : MonoBehaviour
 {
     private Animator _animator;
 
-    [Header("Transform")]
+    [Header("Objects")]
     [SerializeField] private Transform _targetPositionPoint;
     private Camera _camera;
     private CharacterController _characterController;
+    private Sword _sword;
 
     [Header("Phisics")]
     [SerializeField] private float _gravity = 9.8f;
@@ -33,6 +34,7 @@ public class PlayerController : MonoBehaviour
     {
         _camera = FindObjectOfType<Camera>();
         _characterController = FindObjectOfType<CharacterController>();
+        _sword = FindObjectOfType<Sword>();
         _animator = GetComponent<Animator>();
 
         Cursor.lockState = CursorLockMode.Locked;
@@ -117,7 +119,13 @@ public class PlayerController : MonoBehaviour
     private void EndAttack() //called by events in animations
     {
         _inAttack = false;
-    }   
+        _sword.EndAttack();
+    }
+
+    private void StartAttack() //called by events in animations
+    {
+        _sword.StartAttack();
+    }
     
     private void EndRoll() //called by events in animations
     {

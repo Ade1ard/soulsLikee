@@ -7,8 +7,8 @@ public class PlayerHealth : MonoBehaviour
     [Header("BarsUI")]
     [SerializeField] private Image _mainHealthValueImage;
     [SerializeField] private Image _mediumHealthValueImage;
-    [SerializeField] private float _value = 100;
-    private float _maxValue;
+    [SerializeField] private float _maxValue = 100;
+    private float _value;
 
     [Header("BarsSpeeds")]
     [SerializeField] private float _mainBarSpeed;
@@ -26,7 +26,7 @@ public class PlayerHealth : MonoBehaviour
 
     void Start()
     {
-        _maxValue = _value;
+        _value = _maxValue;
 
         StartDrawBarCorutine();
     }
@@ -83,7 +83,7 @@ public class PlayerHealth : MonoBehaviour
         GetComponent<PlayerController>().enabled = false;
     }
 
-    public void addHealt(float amount)
+    public void AddHealt(float amount)
     {
         _value += Mathf.Abs(amount);
         _value = Mathf.Clamp(_value, 0, _maxValue);

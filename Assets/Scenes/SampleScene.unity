@@ -1083,6 +1083,12 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 1525170448}
   m_PrefabAsset: {fileID: 0}
+--- !u!4 &836637830 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 1852576806548013000, guid: c8be8bb32f81dd3409817edde8c4100d,
+    type: 3}
+  m_PrefabInstance: {fileID: 991296895}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &841458485
 GameObject:
   m_ObjectHideFlags: 0
@@ -1267,12 +1273,12 @@ PrefabInstance:
     m_RemovedComponents:
     - {fileID: 5866666021909216657, guid: c8be8bb32f81dd3409817edde8c4100d, type: 3}
     m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 1051571768989249988, guid: c8be8bb32f81dd3409817edde8c4100d,
+    m_AddedGameObjects:
+    - targetCorrespondingSourceObject: {fileID: 1852576806548013000, guid: c8be8bb32f81dd3409817edde8c4100d,
         type: 3}
       insertIndex: -1
-      addedObject: {fileID: 1602381229}
+      addedObject: {fileID: 1245075812}
+    m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 1051571768989249988, guid: c8be8bb32f81dd3409817edde8c4100d,
         type: 3}
       insertIndex: -1
@@ -1371,7 +1377,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 1.9}
+  m_AnchoredPosition: {x: 0.042, y: 1.9}
   m_SizeDelta: {x: 1341, y: 616}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1198033808
@@ -1529,6 +1535,74 @@ Transform:
   m_Father: {fileID: 1608522473}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1245075811
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1245075812}
+  - component: {fileID: 1245075813}
+  - component: {fileID: 1245075814}
+  m_Layer: 0
+  m_Name: SwordCollider
+  m_TagString: PlayerSword
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1245075812
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1245075811}
+  m_LocalRotation: {x: 0.067649424, y: 0.088593856, z: -0.78983223, w: 0.60310835}
+  m_LocalPosition: {x: -0.432, y: 0.187, z: 0.05}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 836637830}
+  m_RootOrder: -1
+  m_LocalEulerAnglesHint: {x: 12.8, y: 0, z: -105.27}
+--- !u!136 &1245075813
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1245075811}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.05
+  m_Height: 0.75
+  m_Direction: 1
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &1245075814
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1245075811}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8bc9f737d9913b341bed4b3f9abedd1d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1248834087
 GameObject:
   m_ObjectHideFlags: 0
@@ -2105,6 +2179,10 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 5997e8eb216917949b5c53fe235d3298,
         type: 3}
       insertIndex: -1
+      addedObject: {fileID: 1525170459}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 5997e8eb216917949b5c53fe235d3298,
+        type: 3}
+      insertIndex: -1
       addedObject: {fileID: 1525170454}
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 5997e8eb216917949b5c53fe235d3298,
         type: 3}
@@ -2243,6 +2321,25 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 1525170448}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1525170459
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1525170449}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 52de7f0d91bcdae468f038958ca23347, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _HealthValue: {fileID: 866004733}
+  _HealthBar: {fileID: 1445055614}
+  _maxValue: 100
+  _healthBarSpeed: 0.05
+  _barFadeDelay: 5
+  _animator: {fileID: 1525170454}
+  _playerAnimator: {fileID: 6046018844230716826}
 --- !u!1 &1525271759
 GameObject:
   m_ObjectHideFlags: 0
@@ -2542,27 +2639,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damage: 10
---- !u!65 &1602381229
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1602381225}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 1
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 0.21804333, y: 0.091959715, z: 0.66080856}
-  m_Center: {x: 0.84, y: 1.4112254, z: 0.42366886}
 --- !u!1 &1608522471
 GameObject:
   m_ObjectHideFlags: 0
@@ -2624,7 +2700,7 @@ MonoBehaviour:
     Value: 1
     m_SpeedMode: 0
     m_MaxSpeed: 10
-    m_AccelTime: 0.2
+    m_AccelTime: 0.1
     m_DecelTime: 0.1
     m_InputAxisName: Mouse Y
     m_InputAxisValue: 0
@@ -2647,9 +2723,9 @@ MonoBehaviour:
   m_XAxis:
     Value: 0
     m_SpeedMode: 0
-    m_MaxSpeed: 600
-    m_AccelTime: 0.1
-    m_DecelTime: 0.1
+    m_MaxSpeed: 700
+    m_AccelTime: 0.05
+    m_DecelTime: 0.05
     m_InputAxisName: Mouse X
     m_InputAxisValue: 0
     m_InvertInput: 0
@@ -2728,7 +2804,7 @@ MonoBehaviour:
   m_DistanceLimit: 0
   m_MinimumOcclusionTime: 0
   m_CameraRadius: 0.1
-  m_Strategy: 1
+  m_Strategy: 0
   m_MaximumEffort: 4
   m_SmoothingTime: 0
   m_Damping: 0
@@ -3436,7 +3512,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _mainHealthValueImage: {fileID: 2119583810}
   _mediumHealthValueImage: {fileID: 1839485778}
-  _value: 100
+  _maxValue: 100
   _mainBarSpeed: 0.05
   _mediumBarSpeed: 0.005
   _playerAnimator: {fileID: 6046018844230716826}
