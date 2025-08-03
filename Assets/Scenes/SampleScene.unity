@@ -3155,7 +3155,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.8113208, g: 0.8113208, b: 0.8113208, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -3236,6 +3236,7 @@ GameObject:
   - component: {fileID: 6046018844230716821}
   - component: {fileID: 6046018844230716824}
   - component: {fileID: 6046018844230716827}
+  - component: {fileID: 6046018844230716828}
   - component: {fileID: 6046018844230716826}
   m_Layer: 0
   m_Name: Player
@@ -3303,6 +3304,27 @@ MonoBehaviour:
   _enemyAnimator: {fileID: 1525170454}
   _gameplayUI: {fileID: 0}
   _gameoverscreen: {fileID: 0}
+--- !u!114 &6046018844230716828
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6046018844230716822}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5e9ff2d9a1e6a054489f9c2921fef420, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _staminaValueBar: {fileID: 1481157162}
+  _maxStaminaValue: 100
+  _barSpeed: 0.03
+  _staminaRecoveryPerSecond: 20
+  _staminaStartRecoveryDelay: 2
+  _runCoastPerSecond: 15
+  _rollCoast: 30
+  _atttackCoast: 30
+  _heavyAttackCoast: 40
 --- !u!4 &6046018844635725962
 Transform:
   m_ObjectHideFlags: 0

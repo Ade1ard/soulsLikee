@@ -9,6 +9,7 @@ public class PlayerController : MonoBehaviour
     private Camera _camera;
     private CharacterController _characterController;
     private PlayerSword _sword;
+    private StaminaPlayerController _stamina;
 
     [Header("Phisics")]
     [SerializeField] private float _gravity = 9.8f;
@@ -32,6 +33,7 @@ public class PlayerController : MonoBehaviour
 
     private void Start()
     {
+        _stamina = GetComponent<StaminaPlayerController>();
         _camera = FindObjectOfType<Camera>();
         _characterController = FindObjectOfType<CharacterController>();
         _sword = FindObjectOfType<PlayerSword>();
@@ -73,15 +75,17 @@ public class PlayerController : MonoBehaviour
             _timePressedButton = Time.time;
         }
 
-        if (Input.GetKey(KeyCode.Space) && Time.time - _timePressedButton >= _buttonPressDelay)
+        if (Input.GetKey(KeyCode.Space) && Time.time - _timePressedButton >= _buttonPressDelay && _stamina.CheckStamina() >= 2f)
         {
             _currentSpeed = _runSpeed;
             _animator.SetFloat("speed", 2);
+            _stamina.SpentStamina(_stamina.GetCoast("run") * Time.deltaTime);
         }
-        else if (Input.GetKeyUp(KeyCode.Space) && Time.time - _timePressedButton < _buttonPressDelay && !_isRolling && _moveVector != Vector3.zero)
+        else if (Input.GetKeyUp(KeyCode.Space) && Time.time - _timePressedButton < _buttonPressDelay && !_isRolling && _moveVector != Vector3.zero && _stamina.CheckStamina() >= 2f)
         {
             _isRolling = true;
             _animator.SetTrigger("roll");
+            _stamina.SpentStamina(_stamina.GetCoast("roll"));
         }
         else if (_moveVector != Vector3.zero)
         {
@@ -92,7 +96,7 @@ public class PlayerController : MonoBehaviour
 
     private void Attachment()
     {
-        if(Input.GetMouseButtonDown(0) && !_inAttack && !_isRolling)
+        if(Input.GetMouseButtonDown(0) && !_inAttack && !_isRolling && _stamina.CheckStamina() >= 2f)
         {
             Attack();
         }
@@ -105,14 +109,17 @@ public class PlayerController : MonoBehaviour
         if (Input.GetKey(KeyCode.LeftShift))
         {
             _animator.SetTrigger("HeavyAttack");
+            _stamina.SpentStamina(_stamina.GetCoast("heavyAttack"));
         }
         else if (_animator.GetCurrentAnimatorStateInfo(0).IsName("Attack1"))
         {
             _animator.SetTrigger("Attack2");
+            _stamina.SpentStamina(_stamina.GetCoast("attack"));
         }
         else
         {
             _animator.SetTrigger("Attack1");
+            _stamina.SpentStamina(_stamina.GetCoast("attack"));
         }
     }
 
