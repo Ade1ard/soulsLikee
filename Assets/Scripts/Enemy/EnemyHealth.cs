@@ -18,11 +18,14 @@ public class EnemyHealth : MonoBehaviour
     [SerializeField] private Animator _animator;
     [SerializeField] private Animator _playerAnimator;
 
+    private EnemyController _enemyController;
+
     private Coroutine _drawHealthBarCorutine;
 
     void Start()
     {
-        BarVisible(0f);
+        _enemyController = GetComponent<EnemyController>();
+        BarGetUnvisible();
         _value = _maxValue;
         
         StartDrawBarCorutine();
@@ -35,12 +38,18 @@ public class EnemyHealth : MonoBehaviour
 
     public void TakeDamage(float damage)
     {
-        BarVisible(1f);
+        BarGetVisible();
+        Invoke("BarGetUnvisible", _barFadeDelay);
+
         _value -= Mathf.Abs(damage);
         _value = Mathf.Clamp(_value, 0, _maxValue);
-        _animator.SetTrigger("Hit");
 
-        if (_value <= 0)
+        if (!_animator.GetCurrentAnimatorStateInfo(0).IsName("Death"))
+        {
+            _animator.SetTrigger("Hit");
+        }
+
+        if (_value <= 0 && !_animator.GetCurrentAnimatorStateInfo(0).IsName("Death"))
         {
             EnemyDeath();
         }
@@ -50,7 +59,9 @@ public class EnemyHealth : MonoBehaviour
 
     private void EnemyDeath()
     {
-
+        _animator.SetTrigger("Death");
+        _enemyController.enabled = false;
+        BarGetUnvisible();
     }
 
     public void AddHealt(float amount)
@@ -84,10 +95,14 @@ public class EnemyHealth : MonoBehaviour
         }
     }
 
-    private void BarVisible(float target)
+    private void BarGetVisible()
     {
-        target = Mathf.Clamp(target, 0, 1);
-        _HealthBar.color = new Color(_HealthBar.color.r, _HealthBar.color.g, _HealthBar.color.b, target);
-        _HealthValue.color = new Color(_HealthValue.color.r, _HealthValue.color.g, _HealthValue.color.g, target);
+        _HealthBar.color = new Color(_HealthBar.color.r, _HealthBar.color.g, _HealthBar.color.b, 1f);
+        _HealthValue.color = new Color(_HealthValue.color.r, _HealthValue.color.g, _HealthValue.color.g, 1f);
+    }
+    private void BarGetUnvisible()
+    {
+        _HealthBar.color = new Color(_HealthBar.color.r, _HealthBar.color.g, _HealthBar.color.b, 0f);
+        _HealthValue.color = new Color(_HealthValue.color.r, _HealthValue.color.g, _HealthValue.color.g, 0f);
     }
 }

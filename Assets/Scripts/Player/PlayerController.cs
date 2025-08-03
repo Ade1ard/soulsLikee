@@ -8,7 +8,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private Transform _targetPositionPoint;
     private Camera _camera;
     private CharacterController _characterController;
-    private Sword _sword;
+    private PlayerSword _sword;
 
     [Header("Phisics")]
     [SerializeField] private float _gravity = 9.8f;
@@ -34,7 +34,7 @@ public class PlayerController : MonoBehaviour
     {
         _camera = FindObjectOfType<Camera>();
         _characterController = FindObjectOfType<CharacterController>();
-        _sword = FindObjectOfType<Sword>();
+        _sword = FindObjectOfType<PlayerSword>();
         _animator = GetComponent<Animator>();
 
         Cursor.lockState = CursorLockMode.Locked;

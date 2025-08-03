@@ -1,9 +1,11 @@
 using UnityEngine;
 
-public class Sword : MonoBehaviour
+public class PlayerSword : MonoBehaviour
 {
+    [SerializeField] private float _damage = 35;
+
     private CapsuleCollider _capsuleCollider;
-    private float _damage = 40;
+    private bool _hasAttacked;
     void Start()
     {
         _capsuleCollider = GetComponent<CapsuleCollider>();
@@ -17,10 +19,10 @@ public class Sword : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.GetComponent<EnemyHealth>())
+        if (other.gameObject.TryGetComponent(out EnemyHealth enemyHealth) && !_hasAttacked)
         {
-            var EnemyHealth = other.gameObject.GetComponent<EnemyHealth>();
-            EnemyHealth.TakeDamage(_damage);
+            enemyHealth.TakeDamage(_damage);
+            _hasAttacked = true;
         }
     }
 
@@ -32,6 +34,7 @@ public class Sword : MonoBehaviour
     public void EndAttack()
     {
         _capsuleCollider.enabled = false;
+        _hasAttacked = false;
     }
 
     public void StartAttack()

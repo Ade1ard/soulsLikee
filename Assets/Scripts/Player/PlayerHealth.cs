@@ -18,6 +18,8 @@ public class PlayerHealth : MonoBehaviour
     [SerializeField] private Animator _playerAnimator;
     [SerializeField] private Animator _enemyAnimator;
 
+    private PlayerController _playerController;
+
     [Header("GlobalUI")]
     [SerializeField] private GameObject _gameplayUI;
     [SerializeField] private GameObject _gameoverscreen;
@@ -26,6 +28,7 @@ public class PlayerHealth : MonoBehaviour
 
     void Start()
     {
+        _playerController = GetComponent<PlayerController>();
         _value = _maxValue;
 
         StartDrawBarCorutine();
@@ -36,26 +39,19 @@ public class PlayerHealth : MonoBehaviour
 
     }
 
-    private void OnTriggerEnter(Collider other)
-    {
-        if (!_enemyAnimator.GetCurrentAnimatorStateInfo(0).IsName("Great Sword Walk") && !_enemyAnimator.GetCurrentAnimatorStateInfo(0).IsName("Great Sword Idle"))
-        {
-            if (other.gameObject.CompareTag("EnemySword"))
-            {
-                DealDamage(Random.Range(20, 40));
-            }
-        }
-    }
-
     public void DealDamage(float damage)
     {
         _value -= Mathf.Abs(damage);
         _value = Mathf.Clamp(_value, 0, _maxValue);
-        _playerAnimator.SetTrigger("Hit");
 
-        if (_value <= 0)
+        if (!_playerAnimator.GetCurrentAnimatorStateInfo(0).IsName("Death"))
         {
-            //PlayerIsDead();
+            _playerAnimator.SetTrigger("Hit");
+        }
+
+        if (_value <= 0 && !_playerAnimator.GetCurrentAnimatorStateInfo(0).IsName("Death"))
+        {
+            PlayerIsDead();
         }
 
         StartDrawBarCorutine();
@@ -78,9 +74,11 @@ public class PlayerHealth : MonoBehaviour
 
     private void PlayerIsDead() 
     {
-        _gameplayUI.gameObject.SetActive(false);
-        _gameoverscreen.gameObject.SetActive(true);
-        GetComponent<PlayerController>().enabled = false;
+        _playerAnimator.SetTrigger("Death");
+        _playerController.enabled = false;
+
+        //_gameplayUI.gameObject.SetActive(false);
+        //_gameoverscreen.gameObject.SetActive(true);
     }
 
     public void AddHealt(float amount)

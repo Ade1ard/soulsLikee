@@ -20,6 +20,7 @@ public class EnemyController : MonoBehaviour
     [Header("Attack")]
     [SerializeField] private float _lowRangeAttackDelay;
     [SerializeField] private float _highRangeAttackDelay;
+    [SerializeField] private EnemySword _enemySword;
     private float _attackDelay;
 
     private bool _inAttack = false;
@@ -170,5 +171,15 @@ public class EnemyController : MonoBehaviour
             _navMeshAgent.destination = transform.position;
             _animator.SetFloat("Speed", -1);
         }
+    }
+
+    private void StartAttack() //called by events in animations
+    {
+        _enemySword.StartAttack();
+    }
+
+    private void EndAttack() //called by events in animations
+    {
+        _enemySword.EndAttack();
     }
 }
