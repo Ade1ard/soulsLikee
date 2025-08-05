@@ -25,6 +25,11 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float _buttonPressDelay = 0.2f;
     private float _timePressedButton;
 
+    [Header("LockCameraSettings")]
+    [SerializeField] private float _cameraLockDistance;
+    private Transform _cameraLockedEnemy;
+    private bool _isCameraLocked = false;
+
     private bool _isRolling = false;
     private bool _inAttack = false;
 
@@ -45,7 +50,10 @@ public class PlayerController : MonoBehaviour
 
     private void Update()
     {
-        _moveVector = Vector3.zero;
+        if (Input.GetMouseButtonDown(2))
+        {
+            ChooseCameraLookMod();
+        }
 
         Movement();
         Attachment();
@@ -54,21 +62,31 @@ public class PlayerController : MonoBehaviour
 
     private void Movement()
     {
-        if ((Input.GetAxis(Vertical) != 0 || Input.GetAxis(Horizontal) != 0) && !_inAttack)
-        {
-            Vector3 playerDir = _targetPositionPoint.position - transform.position;
-            playerDir.y = 0;
-            transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(playerDir), 15 * Time.deltaTime);
+        _moveVector = Vector3.zero;
 
-            Vector3 targetPositionPointDir = _camera.transform.forward * Input.GetAxis(Vertical) + _camera.transform.right * Input.GetAxis(Horizontal);
-            Ray ray = new Ray(transform.position, targetPositionPointDir);
-            _targetPositionPoint.position = ray.GetPoint(15);
-            _moveVector += transform.forward;
+        if (_isCameraLocked)
+        {
+            _targetPositionPoint.position = _cameraLockedEnemy.position;
         }
         else
         {
-            _animator.SetFloat("speed", -1);
+            if ((Input.GetAxis(Vertical) != 0 || Input.GetAxis(Horizontal) != 0) && !_inAttack)
+            {
+                Vector3 playerDir = _targetPositionPoint.position - transform.position;
+                playerDir.y = 0;
+                transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(playerDir), 15 * Time.deltaTime);
+
+                Vector3 targetPositionPointDir = _camera.transform.forward * Input.GetAxis(Vertical) + _camera.transform.right * Input.GetAxis(Horizontal);
+                Ray ray = new Ray(transform.position, targetPositionPointDir);
+                _targetPositionPoint.position = ray.GetPoint(15);
+                _moveVector += transform.forward;
+            }
+            else
+            {
+                _animator.SetFloat("speed", -1);
+            }
         }
+
 
         if (Input.GetKeyDown(KeyCode.Space))
         {
@@ -137,6 +155,46 @@ public class PlayerController : MonoBehaviour
     private void EndRoll() //called by events in animations
     {
         _isRolling = false;
+    }
+
+    private void ChooseCameraLookMod()
+    {
+        if (_isCameraLocked)
+        {
+            _isCameraLocked = false;
+            _cameraLockedEnemy = null;
+        }
+        else
+        {
+            GetNearEnemy();
+            if (_cameraLockedEnemy != null)
+            {
+                _isCameraLocked = true;
+            }
+        }
+    }
+
+    private void GetNearEnemy()
+    {
+        RaycastHit[] hits = Physics.SphereCastAll(_camera.transform.position, 2f, _camera.transform.forward, _cameraLockDistance);
+
+        Transform closestEnemy = null;
+        float closestDistance = Mathf.Infinity;
+
+        foreach (RaycastHit hit in hits)
+        {
+            if (hit.transform.CompareTag("Enemy"))
+            {
+                Vector3 direction = hit.transform.position - _camera.transform.position;
+                float distance = direction.magnitude;
+                if (distance < closestDistance)
+                {
+                    closestDistance = distance;
+                    closestEnemy = hit.transform;
+                }
+            }
+        }
+        _cameraLockedEnemy = closestEnemy;
     }
 
     private void PhysicsMove()
