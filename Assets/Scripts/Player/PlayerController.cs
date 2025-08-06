@@ -20,6 +20,7 @@ public class PlayerController : MonoBehaviour
     [Header("MoveSpeeds")]
     [SerializeField] private float _runSpeed = 6f;
     [SerializeField] private float _walkSpeed = 3.5f;
+    [SerializeField] private float _lockOnWalkSpeed = 2;
     [SerializeField] private float _changeAnimationsSpeed = 1.6f;
     private float _currentSpeed;
 
@@ -30,6 +31,7 @@ public class PlayerController : MonoBehaviour
     [Header("LockCameraSettings")]
     [SerializeField] private float _cameraLockDistance;
     private CinemachineVirtualCamera _lockOnCamera;
+    private CinemachineFreeLook _freeLookCamera;
     private Transform _enemyLockedOn;
     private bool _isCameraLocked = false;
 
@@ -42,11 +44,16 @@ public class PlayerController : MonoBehaviour
     private void Start()
     {
         _lockOnCamera = FindObjectOfType<CinemachineVirtualCamera>();
+        _freeLookCamera = FindObjectOfType<CinemachineFreeLook>();
         _stamina = GetComponent<StaminaPlayerController>();
         _camera = FindObjectOfType<Camera>();
         _characterController = FindObjectOfType<CharacterController>();
         _sword = FindObjectOfType<PlayerSword>();
         _animator = GetComponent<Animator>();
+
+        _freeLookCamera.Priority = 20;
+        _lockOnCamera.Priority = 0;
+
 
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
@@ -59,13 +66,13 @@ public class PlayerController : MonoBehaviour
             ChooseCameraLookMod();
         }
 
-        if (_isCameraLocked)
+        if (!_isCameraLocked || Input.GetKey(KeyCode.Space))
         {
-            LockOnMovement();
+            FreeLookMovement();
         }
         else
         {
-            FreeLookMovement();
+            LockOnMovement();
         }
 
         Attachment();
@@ -123,12 +130,28 @@ public class PlayerController : MonoBehaviour
     {
         _moveVector = Vector3.zero;
 
-        Vector3 playerDir = _enemyLockedOn.transform.position - transform.position;
-        playerDir.y = 0;
-        transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(playerDir), 15 * Time.deltaTime);
+        if (!_isRolling)
+        {
+            Vector3 playerDir = _enemyLockedOn.transform.position - transform.position;
+            playerDir.y = 0;
+            transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(playerDir), 15 * Time.deltaTime);
+        }
 
         if ((Input.GetAxis(Vertical) != 0 || Input.GetAxis(Horizontal) != 0))
         {
+            if (!_inAttack)
+            {
+                _moveVector += _camera.transform.forward * Input.GetAxis(Vertical) + _camera.transform.right * Input.GetAxis(Horizontal);
+            }
+
+            if (Input.GetKeyUp(KeyCode.Space) && !_isRolling && _stamina.CheckStamina() >= 2f)
+            {
+                _isRolling = true;
+                _animator.SetTrigger("roll");
+                _stamina.SpentStamina(_stamina.GetCoast("roll"));
+            }
+
+            _currentSpeed = _lockOnWalkSpeed;
             _animator.SetFloat("speed", 1);
             _animator.SetFloat("H_Speed", Mathf.Lerp(_animator.GetFloat("H_Speed"), Input.GetAxis(Horizontal), _changeAnimationsSpeed * Time.deltaTime));
             _animator.SetFloat("V_Speed", Mathf.Lerp(_animator.GetFloat("V_Speed"), Input.GetAxis(Vertical), _changeAnimationsSpeed * Time.deltaTime));
@@ -188,9 +211,10 @@ public class PlayerController : MonoBehaviour
     {
         if (_isCameraLocked)
         {
+            _lockOnCamera.Priority = 0;
+            _freeLookCamera.Priority = 20;
             _isCameraLocked = false;
             _enemyLockedOn = null;
-            _lockOnCamera.Priority = 9;
             _lockOnCamera.LookAt = null;
             _animator.SetBool("IsCameraLocked", false);
         }
@@ -199,9 +223,10 @@ public class PlayerController : MonoBehaviour
             GetNearEnemy();
             if (_enemyLockedOn != null)
             {
-                _isCameraLocked = true;
-                _lockOnCamera.Priority = 11;
                 _lockOnCamera.LookAt = _enemyLockedOn;
+                _isCameraLocked = true;
+                _lockOnCamera.Priority = 20;
+                _freeLookCamera.Priority = 0;
                 _animator.SetBool("IsCameraLocked", true);
             }
         }
