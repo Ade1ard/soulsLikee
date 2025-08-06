@@ -30,6 +30,8 @@ public class EnemyController : MonoBehaviour
     
     private NavMeshAgent _navMeshAgent;
 
+    public Transform _cameralookAt;
+
     [Header("PLayer")]
     private PlayerController _player;
     private bool _isPlayerNoticed;

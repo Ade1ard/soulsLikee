@@ -1,3 +1,4 @@
+using Cinemachine;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour
@@ -27,7 +28,8 @@ public class PlayerController : MonoBehaviour
 
     [Header("LockCameraSettings")]
     [SerializeField] private float _cameraLockDistance;
-    private Transform _cameraLockedEnemy;
+    private CinemachineVirtualCamera _lockOnCamera;
+    private Transform _enemyLockedOn;
     private bool _isCameraLocked = false;
 
     private bool _isRolling = false;
@@ -38,6 +40,7 @@ public class PlayerController : MonoBehaviour
 
     private void Start()
     {
+        _lockOnCamera = FindObjectOfType<CinemachineVirtualCamera>();
         _stamina = GetComponent<StaminaPlayerController>();
         _camera = FindObjectOfType<Camera>();
         _characterController = FindObjectOfType<CharacterController>();
@@ -55,61 +58,69 @@ public class PlayerController : MonoBehaviour
             ChooseCameraLookMod();
         }
 
-        Movement();
+        if (_isCameraLocked)
+        {
+            LockOnMovement();
+        }
+        else
+        {
+            FreeLookMovement();
+        }
+
         Attachment();
         PhysicsMove();
     }
 
-    private void Movement()
+    private void FreeLookMovement()
     {
         _moveVector = Vector3.zero;
 
-        if (_isCameraLocked)
+        if ((Input.GetAxis(Vertical) != 0 || Input.GetAxis(Horizontal) != 0) && !_inAttack)
         {
-            _targetPositionPoint.position = _cameraLockedEnemy.position;
-        }
-        else
-        {
-            if ((Input.GetAxis(Vertical) != 0 || Input.GetAxis(Horizontal) != 0) && !_inAttack)
-            {
-                Vector3 playerDir = _targetPositionPoint.position - transform.position;
-                playerDir.y = 0;
-                transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(playerDir), 15 * Time.deltaTime);
+            Vector3 playerDir = _targetPositionPoint.position - transform.position;
+            playerDir.y = 0;
+            transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(playerDir), 15 * Time.deltaTime);
 
-                Vector3 targetPositionPointDir = _camera.transform.forward * Input.GetAxis(Vertical) + _camera.transform.right * Input.GetAxis(Horizontal);
-                Ray ray = new Ray(transform.position, targetPositionPointDir);
-                _targetPositionPoint.position = ray.GetPoint(15);
-                _moveVector += transform.forward;
+            Vector3 targetPositionPointDir = _camera.transform.forward * Input.GetAxis(Vertical) + _camera.transform.right * Input.GetAxis(Horizontal);
+            Ray ray = new Ray(transform.position, targetPositionPointDir);
+            _targetPositionPoint.position = ray.GetPoint(15);
+            _moveVector += transform.forward;
+
+
+            if (Input.GetKeyDown(KeyCode.Space))
+            {
+                _timePressedButton = Time.time;
+            }
+
+            if (Input.GetKey(KeyCode.Space) && Time.time - _timePressedButton >= _buttonPressDelay && _stamina.CheckStamina() >= 2f)
+            {
+                _currentSpeed = _runSpeed;
+                _animator.SetFloat("speed", 2);
+                _stamina.SpentStamina(_stamina.GetCoast("run") * Time.deltaTime);
+            }
+            else if (Input.GetKeyUp(KeyCode.Space) && Time.time - _timePressedButton < _buttonPressDelay && !_isRolling && _stamina.CheckStamina() >= 2f)
+            {
+                _isRolling = true;
+                _animator.SetTrigger("roll");
+                _stamina.SpentStamina(_stamina.GetCoast("roll"));
             }
             else
             {
-                _animator.SetFloat("speed", -1);
+                _currentSpeed = _walkSpeed;
+                _animator.SetFloat("speed", 1);
             }
         }
+        else
+        {
+            _animator.SetFloat("speed", -1);
+        }
+    }
 
-
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            _timePressedButton = Time.time;
-        }
-
-        if (Input.GetKey(KeyCode.Space) && Time.time - _timePressedButton >= _buttonPressDelay && _stamina.CheckStamina() >= 2f)
-        {
-            _currentSpeed = _runSpeed;
-            _animator.SetFloat("speed", 2);
-            _stamina.SpentStamina(_stamina.GetCoast("run") * Time.deltaTime);
-        }
-        else if (Input.GetKeyUp(KeyCode.Space) && Time.time - _timePressedButton < _buttonPressDelay && !_isRolling && _moveVector != Vector3.zero && _stamina.CheckStamina() >= 2f)
-        {
-            _isRolling = true;
-            _animator.SetTrigger("roll");
-            _stamina.SpentStamina(_stamina.GetCoast("roll"));
-        }
-        else if (_moveVector != Vector3.zero)
-        {
-            _currentSpeed = _walkSpeed;
-            _animator.SetFloat("speed", 1);
-        }
+    private void LockOnMovement()
+    {
+        Vector3 playerDir = _enemyLockedOn.transform.position - transform.position;
+        playerDir.y = 0;
+        transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(playerDir), 15 * Time.deltaTime);
     }
 
     private void Attachment()
@@ -162,14 +173,18 @@ public class PlayerController : MonoBehaviour
         if (_isCameraLocked)
         {
             _isCameraLocked = false;
-            _cameraLockedEnemy = null;
+            _enemyLockedOn = null;
+            _lockOnCamera.Priority = 9;
+            _lockOnCamera.LookAt = null;
         }
         else
         {
             GetNearEnemy();
-            if (_cameraLockedEnemy != null)
+            if (_enemyLockedOn != null)
             {
                 _isCameraLocked = true;
+                _lockOnCamera.Priority = 11;
+                _lockOnCamera.LookAt = _enemyLockedOn;
             }
         }
     }
@@ -183,18 +198,18 @@ public class PlayerController : MonoBehaviour
 
         foreach (RaycastHit hit in hits)
         {
-            if (hit.transform.CompareTag("Enemy"))
+            if (hit.transform.TryGetComponent(out EnemyController enemy))
             {
                 Vector3 direction = hit.transform.position - _camera.transform.position;
                 float distance = direction.magnitude;
                 if (distance < closestDistance)
                 {
                     closestDistance = distance;
-                    closestEnemy = hit.transform;
+                    closestEnemy = enemy._cameralookAt.transform;
                 }
             }
         }
-        _cameraLockedEnemy = closestEnemy;
+        _enemyLockedOn = closestEnemy;
     }
 
     private void PhysicsMove()

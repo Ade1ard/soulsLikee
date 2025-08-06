@@ -22,6 +22,8 @@ public class EnemyHealth : MonoBehaviour
 
     private Coroutine _drawHealthBarCorutine;
 
+    private bool _isDead = false;
+
     void Start()
     {
         _enemyController = GetComponent<EnemyController>();
@@ -38,23 +40,24 @@ public class EnemyHealth : MonoBehaviour
 
     public void TakeDamage(float damage)
     {
-        BarGetVisible();
-        Invoke("BarGetUnvisible", _barFadeDelay);
-
-        _value -= Mathf.Abs(damage);
-        _value = Mathf.Clamp(_value, 0, _maxValue);
-
-        if (!_animator.GetCurrentAnimatorStateInfo(0).IsName("Death"))
+        if (!_isDead)
         {
+            BarGetVisible();
+
+            _value -= Mathf.Abs(damage);
+            _value = Mathf.Clamp(_value, 0, _maxValue);
+
             _animator.SetTrigger("Hit");
-        }
 
-        if (_value <= 0 && !_animator.GetCurrentAnimatorStateInfo(0).IsName("Death"))
-        {
-            EnemyDeath();
-        }
+            Invoke("BarGetUnvisible", _barFadeDelay);
 
-        StartDrawBarCorutine();
+            if (_value <= 0)
+            {
+                EnemyDeath();
+            }
+
+            StartDrawBarCorutine();
+        }
     }
 
     private void EnemyDeath()
@@ -62,6 +65,7 @@ public class EnemyHealth : MonoBehaviour
         _animator.SetTrigger("Death");
         _enemyController.enabled = false;
         BarGetUnvisible();
+        _isDead = true;
     }
 
     public void AddHealt(float amount)
