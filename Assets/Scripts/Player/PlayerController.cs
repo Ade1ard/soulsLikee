@@ -20,6 +20,7 @@ public class PlayerController : MonoBehaviour
     [Header("MoveSpeeds")]
     [SerializeField] private float _runSpeed = 6f;
     [SerializeField] private float _walkSpeed = 3.5f;
+    [SerializeField] private float _changeAnimationsSpeed = 1.6f;
     private float _currentSpeed;
 
     [Header("RollAndRunSettings")]
@@ -75,17 +76,19 @@ public class PlayerController : MonoBehaviour
     {
         _moveVector = Vector3.zero;
 
-        if ((Input.GetAxis(Vertical) != 0 || Input.GetAxis(Horizontal) != 0) && !_inAttack)
+        if ((Input.GetAxis(Vertical) != 0 || Input.GetAxis(Horizontal) != 0))
         {
-            Vector3 playerDir = _targetPositionPoint.position - transform.position;
-            playerDir.y = 0;
-            transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(playerDir), 15 * Time.deltaTime);
+            if (!_inAttack)
+            {
+                Vector3 playerDir = _targetPositionPoint.position - transform.position;
+                playerDir.y = 0;
+                transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(playerDir), 15 * Time.deltaTime);
 
-            Vector3 targetPositionPointDir = _camera.transform.forward * Input.GetAxis(Vertical) + _camera.transform.right * Input.GetAxis(Horizontal);
-            Ray ray = new Ray(transform.position, targetPositionPointDir);
-            _targetPositionPoint.position = ray.GetPoint(15);
-            _moveVector += transform.forward;
-
+                Vector3 targetPositionPointDir = _camera.transform.forward * Input.GetAxis(Vertical) + _camera.transform.right * Input.GetAxis(Horizontal);
+                Ray ray = new Ray(transform.position, targetPositionPointDir);
+                _targetPositionPoint.position = ray.GetPoint(15);
+                _moveVector += transform.forward;
+            }
 
             if (Input.GetKeyDown(KeyCode.Space))
             {
@@ -95,7 +98,7 @@ public class PlayerController : MonoBehaviour
             if (Input.GetKey(KeyCode.Space) && Time.time - _timePressedButton >= _buttonPressDelay && _stamina.CheckStamina() >= 2f)
             {
                 _currentSpeed = _runSpeed;
-                _animator.SetFloat("speed", 2);
+                _animator.SetFloat("speed", Mathf.Lerp(_animator.GetFloat("speed"), 2, _changeAnimationsSpeed * Time.deltaTime));
                 _stamina.SpentStamina(_stamina.GetCoast("run") * Time.deltaTime);
             }
             else if (Input.GetKeyUp(KeyCode.Space) && Time.time - _timePressedButton < _buttonPressDelay && !_isRolling && _stamina.CheckStamina() >= 2f)
@@ -107,20 +110,33 @@ public class PlayerController : MonoBehaviour
             else
             {
                 _currentSpeed = _walkSpeed;
-                _animator.SetFloat("speed", 1);
+                _animator.SetFloat("speed", Mathf.Lerp(_animator.GetFloat("speed"), 1, _changeAnimationsSpeed * Time.deltaTime));
             }
         }
         else
         {
-            _animator.SetFloat("speed", -1);
+            _animator.SetFloat("speed", Mathf.Lerp(_animator.GetFloat("speed"), 0, _changeAnimationsSpeed * Time.deltaTime));
         }
     }
 
     private void LockOnMovement()
     {
+        _moveVector = Vector3.zero;
+
         Vector3 playerDir = _enemyLockedOn.transform.position - transform.position;
         playerDir.y = 0;
         transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(playerDir), 15 * Time.deltaTime);
+
+        if ((Input.GetAxis(Vertical) != 0 || Input.GetAxis(Horizontal) != 0))
+        {
+            _animator.SetFloat("speed", 1);
+            _animator.SetFloat("H_Speed", Mathf.Lerp(_animator.GetFloat("H_Speed"), Input.GetAxis(Horizontal), _changeAnimationsSpeed * Time.deltaTime));
+            _animator.SetFloat("V_Speed", Mathf.Lerp(_animator.GetFloat("V_Speed"), Input.GetAxis(Vertical), _changeAnimationsSpeed * Time.deltaTime));
+        }
+        else
+        {
+            _animator.SetFloat("speed", 0);
+        }
     }
 
     private void Attachment()
@@ -176,6 +192,7 @@ public class PlayerController : MonoBehaviour
             _enemyLockedOn = null;
             _lockOnCamera.Priority = 9;
             _lockOnCamera.LookAt = null;
+            _animator.SetBool("IsCameraLocked", false);
         }
         else
         {
@@ -185,6 +202,7 @@ public class PlayerController : MonoBehaviour
                 _isCameraLocked = true;
                 _lockOnCamera.Priority = 11;
                 _lockOnCamera.LookAt = _enemyLockedOn;
+                _animator.SetBool("IsCameraLocked", true);
             }
         }
     }

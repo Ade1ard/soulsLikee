@@ -3307,8 +3307,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1962794637}
-  m_LocalRotation: {x: 0.041172408, y: -0.7707658, z: 0.050068893, w: 0.63381237}
-  m_LocalPosition: {x: 4.8039246, y: 3.4204507, z: -3.8602943}
+  m_LocalRotation: {x: 0.041172396, y: -0.77076584, z: 0.05006889, w: 0.63381225}
+  m_LocalPosition: {x: 4.8039217, y: 3.4204504, z: -3.8602962}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -3550,6 +3550,7 @@ MonoBehaviour:
   _gravity: 9.8
   _runSpeed: 6
   _walkSpeed: 3.5
+  _changeAnimationsSpeed: 2.2
   _buttonPressDelay: 0.2
   _cameraLockDistance: 30
 --- !u!95 &6046018844230716826
@@ -3609,12 +3610,12 @@ MonoBehaviour:
   _staminaValueBar: {fileID: 1481157162}
   _maxStaminaValue: 100
   _barSpeed: 0.03
-  _staminaRecoveryPerSecond: 30
+  _staminaRecoveryPerSecond: 35
   _staminaStartRecoveryDelay: 2
   _runCoastPerSecond: 15
   _rollCoast: 25
   _atttackCoast: 25
-  _heavyAttackCoast: 35
+  _heavyAttackCoast: 30
 --- !u!4 &6046018844635725962
 Transform:
   m_ObjectHideFlags: 0
