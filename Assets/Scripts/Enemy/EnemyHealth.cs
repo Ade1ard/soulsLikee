@@ -51,7 +51,7 @@ public class EnemyHealth : MonoBehaviour
 
             Invoke("BarGetUnvisible", _barFadeDelay);
 
-            if (_value <= 0)
+            if (_value <= 0 && !_animator.GetCurrentAnimatorStateInfo(0).IsName("Death"))
             {
                 EnemyDeath();
             }
