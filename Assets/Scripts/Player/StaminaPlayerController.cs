@@ -14,11 +14,11 @@ public class StaminaPlayerController : MonoBehaviour
     [SerializeField] private float _staminaStartRecoveryDelay;
     private float _staminaValue;
 
-    [Header("Coasts")]
-    [SerializeField] private float _runCoastPerSecond;
-    [SerializeField] private float _rollCoast;
-    [SerializeField] private float _atttackCoast;
-    [SerializeField] private float _heavyAttackCoast;
+    [Header("Costs")]
+    [SerializeField] private float _runCostPerSecond;
+    [SerializeField] private float _rollCost;
+    [SerializeField] private float _atttackCost;
+    [SerializeField] private float _heavyAttackCost;
 
     private Dictionary<string, float> MoveCoasts = new Dictionary<string, float>();
 
@@ -28,10 +28,10 @@ public class StaminaPlayerController : MonoBehaviour
     {
         _staminaValue = _maxStaminaValue;
 
-        MoveCoasts["run"] = _runCoastPerSecond;
-        MoveCoasts["roll"] = _rollCoast;
-        MoveCoasts["attack"] = _atttackCoast;
-        MoveCoasts["heavyAttack"] = _heavyAttackCoast;
+        MoveCoasts["run"] = _runCostPerSecond;
+        MoveCoasts["roll"] = _rollCost;
+        MoveCoasts["attack"] = _atttackCost;
+        MoveCoasts["heavyAttack"] = _heavyAttackCost;
     }
 
     void Update()
@@ -45,7 +45,7 @@ public class StaminaPlayerController : MonoBehaviour
         }
     }
 
-    public float GetCoast(string coastName)
+    public float GetCost(string coastName)
     {
         return MoveCoasts[coastName];
     }

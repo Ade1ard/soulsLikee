@@ -29,31 +29,23 @@ public class PlayerController : MonoBehaviour
     private float _timePressedButton;
 
     [Header("LockCameraSettings")]
-    [SerializeField] private float _cameraLockDistance;
-    private CinemachineVirtualCamera _lockOnCamera;
-    private CinemachineFreeLook _freeLookCamera;
     private Transform _enemyLockedOn;
     private bool _isCameraLocked = false;
 
     private bool _isRolling = false;
     private bool _inAttack = false;
+    private bool _isSprinting = false;
 
     private const string Horizontal = nameof(Horizontal);
     private const string Vertical = nameof(Vertical);
 
     private void Start()
     {
-        _lockOnCamera = FindObjectOfType<CinemachineVirtualCamera>();
-        _freeLookCamera = FindObjectOfType<CinemachineFreeLook>();
         _stamina = GetComponent<StaminaPlayerController>();
         _camera = FindObjectOfType<Camera>();
         _characterController = FindObjectOfType<CharacterController>();
         _sword = FindObjectOfType<PlayerSword>();
         _animator = GetComponent<Animator>();
-
-        _freeLookCamera.Priority = 20;
-        _lockOnCamera.Priority = 0;
-
 
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
@@ -61,12 +53,7 @@ public class PlayerController : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetMouseButtonDown(2))
-        {
-            ChooseCameraLookMod();
-        }
-
-        if (!_isCameraLocked || Input.GetKey(KeyCode.Space))
+        if (!_isCameraLocked)
         {
             FreeLookMovement();
         }
@@ -87,34 +74,14 @@ public class PlayerController : MonoBehaviour
         {
             if (!_inAttack)
             {
-                Vector3 playerDir = _targetPositionPoint.position - transform.position;
-                playerDir.y = 0;
-                transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(playerDir), 15 * Time.deltaTime);
-
-                Vector3 targetPositionPointDir = _camera.transform.forward * Input.GetAxis(Vertical) + _camera.transform.right * Input.GetAxis(Horizontal);
-                Ray ray = new Ray(transform.position, targetPositionPointDir);
-                _targetPositionPoint.position = ray.GetPoint(15);
+                transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(GetPlayerDirection()), 15 * Time.deltaTime);
+                GetTargetPointPosition();
                 _moveVector += transform.forward;
             }
 
-            if (Input.GetKeyDown(KeyCode.Space))
-            {
-                _timePressedButton = Time.time;
-            }
+            RoolingSprinting();
 
-            if (Input.GetKey(KeyCode.Space) && Time.time - _timePressedButton >= _buttonPressDelay && _stamina.CheckStamina() >= 2f)
-            {
-                _currentSpeed = _runSpeed;
-                _animator.SetFloat("speed", Mathf.Lerp(_animator.GetFloat("speed"), 2, _changeAnimationsSpeed * Time.deltaTime));
-                _stamina.SpentStamina(_stamina.GetCoast("run") * Time.deltaTime);
-            }
-            else if (Input.GetKeyUp(KeyCode.Space) && Time.time - _timePressedButton < _buttonPressDelay && !_isRolling && _stamina.CheckStamina() >= 2f)
-            {
-                _isRolling = true;
-                _animator.SetTrigger("roll");
-                _stamina.SpentStamina(_stamina.GetCoast("roll"));
-            }
-            else
+            if (!_isSprinting)
             {
                 _currentSpeed = _walkSpeed;
                 _animator.SetFloat("speed", Mathf.Lerp(_animator.GetFloat("speed"), 1, _changeAnimationsSpeed * Time.deltaTime));
@@ -130,11 +97,11 @@ public class PlayerController : MonoBehaviour
     {
         _moveVector = Vector3.zero;
 
-        if (!_isRolling)
+        if (!_isRolling && !_isSprinting)
         {
-            Vector3 playerDir = _enemyLockedOn.transform.position - transform.position;
-            playerDir.y = 0;
-            transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(playerDir), 15 * Time.deltaTime);
+            Vector3 PlayerDir = _enemyLockedOn.position - transform.position;
+            PlayerDir.y = 0;
+            transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(PlayerDir), 15 * Time.deltaTime);
         }
 
         if ((Input.GetAxis(Vertical) != 0 || Input.GetAxis(Horizontal) != 0))
@@ -144,21 +111,66 @@ public class PlayerController : MonoBehaviour
                 _moveVector += _camera.transform.forward * Input.GetAxis(Vertical) + _camera.transform.right * Input.GetAxis(Horizontal);
             }
 
-            if (Input.GetKeyUp(KeyCode.Space) && !_isRolling && _stamina.CheckStamina() >= 2f)
-            {
-                _isRolling = true;
-                _animator.SetTrigger("roll");
-                _stamina.SpentStamina(_stamina.GetCoast("roll"));
-            }
+            RoolingSprinting();
 
-            _currentSpeed = _lockOnWalkSpeed;
-            _animator.SetFloat("speed", 1);
-            _animator.SetFloat("H_Speed", Mathf.Lerp(_animator.GetFloat("H_Speed"), Input.GetAxis(Horizontal), _changeAnimationsSpeed * Time.deltaTime));
-            _animator.SetFloat("V_Speed", Mathf.Lerp(_animator.GetFloat("V_Speed"), Input.GetAxis(Vertical), _changeAnimationsSpeed * Time.deltaTime));
+            if (!_isSprinting)
+            {
+                _currentSpeed = _lockOnWalkSpeed;
+                _animator.SetFloat("speed", 1);
+                _animator.SetFloat("H_Speed", Mathf.Lerp(_animator.GetFloat("H_Speed"), Input.GetAxis(Horizontal), _changeAnimationsSpeed * Time.deltaTime));
+                _animator.SetFloat("V_Speed", Mathf.Lerp(_animator.GetFloat("V_Speed"), Input.GetAxis(Vertical), _changeAnimationsSpeed * Time.deltaTime));
+            }
         }
         else
         {
             _animator.SetFloat("speed", 0);
+        }
+    }
+
+    private void RoolingSprinting()
+    {
+        if (_isCameraLocked)
+        {
+            GetTargetPointPosition();
+        }
+
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            _timePressedButton = Time.time;
+        }
+
+        if (Input.GetKey(KeyCode.Space) && Time.time - _timePressedButton >= _buttonPressDelay && _stamina.CheckStamina() >= 2f)
+        {
+            if (_isCameraLocked)
+            {
+                transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(GetPlayerDirection()), 15 * Time.deltaTime);
+                _animator.SetBool("IsCameraLocked", false);
+            }
+
+            _isSprinting = true;
+            _currentSpeed = _runSpeed;
+            _animator.SetFloat("speed", Mathf.Lerp(_animator.GetFloat("speed"), 2, _changeAnimationsSpeed * Time.deltaTime));
+            _stamina.SpentStamina(_stamina.GetCost("run") * Time.deltaTime);
+        }
+        else if (Input.GetKeyUp(KeyCode.Space) && Time.time - _timePressedButton < _buttonPressDelay && !_isRolling && _stamina.CheckStamina() >= 2f)
+        {
+            if (_isCameraLocked)
+            {
+                transform.rotation = Quaternion.LookRotation(GetPlayerDirection());
+            }
+
+            _isSprinting = true;
+            _isRolling = true;
+            _animator.SetTrigger("roll");
+            _stamina.SpentStamina(_stamina.GetCost("roll"));
+        }
+        else 
+        {
+            if (_isCameraLocked)
+            {
+                _animator.SetBool("IsCameraLocked", true);
+            }
+            _isSprinting = false;
         }
     }
 
@@ -177,17 +189,17 @@ public class PlayerController : MonoBehaviour
         if (Input.GetKey(KeyCode.LeftShift))
         {
             _animator.SetTrigger("HeavyAttack");
-            _stamina.SpentStamina(_stamina.GetCoast("heavyAttack"));
+            _stamina.SpentStamina(_stamina.GetCost("heavyAttack"));
         }
         else if (_animator.GetCurrentAnimatorStateInfo(0).IsName("Attack1"))
         {
             _animator.SetTrigger("Attack2");
-            _stamina.SpentStamina(_stamina.GetCoast("attack"));
+            _stamina.SpentStamina(_stamina.GetCost("attack"));
         }
         else
         {
             _animator.SetTrigger("Attack1");
-            _stamina.SpentStamina(_stamina.GetCoast("attack"));
+            _stamina.SpentStamina(_stamina.GetCost("attack"));
         }
     }
 
@@ -207,52 +219,32 @@ public class PlayerController : MonoBehaviour
         _isRolling = false;
     }
 
-    private void ChooseCameraLookMod()
+    private void GetTargetPointPosition()
     {
-        if (_isCameraLocked)
+        Vector3 targetPositionPointDir = _camera.transform.forward * Input.GetAxis(Vertical) + _camera.transform.right * Input.GetAxis(Horizontal);
+        Ray ray = new Ray(transform.position, targetPositionPointDir);
+        _targetPositionPoint.position = ray.GetPoint(15);
+    }
+
+    private Vector3 GetPlayerDirection()
+    {
+        Vector3 playerDir = _targetPositionPoint.position - transform.position;
+        playerDir.y = 0;
+        return playerDir;
+    }
+
+    public void TakeNearEnemy(Transform NearEnemy)
+    {
+        if (NearEnemy != null)
         {
-            _lockOnCamera.Priority = 0;
-            _freeLookCamera.Priority = 20;
-            _isCameraLocked = false;
-            _enemyLockedOn = null;
-            _lockOnCamera.LookAt = null;
-            _animator.SetBool("IsCameraLocked", false);
+            _enemyLockedOn = NearEnemy;
+            _isCameraLocked = true;
         }
         else
         {
-            GetNearEnemy();
-            if (_enemyLockedOn != null)
-            {
-                _lockOnCamera.LookAt = _enemyLockedOn;
-                _isCameraLocked = true;
-                _lockOnCamera.Priority = 20;
-                _freeLookCamera.Priority = 0;
-                _animator.SetBool("IsCameraLocked", true);
-            }
+            _isCameraLocked = false;
+            _enemyLockedOn = null;
         }
-    }
-
-    private void GetNearEnemy()
-    {
-        RaycastHit[] hits = Physics.SphereCastAll(_camera.transform.position, 2f, _camera.transform.forward, _cameraLockDistance);
-
-        Transform closestEnemy = null;
-        float closestDistance = Mathf.Infinity;
-
-        foreach (RaycastHit hit in hits)
-        {
-            if (hit.transform.TryGetComponent(out EnemyController enemy))
-            {
-                Vector3 direction = hit.transform.position - _camera.transform.position;
-                float distance = direction.magnitude;
-                if (distance < closestDistance)
-                {
-                    closestDistance = distance;
-                    closestEnemy = enemy._cameralookAt.transform;
-                }
-            }
-        }
-        _enemyLockedOn = closestEnemy;
     }
 
     private void PhysicsMove()

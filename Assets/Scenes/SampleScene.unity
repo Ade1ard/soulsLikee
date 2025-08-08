@@ -3307,8 +3307,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1962794637}
-  m_LocalRotation: {x: 0.042005457, y: -0.77069336, z: 0.051080957, w: 0.633765}
-  m_LocalPosition: {x: 4.8015156, y: 3.429399, z: -3.860836}
+  m_LocalRotation: {x: 0.04200546, y: -0.77069336, z: 0.05108096, w: 0.63376504}
+  m_LocalPosition: {x: 4.8015175, y: 3.4293995, z: -3.8608341}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -3526,6 +3526,7 @@ GameObject:
   - component: {fileID: 6046018844230716824}
   - component: {fileID: 6046018844230716827}
   - component: {fileID: 6046018844230716828}
+  - component: {fileID: 6046018844230716829}
   - component: {fileID: 6046018844230716826}
   m_Layer: 0
   m_Name: Player
@@ -3551,9 +3552,8 @@ MonoBehaviour:
   _runSpeed: 6
   _walkSpeed: 3.5
   _lockOnWalkSpeed: 2
-  _changeAnimationsSpeed: 2.2
+  _changeAnimationsSpeed: 2.5
   _buttonPressDelay: 0.2
-  _cameraLockDistance: 30
 --- !u!95 &6046018844230716826
 Animator:
   serializedVersion: 5
@@ -3613,10 +3613,24 @@ MonoBehaviour:
   _barSpeed: 0.03
   _staminaRecoveryPerSecond: 35
   _staminaStartRecoveryDelay: 2
-  _runCoastPerSecond: 15
-  _rollCoast: 25
-  _atttackCoast: 25
-  _heavyAttackCoast: 30
+  _runCostPerSecond: 15
+  _rollCost: 25
+  _atttackCost: 25
+  _heavyAttackCost: 30
+--- !u!114 &6046018844230716829
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6046018844230716822}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e8240e83da1bc0e498d033313a810d58, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _cameraLockDistance: 30
+  _FindEnemyRadius: 3
 --- !u!4 &6046018844635725962
 Transform:
   m_ObjectHideFlags: 0
