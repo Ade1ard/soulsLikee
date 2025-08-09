@@ -23,6 +23,7 @@ public class EnemyController : MonoBehaviour
     [SerializeField] private EnemySword _enemySword;
     private float _attackDelay;
 
+    private bool _inAggression = false;
     private bool _inAttack = false;
     private float _timeLastAttack;
     private float _timeLastSeen;
@@ -93,12 +94,12 @@ public class EnemyController : MonoBehaviour
         {
             Fight();
         }
-        else if (DistanceToPLayer < _attackDistance || _inAttack)
+        else if (DistanceToPLayer < _attackDistance || _inAggression)
         {
             _navMeshAgent.speed = _runToPlayerSpeed;
             _animator.SetFloat("Speed", 2);
 
-            _inAttack = true;
+            _inAggression = true;
             _navMeshAgent.destination = _player.transform.position;
         }
         else
@@ -113,24 +114,29 @@ public class EnemyController : MonoBehaviour
     {
         if (Time.time - _timeLastAttack > _attackDelay)
         {
-            if(_navMeshAgent.remainingDistance < _navMeshAgent.stoppingDistance + 0.15f)
+            _navMeshAgent.destination = _player.transform.position;
+            if(_navMeshAgent.remainingDistance <= _navMeshAgent.stoppingDistance + 0.15f)
             {
+                _attackDelay = Random.Range(_lowRangeAttackDelay, _highRangeAttackDelay);
+                _timeLastAttack = Time.time;
                 _navMeshAgent.ResetPath();
-                _animator.SetFloat("AttackNear", Random.Range(1, 3));
+                _inAttack = true;
+                _animator.SetFloat("Attack", Random.Range(1, 6));
+                _animator.SetFloat("Speed", -1);
             }
             else
             {
-                _navMeshAgent.ResetPath();
-                _animator.SetFloat("AttackFar", Random.Range(1, 5));
+                _animator.SetFloat("Speed", 2);
+                _navMeshAgent.destination = _player.transform.position;
+                _navMeshAgent.speed = _runToPlayerSpeed;
             }
-            _timeLastAttack = Time.time;
-            _attackDelay = Random.Range(_lowRangeAttackDelay, _highRangeAttackDelay);
         }
         else
         {
-            if (_animator.GetCurrentAnimatorStateInfo(0).IsName("Great Sword Walk"))
+            if (!_inAttack)
             {
-                _navMeshAgent.destination = _player.transform.position;
+                Ray ray = new Ray(_player.transform.position, transform.position);
+                _navMeshAgent.destination = ray.GetPoint(_fightDistance - 1.5f);
                 _navMeshAgent.speed = _WalkSpeed;
                 if (_navMeshAgent.remainingDistance <= _navMeshAgent.stoppingDistance)
                 {
@@ -138,11 +144,10 @@ public class EnemyController : MonoBehaviour
                 }
                 else
                 {
-                    _animator.SetFloat("Speed", 1);
+                    _animator.SetFloat("Speed", 3);
                 }
             }
-            _animator.SetFloat("AttackFar", -1);
-            _animator.SetFloat("AttackNear", -1);
+            _animator.SetFloat("Attack", -1);
         }
 
         var lookDirection = _player.transform.position - transform.position;
@@ -152,7 +157,7 @@ public class EnemyController : MonoBehaviour
 
     private void Patrolling()
     {
-        _inAttack = false;
+        _inAggression = false;
         _navMeshAgent.speed = _WalkSpeed;
         _animator.SetFloat("Speed", 1);
 
@@ -183,5 +188,6 @@ public class EnemyController : MonoBehaviour
     private void EndAttack() //called by events in animations
     {
         _enemySword.EndAttack();
+        _inAttack = false;
     }
 }

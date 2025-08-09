@@ -2206,9 +2206,9 @@ MonoBehaviour:
   _WalkSpeed: 1.5
   _attackDistance: 20
   _noticeDistance: 30
-  _fightDistance: 7
+  _fightDistance: 10
   _lowRangeAttackDelay: 2
-  _highRangeAttackDelay: 5
+  _highRangeAttackDelay: 4
   _enemySword: {fileID: 1178316079}
   _cameralookAt: {fileID: 765416298}
 --- !u!195 &1525170452
@@ -2222,10 +2222,10 @@ NavMeshAgent:
   m_AgentTypeID: 0
   m_Radius: 0.5
   m_Speed: 15
-  m_Acceleration: 8
+  m_Acceleration: 15
   avoidancePriority: 50
   m_AngularSpeed: 120
-  m_StoppingDistance: 1.5
+  m_StoppingDistance: 2
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 1
   m_AutoRepath: 1
@@ -3307,8 +3307,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1962794637}
-  m_LocalRotation: {x: 0.023074249, y: -0.7512628, z: 0.026301745, w: 0.65907514}
-  m_LocalPosition: {x: 4.923666, y: 3.2153282, z: -4.062703}
+  m_LocalRotation: {x: 0.02307446, y: -0.7512447, z: 0.026300525, w: 0.65909576}
+  m_LocalPosition: {x: 4.923723, y: 3.2153227, z: -4.062887}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
