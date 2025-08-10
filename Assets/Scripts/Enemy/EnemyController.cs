@@ -156,7 +156,8 @@ public class EnemyController : MonoBehaviour
             }
             else
             {
-                _navMeshAgent.ResetPath();
+                _navMeshAgent.speed = _WalkSpeed;
+                _navMeshAgent.destination = _player.transform.position;
             }
             _animator.SetFloat("Attack", -1);
         }
@@ -194,10 +195,12 @@ public class EnemyController : MonoBehaviour
     private void StartAttack() //called by events in animations
     {
         _enemySword.StartAttack();
+        _animator.speed = 1.2f;
     }
 
     private void EndAttack() //called by events in animations
     {
         _enemySword.EndAttack();
+        _animator.speed = 1f;
     }
 }

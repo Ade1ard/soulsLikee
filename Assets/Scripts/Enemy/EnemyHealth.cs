@@ -1,6 +1,7 @@
 using System.Collections;
 using UnityEngine.UI;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class EnemyHealth : MonoBehaviour
 {
@@ -12,6 +13,7 @@ public class EnemyHealth : MonoBehaviour
 
     [Header("BarSpeed")]
     [SerializeField] private float _healthBarSpeed;
+    [SerializeField] private float _healthBarFadeSpeed;
     [SerializeField] private float _barFadeDelay;
 
     [Header("Animators")]
@@ -20,14 +22,22 @@ public class EnemyHealth : MonoBehaviour
 
     private EnemyController _enemyController;
 
+    private NavMeshAgent _navMeshAgent;
+
     private Coroutine _drawHealthBarCorutine;
+    private Coroutine _VisibleHealthBarCorutine;
 
     private bool _isDead = false;
+    private bool _inAttack = false;
+    private bool _isBarVisible = true;
+
+    private float _timeLastHit;
 
     void Start()
     {
+        _navMeshAgent = GetComponent<NavMeshAgent>();
         _enemyController = GetComponent<EnemyController>();
-        BarGetUnvisible();
+        SetBarVisible(false);
         _value = _maxValue;
         
         StartDrawBarCorutine();
@@ -35,21 +45,30 @@ public class EnemyHealth : MonoBehaviour
 
     void Update()
     {
-
+        if (Time.time - _timeLastHit > _barFadeDelay)
+        {
+            SetBarVisible(false);
+        }
     }
 
     public void TakeDamage(float damage)
     {
         if (!_isDead)
         {
-            BarGetVisible();
+            _timeLastHit = Time.time;
+            SetBarVisible(true);
 
             _value -= Mathf.Abs(damage);
             _value = Mathf.Clamp(_value, 0, _maxValue);
 
-            _animator.SetTrigger("Hit");
+            if (_inAttack)
+            {
 
-            Invoke("BarGetUnvisible", _barFadeDelay);
+            }
+            else
+            {
+                _animator.SetTrigger("Hit");
+            }
 
             if (_value <= 0 && !_animator.GetCurrentAnimatorStateInfo(0).IsName("Death"))
             {
@@ -64,7 +83,8 @@ public class EnemyHealth : MonoBehaviour
     {
         _animator.SetTrigger("Death");
         _enemyController.enabled = false;
-        BarGetUnvisible();
+        _navMeshAgent.ResetPath();
+        SetBarVisible(false);
         _isDead = true;
     }
 
@@ -81,6 +101,15 @@ public class EnemyHealth : MonoBehaviour
         StartDrawBarCorutine();
     }
 
+
+    private void StartDrawBarCorutine()
+    {
+        if (_drawHealthBarCorutine == null)
+        {
+            _drawHealthBarCorutine = StartCoroutine(DrawHealtBar());
+        }
+    }
+
     private IEnumerator DrawHealtBar()
     {
         while (_HealthValue.fillAmount - (_value / _maxValue) > 0.001f)
@@ -91,22 +120,37 @@ public class EnemyHealth : MonoBehaviour
         _drawHealthBarCorutine = null;
     }
 
-    private void StartDrawBarCorutine()
+    private void SetBarVisible(bool _bool)
     {
-        if (_drawHealthBarCorutine == null)
+        if (_bool != _isBarVisible)
         {
-            _drawHealthBarCorutine = StartCoroutine(DrawHealtBar());
+            _isBarVisible = _bool;
+            if (_VisibleHealthBarCorutine == null)
+            {
+                _VisibleHealthBarCorutine = StartCoroutine(BarVisible(_bool ? 1 : 0));
+            }
         }
     }
 
-    private void BarGetVisible()
+    private IEnumerator BarVisible(float amount)
     {
-        _HealthBar.color = new Color(_HealthBar.color.r, _HealthBar.color.g, _HealthBar.color.b, 1f);
-        _HealthValue.color = new Color(_HealthValue.color.r, _HealthValue.color.g, _HealthValue.color.g, 1f);
+        while (_HealthBar.color.a != amount)
+        {
+            float newAlpha = Mathf.MoveTowards(_HealthBar.color.a, amount, _healthBarFadeSpeed * Time.deltaTime);
+            _HealthBar.color = new Color(_HealthBar.color.r, _HealthBar.color.g, _HealthBar.color.b, newAlpha);
+            _HealthValue.color = new Color(_HealthValue.color.r, _HealthValue.color.g, _HealthValue.color.g, newAlpha);
+            yield return null;
+        }
+        _VisibleHealthBarCorutine = null;
     }
-    private void BarGetUnvisible()
+
+    private void StartAttack() //called by events in animations
     {
-        _HealthBar.color = new Color(_HealthBar.color.r, _HealthBar.color.g, _HealthBar.color.b, 0f);
-        _HealthValue.color = new Color(_HealthValue.color.r, _HealthValue.color.g, _HealthValue.color.g, 0f);
+        _inAttack = true;
+    }
+
+    private void EndAttack() //called by events in animations
+    {
+        _inAttack = false;
     }
 }
