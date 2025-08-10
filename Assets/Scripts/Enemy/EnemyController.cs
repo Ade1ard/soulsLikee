@@ -11,6 +11,7 @@ public class EnemyController : MonoBehaviour
     [Header("Speeds")]
     [SerializeField] private float _runToPlayerSpeed;
     [SerializeField] private float _WalkSpeed;
+    [SerializeField] private float _changeAnimationsSpeed = 2.5f;
 
     [Header("Distances")]
     [SerializeField] private float _attackDistance;
@@ -24,7 +25,6 @@ public class EnemyController : MonoBehaviour
     private float _attackDelay;
 
     private bool _inAggression = false;
-    private bool _inAttack = false;
     private float _timeLastAttack;
     private float _timeLastSeen;
     private Animator _animator;
@@ -88,7 +88,7 @@ public class EnemyController : MonoBehaviour
         var lookDirection = _player.transform.position - transform.position;
             lookDirection.y = 0;
 
-        var DistanceToPLayer = _navMeshAgent.remainingDistance;
+        var DistanceToPLayer = Vector3.Distance(transform.position, _player.transform.position);
 
         if (DistanceToPLayer <= _fightDistance)
         {
@@ -97,7 +97,7 @@ public class EnemyController : MonoBehaviour
         else if (DistanceToPLayer < _attackDistance || _inAggression)
         {
             _navMeshAgent.speed = _runToPlayerSpeed;
-            _animator.SetFloat("Speed", 2);
+            _animator.SetFloat("Speed", Mathf.Lerp(_animator.GetFloat("Speed"), 2, _changeAnimationsSpeed * Time.deltaTime));
 
             _inAggression = true;
             _navMeshAgent.destination = _player.transform.position;
@@ -105,7 +105,7 @@ public class EnemyController : MonoBehaviour
         else
         {
             _navMeshAgent.destination = transform.position;
-            _animator.SetFloat("Speed", -1);
+            _animator.SetFloat("Speed", Mathf.Lerp(_animator.GetFloat("Speed"), 0, _changeAnimationsSpeed * Time.deltaTime));
             transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(lookDirection), 10 * Time.deltaTime);
         }
     }
@@ -115,37 +115,48 @@ public class EnemyController : MonoBehaviour
         if (Time.time - _timeLastAttack > _attackDelay)
         {
             _navMeshAgent.destination = _player.transform.position;
-            if(_navMeshAgent.remainingDistance <= _navMeshAgent.stoppingDistance + 0.15f)
+            if(Vector3.Distance(transform.position, _player.transform.position) <= _navMeshAgent.stoppingDistance + 0.15f)
             {
                 _attackDelay = Random.Range(_lowRangeAttackDelay, _highRangeAttackDelay);
                 _timeLastAttack = Time.time;
                 _navMeshAgent.ResetPath();
-                _inAttack = true;
                 _animator.SetFloat("Attack", Random.Range(1, 6));
-                _animator.SetFloat("Speed", -1);
+                _animator.SetFloat("Speed", Mathf.Lerp(_animator.GetFloat("Speed"), 0, _changeAnimationsSpeed * Time.deltaTime));
             }
             else
             {
-                _animator.SetFloat("Speed", 2);
+                _animator.SetFloat("Speed", Mathf.Lerp(_animator.GetFloat("Speed"), 2, _changeAnimationsSpeed * Time.deltaTime));
                 _navMeshAgent.destination = _player.transform.position;
                 _navMeshAgent.speed = _runToPlayerSpeed;
             }
         }
         else
         {
-            if (!_inAttack)
+            if (_animator.GetCurrentAnimatorStateInfo(0).IsName("Movement")) // not in attack animation
             {
-                Ray ray = new Ray(_player.transform.position, transform.position);
-                _navMeshAgent.destination = ray.GetPoint(_fightDistance - 1.5f);
-                _navMeshAgent.speed = _WalkSpeed;
-                if (_navMeshAgent.remainingDistance <= _navMeshAgent.stoppingDistance)
+                RaycastHit hit;
+                if (Physics.Raycast(_player.transform.position + Vector3.up, transform.position + Vector3.up, out hit, _fightDistance - 2f))
                 {
-                    _animator.SetFloat("Speed", -1);
+                    _navMeshAgent.destination = hit.transform.position;
                 }
                 else
                 {
-                    _animator.SetFloat("Speed", 3);
+                    Ray ray = new Ray(_player.transform.position, transform.position);
+                    _navMeshAgent.destination = ray.GetPoint(_fightDistance - 2f); 
                 }
+                _navMeshAgent.speed = _WalkSpeed;
+                if (_navMeshAgent.remainingDistance <= _navMeshAgent.stoppingDistance)
+                {
+                    _animator.SetFloat("Speed", Mathf.Lerp(_animator.GetFloat("Speed"), 0, _changeAnimationsSpeed * Time.deltaTime));
+                }
+                else
+                {
+                    _animator.SetFloat("Speed", Mathf.Lerp(_animator.GetFloat("Speed"), -1, _changeAnimationsSpeed * Time.deltaTime));
+                }
+            }
+            else
+            {
+                _navMeshAgent.ResetPath();
             }
             _animator.SetFloat("Attack", -1);
         }
@@ -159,7 +170,7 @@ public class EnemyController : MonoBehaviour
     {
         _inAggression = false;
         _navMeshAgent.speed = _WalkSpeed;
-        _animator.SetFloat("Speed", 1);
+        _animator.SetFloat("Speed", Mathf.Lerp(_animator.GetFloat("Speed"), 1, _changeAnimationsSpeed * Time.deltaTime));
 
         if (_navMeshAgent.remainingDistance <= _navMeshAgent.stoppingDistance)
         {
@@ -176,7 +187,7 @@ public class EnemyController : MonoBehaviour
         else
         {
             _navMeshAgent.destination = transform.position;
-            _animator.SetFloat("Speed", -1);
+            _animator.SetFloat("Speed", Mathf.Lerp(_animator.GetFloat("Speed"), 0, _changeAnimationsSpeed * Time.deltaTime));
         }
     }
 
@@ -188,6 +199,5 @@ public class EnemyController : MonoBehaviour
     private void EndAttack() //called by events in animations
     {
         _enemySword.EndAttack();
-        _inAttack = false;
     }
 }

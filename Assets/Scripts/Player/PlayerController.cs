@@ -20,7 +20,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float _runSpeed = 6f;
     [SerializeField] private float _walkSpeed = 3.5f;
     [SerializeField] private float _lockOnWalkSpeed = 2;
-    [SerializeField] private float _changeAnimationsSpeed = 1.6f;
+    [SerializeField] private float _changeAnimationsSpeed = 2.5f;
     private float _currentSpeed;
 
     [Header("RollAndRunSettings")]
