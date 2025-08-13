@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour
@@ -10,6 +11,7 @@ public class PlayerController : MonoBehaviour
     private CharacterController _characterController;
     private PlayerSword _sword;
     private StaminaPlayerController _stamina;
+    private AudioSource _audioSource;
 
     [Header("Phisics")]
     [SerializeField] private float _gravity = 9.8f;
@@ -31,6 +33,10 @@ public class PlayerController : MonoBehaviour
     private Transform _enemyLockedOn;
     private bool _isCameraLocked = false;
 
+    [Header("Sounds")]
+    [SerializeField] private List<AudioClip> _swordSwingSounds;
+    [SerializeField] private List<AudioClip> _rollsSounds;
+
     private bool _isRolling = false;
     private bool _inAttack = false;
     private bool _isSprinting = false;
@@ -40,6 +46,7 @@ public class PlayerController : MonoBehaviour
 
     private void Start()
     {
+        _audioSource = GetComponent<AudioSource>();
         _stamina = GetComponent<StaminaPlayerController>();
         _camera = FindObjectOfType<Camera>();
         _characterController = FindObjectOfType<CharacterController>();
@@ -162,6 +169,8 @@ public class PlayerController : MonoBehaviour
             _isRolling = true;
             _animator.SetTrigger("roll");
             _stamina.SpentStamina(_stamina.GetCost("roll"));
+
+            _audioSource.PlayOneShot(_rollsSounds[Random.Range(0, _rollsSounds.Count)]);
         }
         else 
         {
@@ -200,6 +209,8 @@ public class PlayerController : MonoBehaviour
             _animator.SetTrigger("Attack1");
             _stamina.SpentStamina(_stamina.GetCost("attack"));
         }
+
+        _audioSource.PlayOneShot(_swordSwingSounds[Random.Range(0, _swordSwingSounds.Count)]);
     }
 
     private void EndAttack() //called by events in animations

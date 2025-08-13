@@ -5,9 +5,11 @@ public class PlayerSword : MonoBehaviour
 {
     [SerializeField] private float _damage = 35;
 
-    [SerializeField] private ParticleSystem _Blood;
+    [SerializeField] private ParticleSystem _blood;
+    [SerializeField] private ParticleSystem _sparkl;
 
     [SerializeField] private List<AudioClip> _hitSounds;
+    [SerializeField] private AudioClip _hitAtSomething;
     private AudioSource _audioSource;
 
     private CapsuleCollider _capsuleCollider;
@@ -31,11 +33,19 @@ public class PlayerSword : MonoBehaviour
             enemyHealth.TakeDamage(_damage);
 
             var ContactPoint = other.ClosestPoint(transform.position);
-            Instantiate(_Blood, ContactPoint, Quaternion.LookRotation(Vector3.forward));
+            Instantiate(_blood, ContactPoint, Quaternion.LookRotation(Vector3.forward));
 
             _audioSource.PlayOneShot(_hitSounds[Random.Range(0, _hitSounds.Count)]);
 
             _hasAttacked = true;
+        }
+        
+        if (!other.CompareTag("Camera Ignore"))
+        {
+            _audioSource.PlayOneShot(_hitAtSomething);
+
+            var ContactPoint = other.ClosestPoint(transform.position);
+            Instantiate(_sparkl, ContactPoint, Quaternion.LookRotation(gameObject.transform.position));
         }
     }
 
