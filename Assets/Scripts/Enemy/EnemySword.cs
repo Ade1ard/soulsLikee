@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class EnemySword : MonoBehaviour
@@ -7,12 +8,16 @@ public class EnemySword : MonoBehaviour
 
     [SerializeField] private ParticleSystem _Blood;
 
+    [SerializeField] private List<AudioClip> _hitSounds;
+    private AudioSource _audioSource;
+
     private CapsuleCollider _capsuleCollider;
     private bool _hasAttacked;
 
     void Start()
     {
         _capsuleCollider = GetComponent<CapsuleCollider>();
+        _audioSource = GetComponent<AudioSource>();
         _capsuleCollider.enabled = false;
     }
 
@@ -29,6 +34,8 @@ public class EnemySword : MonoBehaviour
 
             var ContactPoint = other.ClosestPoint(transform.position);
             Instantiate(_Blood, ContactPoint, Quaternion.LookRotation(Vector3.forward));
+
+            _audioSource.PlayOneShot(_hitSounds[Random.Range(0, _hitSounds.Count)]);
 
             _hasAttacked = true;
         }

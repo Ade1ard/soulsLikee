@@ -12,6 +12,7 @@ public class CameraModeChanger : MonoBehaviour
     private Animator _animator;
     private Camera _camera;
     private PlayerController _playerController;
+    private EnemyController _enemyLockedOn;
 
     private bool _isCameraLocked = false;
 
@@ -25,6 +26,8 @@ public class CameraModeChanger : MonoBehaviour
 
         _freeLookCamera.Priority = 20;
         _lockOnCamera.Priority = 0;
+
+        InvokeRepeating("CheckDistanceToLockEnemy", 2f, 2f);
     }
 
     void Update()
@@ -50,14 +53,14 @@ public class CameraModeChanger : MonoBehaviour
         }
         else
         {
-            Transform EnemyLockedOn = GetNearEnemy();
+            _enemyLockedOn = GetNearEnemy();
 
-            if (EnemyLockedOn != null)
+            if (_enemyLockedOn != null)
             {
-                _lockOnCamera.LookAt = EnemyLockedOn;
+                _lockOnCamera.LookAt = _enemyLockedOn._cameralookAt.transform;
                 _isCameraLocked = true;
 
-                _playerController.TakeNearEnemy(EnemyLockedOn);
+                _playerController.TakeNearEnemy(_enemyLockedOn._cameralookAt.transform);
 
                 _lockOnCamera.Priority = 20;
                 _freeLookCamera.Priority = 0;
@@ -66,23 +69,42 @@ public class CameraModeChanger : MonoBehaviour
         }
     }
 
-    private Transform GetNearEnemy()
+    private void CheckDistanceToLockEnemy()
+    {
+        if (_isCameraLocked)
+        {
+            if (Vector3.Distance(_enemyLockedOn._cameralookAt.transform.position, transform.position) > _cameraLockDistance)
+            {
+                ChangeCameraLookMod();
+            }
+
+            if (!_enemyLockedOn.CheckAlive())
+            {
+                ChangeCameraLookMod();
+            }
+        }
+    }
+
+    private EnemyController GetNearEnemy()
     {
         RaycastHit[] hits = Physics.SphereCastAll(_camera.transform.position, _FindEnemyRadius, _camera.transform.forward, _cameraLockDistance);
 
-        Transform closestEnemy = null;
+        EnemyController closestEnemy = null;
         float closestDistance = Mathf.Infinity;
 
         foreach (RaycastHit hit in hits)
         {
             if (hit.transform.TryGetComponent(out EnemyController enemy))
             {
-                Vector3 direction = hit.transform.position - _camera.transform.position;
-                float distance = direction.magnitude;
-                if (distance < closestDistance)
+                if (enemy.CheckAlive())
                 {
-                    closestDistance = distance;
-                    closestEnemy = enemy._cameralookAt.transform;
+                    Vector3 direction = hit.transform.position - _camera.transform.position;
+                    float distance = direction.magnitude;
+                    if (distance < closestDistance)
+                    {
+                        closestDistance = distance;
+                        closestEnemy = enemy;
+                    }
                 }
             }
         }

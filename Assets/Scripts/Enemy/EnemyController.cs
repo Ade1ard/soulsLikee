@@ -203,4 +203,9 @@ public class EnemyController : MonoBehaviour
         _enemySword.EndAttack();
         _animator.speed = 1f;
     }
+
+    public bool CheckAlive()
+    {
+        return !_animator.GetCurrentAnimatorStateInfo(0).IsName("Death");
+    }
 }
