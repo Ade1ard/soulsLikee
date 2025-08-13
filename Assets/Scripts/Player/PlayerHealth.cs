@@ -26,6 +26,8 @@ public class PlayerHealth : MonoBehaviour
 
     private Coroutine _drawHealthBarCorutine;
 
+    private bool _inHyperarmor = false;
+
     void Start()
     {
         _playerController = GetComponent<PlayerController>();
@@ -46,7 +48,14 @@ public class PlayerHealth : MonoBehaviour
 
         if (!_playerAnimator.GetCurrentAnimatorStateInfo(0).IsName("Death"))
         {
-            _playerAnimator.SetTrigger("Hit");
+            if (_inHyperarmor)
+            {
+
+            }
+            else
+            {
+                _playerAnimator.SetTrigger("Hit");
+            }
         }
 
         if (_value <= 0 && !_playerAnimator.GetCurrentAnimatorStateInfo(0).IsName("Death"))
@@ -100,5 +109,15 @@ public class PlayerHealth : MonoBehaviour
         {
             _drawHealthBarCorutine = StartCoroutine(DrawHealtBar());
         }
+    }
+
+    private void StartHyperArmor() //called by events in animations
+    {
+        _inHyperarmor = true;
+    }
+
+    private void EndHyperArmor() //called by events in animations
+    {
+        _inHyperarmor = false;
     }
 }

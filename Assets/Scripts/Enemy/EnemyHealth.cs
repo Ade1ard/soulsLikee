@@ -144,12 +144,12 @@ public class EnemyHealth : MonoBehaviour
         _VisibleHealthBarCorutine = null;
     }
 
-    private void StartAttack() //called by events in animations
+    private void StartHyperArmor() //called by events in animations
     {
         _inHyperarmor = true;
     }
 
-    private void EndAttack() //called by events in animations
+    private void EndHyperArmor() //called by events in animations
     {
         _inHyperarmor = false;
     }
