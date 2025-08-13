@@ -28,7 +28,7 @@ public class EnemyHealth : MonoBehaviour
     private Coroutine _VisibleHealthBarCorutine;
 
     private bool _isDead = false;
-    private bool _inAttack = false;
+    private bool _inHyperarmor = false;
     private bool _isBarVisible = true;
 
     private float _timeLastHit;
@@ -61,7 +61,7 @@ public class EnemyHealth : MonoBehaviour
             _value -= Mathf.Abs(damage);
             _value = Mathf.Clamp(_value, 0, _maxValue);
 
-            if (_inAttack)
+            if (_inHyperarmor)
             {
 
             }
@@ -146,11 +146,11 @@ public class EnemyHealth : MonoBehaviour
 
     private void StartAttack() //called by events in animations
     {
-        _inAttack = true;
+        _inHyperarmor = true;
     }
 
     private void EndAttack() //called by events in animations
     {
-        _inAttack = false;
+        _inHyperarmor = false;
     }
 }

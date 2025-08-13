@@ -4,6 +4,8 @@ public class PlayerSword : MonoBehaviour
 {
     [SerializeField] private float _damage = 35;
 
+    [SerializeField] private ParticleSystem _Blood;
+
     private CapsuleCollider _capsuleCollider;
     private bool _hasAttacked;
     void Start()
@@ -22,6 +24,10 @@ public class PlayerSword : MonoBehaviour
         if (other.gameObject.TryGetComponent(out EnemyHealth enemyHealth) && !_hasAttacked)
         {
             enemyHealth.TakeDamage(_damage);
+
+            var ContactPoint = other.ClosestPoint(transform.position);
+            Instantiate(_Blood, ContactPoint, Quaternion.LookRotation(Vector3.forward));
+
             _hasAttacked = true;
         }
     }
