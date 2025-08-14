@@ -7,6 +7,7 @@ public class PlayerSword : MonoBehaviour
 
     [SerializeField] private ParticleSystem _blood;
     [SerializeField] private ParticleSystem _sparkl;
+    [SerializeField] private ParticleSystem _dust;
 
     [SerializeField] private List<AudioClip> _hitSounds;
     [SerializeField] private AudioClip _hitAtSomething;
@@ -46,6 +47,7 @@ public class PlayerSword : MonoBehaviour
 
             var ContactPoint = other.ClosestPoint(transform.position);
             Instantiate(_sparkl, ContactPoint, Quaternion.LookRotation(gameObject.transform.position));
+            Instantiate(_dust, ContactPoint, Quaternion.LookRotation(gameObject.transform.position));
         }
     }
 
