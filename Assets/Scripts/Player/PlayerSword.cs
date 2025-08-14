@@ -8,6 +8,7 @@ public class PlayerSword : MonoBehaviour
     [SerializeField] private ParticleSystem _blood;
     [SerializeField] private ParticleSystem _sparkl;
     [SerializeField] private ParticleSystem _dust;
+    [SerializeField] private ParticleSystem _swordTrail;
 
     [SerializeField] private List<AudioClip> _hitSounds;
     [SerializeField] private AudioClip _hitAtSomething;
@@ -41,13 +42,21 @@ public class PlayerSword : MonoBehaviour
             _hasAttacked = true;
         }
         
-        if (!other.CompareTag("Camera Ignore"))
+        if (other.CompareTag("Environment"))
         {
             _audioSource.PlayOneShot(_hitAtSomething);
 
             var ContactPoint = other.ClosestPoint(transform.position);
             Instantiate(_sparkl, ContactPoint, Quaternion.LookRotation(gameObject.transform.position));
             Instantiate(_dust, ContactPoint, Quaternion.LookRotation(gameObject.transform.position));
+        } 
+
+        if (other.CompareTag("EnemySword"))
+        {
+            _audioSource.PlayOneShot(_hitAtSomething);
+
+            var ContactPoint = other.ClosestPoint(transform.position);
+            Instantiate(_sparkl, ContactPoint, Quaternion.LookRotation(gameObject.transform.position));
         }
     }
 
@@ -60,10 +69,12 @@ public class PlayerSword : MonoBehaviour
     {
         _capsuleCollider.enabled = false;
         _hasAttacked = false;
+        _swordTrail.Stop();
     }
 
     public void StartAttack()
     {
         _capsuleCollider.enabled = true;
+        _swordTrail.Play();
     }
 }

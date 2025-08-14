@@ -7,6 +7,7 @@ public class EnemySword : MonoBehaviour
     [SerializeField] private float _maxDamage = 45;
 
     [SerializeField] private ParticleSystem _Blood;
+    [SerializeField] private ParticleSystem _SworsTrail;
 
     [SerializeField] private List<AudioClip> _hitSounds;
     private AudioSource _audioSource;
@@ -44,11 +45,13 @@ public class EnemySword : MonoBehaviour
     public void StartAttack()
     {
         _capsuleCollider.enabled = true;
+        _SworsTrail.Play();
     }
 
     public void EndAttack()
     {
         _capsuleCollider.enabled = false;
         _hasAttacked = false;
+        _SworsTrail.Stop();
     }
 }
