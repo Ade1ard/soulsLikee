@@ -70,7 +70,7 @@ public class EnemyHealth : MonoBehaviour
                 _animator.SetTrigger("Hit");
             }
 
-            if (_value <= 0 && !_animator.GetCurrentAnimatorStateInfo(0).IsName("Death"))
+            if (_value <= 0 && !_isDead)
             {
                 EnemyDeath();
             }
@@ -81,11 +81,11 @@ public class EnemyHealth : MonoBehaviour
 
     private void EnemyDeath()
     {
+        _isDead = true;
         _animator.SetTrigger("Death");
         _enemyController.enabled = false;
         _navMeshAgent.ResetPath();
         SetBarVisible(false);
-        _isDead = true;
     }
 
     public void AddHealt(float amount)
@@ -125,10 +125,11 @@ public class EnemyHealth : MonoBehaviour
         if (_bool != _isBarVisible)
         {
             _isBarVisible = _bool;
-            if (_VisibleHealthBarCorutine == null)
+            if (_VisibleHealthBarCorutine != null)
             {
-                _VisibleHealthBarCorutine = StartCoroutine(BarVisible(_bool ? 1 : 0));
+                StopCoroutine(BarVisible(0));
             }
+            StartCoroutine(BarVisible(_bool ? 1:0));
         }
     }
 
@@ -152,5 +153,10 @@ public class EnemyHealth : MonoBehaviour
     private void EndHyperArmor() //called by events in animations
     {
         _inHyperarmor = false;
+    }
+
+        public bool CheckAlive()
+    {
+        return !_animator.GetCurrentAnimatorStateInfo(0).IsName("Death");
     }
 }

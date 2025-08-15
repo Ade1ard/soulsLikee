@@ -32,14 +32,17 @@ public class PlayerSword : MonoBehaviour
     {
         if (other.gameObject.TryGetComponent(out EnemyHealth enemyHealth) && !_hasAttacked)
         {
-            enemyHealth.TakeDamage(_damage);
+            if (enemyHealth.CheckAlive())
+            {
+                enemyHealth.TakeDamage(_damage);
 
-            var ContactPoint = other.ClosestPoint(transform.position);
-            Instantiate(_blood, ContactPoint, Quaternion.LookRotation(Vector3.forward));
+                var ContactPoint = other.ClosestPoint(transform.position);
+                Instantiate(_blood, ContactPoint, Quaternion.LookRotation(Vector3.forward));
 
-            _audioSource.PlayOneShot(_hitSounds[Random.Range(0, _hitSounds.Count)]);
+                _audioSource.PlayOneShot(_hitSounds[Random.Range(0, _hitSounds.Count)]);
 
-            _hasAttacked = true;
+                _hasAttacked = true;
+            }
         }
         
         if (other.CompareTag("Environment"))

@@ -217,11 +217,13 @@ public class PlayerController : MonoBehaviour
     {
         _inAttack = false;
         _sword.EndAttack();
+        _animator.speed = 1f;
     }
 
     private void StartAttack() //called by events in animations
     {
         _sword.StartAttack();
+        _animator.speed = 1.2f;
     }
     
     private void EndRoll() //called by events in animations

@@ -1,11 +1,16 @@
 using Cinemachine;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class CameraModeChanger : MonoBehaviour
 {
     [Header("LockCameraSettings")]
     [SerializeField] private float _cameraLockDistance;
     [SerializeField] private float _FindEnemyRadius = 3f;
+
+    [Header("UI")]
+    [SerializeField] private Image _EnemyTargetLockUI;
+
     private CinemachineVirtualCamera _lockOnCamera;
     private CinemachineFreeLook _freeLookCamera;
 
@@ -18,6 +23,8 @@ public class CameraModeChanger : MonoBehaviour
 
     void Start()
     {
+        _EnemyTargetLockUI.enabled = false;
+
         _camera = FindObjectOfType<Camera>();
         _animator = GetComponent<Animator>();
         _playerController = FindObjectOfType<PlayerController>();
@@ -36,12 +43,19 @@ public class CameraModeChanger : MonoBehaviour
         {
             ChangeCameraLookMod();
         }
+
+        if (_isCameraLocked)
+        {
+            var screenPosition = Camera.main.WorldToScreenPoint(_enemyLockedOn._enemySpine.position);
+            _EnemyTargetLockUI.rectTransform.position = screenPosition;
+        }
     }
 
     private void ChangeCameraLookMod()
     {
         if (_isCameraLocked)
         {
+            _EnemyTargetLockUI.enabled = false;
             _lockOnCamera.Priority = 0;
             _freeLookCamera.Priority = 20;
             _isCameraLocked = false;
@@ -57,6 +71,7 @@ public class CameraModeChanger : MonoBehaviour
 
             if (_enemyLockedOn != null)
             {
+                _EnemyTargetLockUI.enabled = true;
                 _lockOnCamera.LookAt = _enemyLockedOn._cameralookAt.transform;
                 _isCameraLocked = true;
 

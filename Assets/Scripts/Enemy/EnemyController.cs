@@ -31,11 +31,13 @@ public class EnemyController : MonoBehaviour
     
     private NavMeshAgent _navMeshAgent;
 
-    public Transform _cameralookAt;
-
     [Header("PLayer")]
     private PlayerController _player;
     private bool _isPlayerNoticed;
+
+    [Header("Objects for camera")]
+    public Transform _enemySpine;
+    public Transform _cameralookAt;
 
 
     void Start()
