@@ -12478,7 +12478,7 @@ CapsuleCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.3
+  m_Radius: 0.25
   m_Height: 1.7
   m_Direction: 1
   m_Center: {x: 0, y: 0.9, z: 0}
@@ -13017,8 +13017,8 @@ MonoBehaviour:
     Value: 1
     m_SpeedMode: 0
     m_MaxSpeed: 10
-    m_AccelTime: 0.1
-    m_DecelTime: 0.1
+    m_AccelTime: 0.05
+    m_DecelTime: 0.05
     m_InputAxisName: Mouse Y
     m_InputAxisValue: 0
     m_InvertInput: 1
@@ -13041,8 +13041,8 @@ MonoBehaviour:
     Value: 0
     m_SpeedMode: 0
     m_MaxSpeed: 700
-    m_AccelTime: 0.05
-    m_DecelTime: 0.05
+    m_AccelTime: 0.07
+    m_DecelTime: 0.07
     m_InputAxisName: Mouse X
     m_InputAxisValue: 0
     m_InvertInput: 0
@@ -13112,7 +13112,7 @@ MonoBehaviour:
   m_CollideAgainst:
     serializedVersion: 2
     m_Bits: 39
-  m_IgnoreTag: Enemy
+  m_IgnoreTag: Camera Ignore
   m_TransparentLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -13907,7 +13907,7 @@ CharacterController:
   m_Enabled: 1
   serializedVersion: 3
   m_Height: 1.7
-  m_Radius: 0.3
+  m_Radius: 0.25
   m_SlopeLimit: 45
   m_StepOffset: 0.3
   m_SkinWidth: 0.08
