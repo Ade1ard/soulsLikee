@@ -199,6 +199,11 @@ public class PlayerController : MonoBehaviour
             _animator.SetTrigger("HeavyAttack");
             _stamina.SpentStamina(_stamina.GetCost("heavyAttack"));
         }
+        else if (_animator.GetCurrentAnimatorStateInfo(0).IsName("Attack2"))
+        {
+            _animator.SetTrigger("Attack3");
+            _stamina.SpentStamina(_stamina.GetCost("attack"));
+        }
         else if (_animator.GetCurrentAnimatorStateInfo(0).IsName("Attack1"))
         {
             _animator.SetTrigger("Attack2");
