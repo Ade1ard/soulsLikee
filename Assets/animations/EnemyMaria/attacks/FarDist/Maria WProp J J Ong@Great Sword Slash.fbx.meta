@@ -64,7 +64,7 @@ ModelImporter:
         floatParameter: 0
         intParameter: 0
         messageOptions: 0
-      - time: 0.21481481
+      - time: 0.2725926
         functionName: StartHyperArmor
         data: 
         objectReferenceParameter: {instanceID: 0}

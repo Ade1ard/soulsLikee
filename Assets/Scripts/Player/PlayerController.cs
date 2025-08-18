@@ -39,6 +39,7 @@ public class PlayerController : MonoBehaviour
 
     private bool _isRolling = false;
     private bool _inAttack = false;
+    private bool _justAttacked = false;
     private bool _isSprinting = false;
 
     private const string Horizontal = nameof(Horizontal);
@@ -78,22 +79,23 @@ public class PlayerController : MonoBehaviour
 
         if ((Input.GetAxis(Vertical) != 0 || Input.GetAxis(Horizontal) != 0))
         {
-            if (!_inAttack)
-            {
-                transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(GetPlayerDirection()), 15 * Time.deltaTime);
-                GetTargetPointPosition();
-                _moveVector += transform.forward;
-            }
+            transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(GetPlayerDirection()), (!_inAttack ? 15 : 5) * Time.deltaTime);
+            GetTargetPointPosition();
 
             RoolingSprinting();
 
-            if (!_isSprinting)
+            if (!_inAttack)
             {
-                _currentSpeed = _walkSpeed;
-                _animator.SetFloat("speed", Mathf.Lerp(_animator.GetFloat("speed"), 1, _changeAnimationsSpeed * Time.deltaTime));
+                _moveVector += transform.forward;
+
+                if (!_isSprinting)
+                {
+                    _currentSpeed = _walkSpeed;
+                    _animator.SetFloat("speed", Mathf.Lerp(_animator.GetFloat("speed"), 1, _changeAnimationsSpeed * Time.deltaTime));
+                }
             }
         }
-        else
+        else if (!_inAttack)
         {
             _animator.SetFloat("speed", Mathf.Lerp(_animator.GetFloat("speed"), 0, _changeAnimationsSpeed * Time.deltaTime));
         }
@@ -112,22 +114,19 @@ public class PlayerController : MonoBehaviour
 
         if ((Input.GetAxis(Vertical) != 0 || Input.GetAxis(Horizontal) != 0))
         {
-            if (!_inAttack)
-            {
-                _moveVector += _camera.transform.forward * Input.GetAxis(Vertical) + _camera.transform.right * Input.GetAxis(Horizontal);
-            }
-
             RoolingSprinting();
 
-            if (!_isSprinting)
+            if (!_isSprinting && !_inAttack)
             {
+                _moveVector += _camera.transform.forward * Input.GetAxis(Vertical) + _camera.transform.right * Input.GetAxis(Horizontal);
+
                 _currentSpeed = _lockOnWalkSpeed;
                 _animator.SetFloat("speed", 1);
                 _animator.SetFloat("H_Speed", Mathf.Lerp(_animator.GetFloat("H_Speed"), Input.GetAxis(Horizontal), _changeAnimationsSpeed * Time.deltaTime));
                 _animator.SetFloat("V_Speed", Mathf.Lerp(_animator.GetFloat("V_Speed"), Input.GetAxis(Vertical), _changeAnimationsSpeed * Time.deltaTime));
             }
         }
-        else
+        else if (!_inAttack)
         {
             _animator.SetFloat("speed", 0);
         }
@@ -145,7 +144,7 @@ public class PlayerController : MonoBehaviour
             _timePressedButton = Time.time;
         }
 
-        if (Input.GetKey(KeyCode.Space) && Time.time - _timePressedButton >= _buttonPressDelay && _stamina.CheckStamina() >= 2f)
+        if (Input.GetKey(KeyCode.Space) && Time.time - _timePressedButton >= _buttonPressDelay && !_inAttack && _stamina.CheckStamina() >= 2f)
         {
             if (_isCameraLocked)
             {
@@ -184,7 +183,7 @@ public class PlayerController : MonoBehaviour
 
     private void Attachment()
     {
-        if(Input.GetMouseButtonDown(0) && !_inAttack && !_isRolling && _stamina.CheckStamina() >= 2f)
+        if(Input.GetMouseButtonDown(0) && !_justAttacked && !_isRolling && _stamina.CheckStamina() >= 2f)
         {
             Attack();
         }
@@ -193,6 +192,8 @@ public class PlayerController : MonoBehaviour
     private void Attack()
     {
         _inAttack = true;
+        _justAttacked = true;
+        _animator.SetFloat("speed", 0);
 
         if (Input.GetKey(KeyCode.LeftShift))
         {
@@ -217,19 +218,24 @@ public class PlayerController : MonoBehaviour
 
         _audioSource.PlayOneShot(_swordSwingSounds[Random.Range(0, _swordSwingSounds.Count)]);
     }
-
-    private void EndAttack() //called by events in animations
-    {
-        _inAttack = false;
-        _sword.EndAttack();
-        _animator.speed = 1f;
-    }
-
     private void StartAttack() //called by events in animations
     {
         _sword.StartAttack();
         _animator.speed = 1.2f;
     }
+
+    private void EndAttack() //called by events in animations
+    {
+        _justAttacked = false;
+        _sword.EndAttack();
+        _animator.speed = 1f;
+    }
+
+    private void CanMove() //after Attack, called by events in animations 
+    {
+        _inAttack = false;
+    }
+
     
     private void EndRoll() //called by events in animations
     {
