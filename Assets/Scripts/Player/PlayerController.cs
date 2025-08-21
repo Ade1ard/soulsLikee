@@ -41,6 +41,7 @@ public class PlayerController : MonoBehaviour
     private bool _inAttack = false;
     private bool _justAttacked = false;
     private bool _isSprinting = false;
+    private bool _isHealing = false;
 
     private const string Horizontal = nameof(Horizontal);
     private const string Vertical = nameof(Vertical);
@@ -60,23 +61,27 @@ public class PlayerController : MonoBehaviour
 
     private void Update()
     {
-        if (!_isCameraLocked)
+        _moveVector = Vector3.zero;
+
+        if (!_isHealing)
         {
-            FreeLookMovement();
-        }
-        else
-        {
-            LockOnMovement();
+            if (!_isCameraLocked)
+            {
+                FreeLookMovement();
+            }
+            else
+            {
+                LockOnMovement();
+            }
+
+            Attachment();
         }
 
-        Attachment();
         PhysicsMove();
     }
 
     private void FreeLookMovement()
     {
-        _moveVector = Vector3.zero;
-
         if ((Input.GetAxis(Vertical) != 0 || Input.GetAxis(Horizontal) != 0))
         {
             transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(GetPlayerDirection()), (!_inAttack ? 15 : 5) * Time.deltaTime);
@@ -103,8 +108,6 @@ public class PlayerController : MonoBehaviour
 
     private void LockOnMovement()
     {
-        _moveVector = Vector3.zero;
-
         if (!_isRolling && !_isSprinting)
         {
             Vector3 PlayerDir = _enemyLockedOn.position - transform.position;
@@ -116,14 +119,17 @@ public class PlayerController : MonoBehaviour
         {
             RoolingSprinting();
 
-            if (!_isSprinting && !_inAttack)
+            if (!_inAttack)
             {
                 _moveVector += _camera.transform.forward * Input.GetAxis(Vertical) + _camera.transform.right * Input.GetAxis(Horizontal);
 
-                _currentSpeed = _lockOnWalkSpeed;
-                _animator.SetFloat("speed", 1);
-                _animator.SetFloat("H_Speed", Mathf.Lerp(_animator.GetFloat("H_Speed"), Input.GetAxis(Horizontal), _changeAnimationsSpeed * Time.deltaTime));
-                _animator.SetFloat("V_Speed", Mathf.Lerp(_animator.GetFloat("V_Speed"), Input.GetAxis(Vertical), _changeAnimationsSpeed * Time.deltaTime));
+                if (!_isSprinting)
+                {
+                    _currentSpeed = _lockOnWalkSpeed;
+                    _animator.SetFloat("speed", 1);
+                    _animator.SetFloat("H_Speed", Mathf.Lerp(_animator.GetFloat("H_Speed"), Input.GetAxis(Horizontal), _changeAnimationsSpeed * Time.deltaTime));
+                    _animator.SetFloat("V_Speed", Mathf.Lerp(_animator.GetFloat("V_Speed"), Input.GetAxis(Vertical), _changeAnimationsSpeed * Time.deltaTime));
+                }
             }
         }
         else if (!_inAttack)
@@ -215,13 +221,12 @@ public class PlayerController : MonoBehaviour
             _animator.SetTrigger("Attack1");
             _stamina.SpentStamina(_stamina.GetCost("attack"));
         }
-
-        _audioSource.PlayOneShot(_swordSwingSounds[Random.Range(0, _swordSwingSounds.Count)]);
     }
     private void StartAttack() //called by events in animations
     {
         _sword.StartAttack();
         _animator.speed = 1.2f;
+        _audioSource.PlayOneShot(_swordSwingSounds[Random.Range(0, _swordSwingSounds.Count)]);
     }
 
     private void EndAttack() //called by events in animations
@@ -240,6 +245,27 @@ public class PlayerController : MonoBehaviour
     private void EndRoll() //called by events in animations
     {
         _isRolling = false;
+    }
+
+    private void IsHealing(int _int) //called by events in animations
+    {
+        if (_int == 1)
+        {
+            _isHealing = true;
+        }
+        else
+        {
+            _isHealing = false;
+        }
+    }
+
+    private void AllFlagsReload() ////called by events in hit animation
+    {
+        _inAttack = false;
+        _isRolling = false;
+        _isHealing = false;
+        _justAttacked = false;
+        _isSprinting = false;
     }
 
     private void GetTargetPointPosition()

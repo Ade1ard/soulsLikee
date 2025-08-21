@@ -20,10 +20,6 @@ public class PlayerHealth : MonoBehaviour
 
     private PlayerController _playerController;
 
-    [Header("GlobalUI")]
-    [SerializeField] private GameObject _gameplayUI;
-    [SerializeField] private GameObject _gameoverscreen;
-
     private Coroutine _drawHealthBarCorutine;
 
     private bool _inHyperarmor = false;
@@ -60,34 +56,16 @@ public class PlayerHealth : MonoBehaviour
 
         if (_value <= 0 && !_playerAnimator.GetCurrentAnimatorStateInfo(0).IsName("Death"))
         {
-            PlayerIsDead();
+            //PlayerIsDead();
         }
 
         StartDrawBarCorutine();
-    }
-
-    private IEnumerator DrawHealtBar()
-    {
-        while (_mediumHealthValueImage.fillAmount - (_value / _maxValue) > 0.001f)
-        {
-            _mainHealthValueImage.fillAmount = Mathf.Lerp(_mainHealthValueImage.fillAmount, _value / _maxValue, _mainBarSpeed);
-
-            if (_mainHealthValueImage.fillAmount - (_value / _maxValue) <= 0.001f)
-            {
-                _mediumHealthValueImage.fillAmount = Mathf.Lerp(_mediumHealthValueImage.fillAmount, _mainHealthValueImage.fillAmount, _mediumBarSpeed);
-            }
-            yield return null;
-        }
-        _drawHealthBarCorutine = null;
     }
 
     private void PlayerIsDead() 
     {
         _playerAnimator.SetTrigger("Death");
         _playerController.enabled = false;
-
-        //_gameplayUI.gameObject.SetActive(false);
-        //_gameoverscreen.gameObject.SetActive(true);
     }
 
     public void AddHealt(float amount)
@@ -109,6 +87,20 @@ public class PlayerHealth : MonoBehaviour
         {
             _drawHealthBarCorutine = StartCoroutine(DrawHealtBar());
         }
+    }
+    private IEnumerator DrawHealtBar()
+    {
+        while (_mediumHealthValueImage.fillAmount != (_value / _maxValue) + 0.005f)
+        {
+            _mainHealthValueImage.fillAmount = Mathf.Lerp(_mainHealthValueImage.fillAmount, _value / _maxValue, _mainBarSpeed);
+
+            if (_mainHealthValueImage.fillAmount != (_value / _maxValue) + 0.005f)
+            {
+                _mediumHealthValueImage.fillAmount = Mathf.Lerp(_mediumHealthValueImage.fillAmount, _mainHealthValueImage.fillAmount, _mediumBarSpeed);
+            }
+            yield return null;
+        }
+        _drawHealthBarCorutine = null;
     }
 
     private void StartHyperArmor() //called by events in animations
