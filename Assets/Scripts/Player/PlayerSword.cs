@@ -7,7 +7,6 @@ public class PlayerSword : MonoBehaviour
 
     [SerializeField] private ParticleSystem _blood;
     [SerializeField] private ParticleSystem _sparkl;
-    [SerializeField] private ParticleSystem _dust;
     [SerializeField] private ParticleSystem _swordTrail;
 
     [SerializeField] private List<AudioClip> _hitSounds;
@@ -45,22 +44,13 @@ public class PlayerSword : MonoBehaviour
             }
         }
         
-        if (other.CompareTag("Environment"))
+        if (other.CompareTag("Environment") || other.CompareTag("EnemySword"))
         {
             _audioSource.PlayOneShot(_hitAtSomething);
 
             var ContactPoint = other.ClosestPoint(transform.position);
             Instantiate(_sparkl, ContactPoint, Quaternion.LookRotation(gameObject.transform.position));
-            Instantiate(_dust, ContactPoint, Quaternion.LookRotation(gameObject.transform.position));
         } 
-
-        if (other.CompareTag("EnemySword"))
-        {
-            _audioSource.PlayOneShot(_hitAtSomething);
-
-            var ContactPoint = other.ClosestPoint(transform.position);
-            Instantiate(_sparkl, ContactPoint, Quaternion.LookRotation(gameObject.transform.position));
-        }
     }
 
     public void AddDamage(float amount)

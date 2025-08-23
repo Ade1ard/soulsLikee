@@ -6,7 +6,7 @@ public class Healing : MonoBehaviour
     [SerializeField] private float _FlackCount;
     [SerializeField] private float _healHPCount;
 
-    [SerializeField] private ParticleSystem _effect;
+    //[SerializeField] private ParticleSystem _effect;
 
     [SerializeField] private GameObject _healFlask;
     [SerializeField] private TextMeshProUGUI _FlackCountText;
@@ -36,7 +36,7 @@ public class Healing : MonoBehaviour
             _health.AddHealt(_healHPCount);
             _FlackCount -= 1;
             _FlackCountText.text = _FlackCount.ToString();
-            Instantiate(_effect, transform.position + Vector3.up * 1.5f, Quaternion.identity);
+            //Instantiate(_effect, transform.position + Vector3.up * 1.5f, Quaternion.identity);
         }
     }
 
