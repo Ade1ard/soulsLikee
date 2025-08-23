@@ -12125,7 +12125,6 @@ MonoBehaviour:
   _damage: 30
   _blood: {fileID: 8761645392988832587, guid: 4dfd7525f1936cf4a83e0174af938de1, type: 3}
   _sparkl: {fileID: 5106805139924674257, guid: 794fc7da1e030ee44bdb7f67fed5c2c7, type: 3}
-  _smoke: {fileID: 1855069379698635618, guid: 0d7ad532558de1a4fa4f65e529bdbaf4, type: 3}
   _swordTrail: {fileID: 121330443}
   _hitSounds:
   - {fileID: 8300000, guid: 118ef8ae1e68e3145981fa2594891a2c, type: 3}
@@ -13783,7 +13782,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1608522471}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 1.5682907, y: 5.482134, z: -9.064157}
+  m_LocalPosition: {x: 2.0748825, y: 5.482134, z: -13.984702}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -14380,8 +14379,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1962794637}
-  m_LocalRotation: {x: 0.033335302, y: -0.75119203, z: 0.038048316, w: 0.65814257}
-  m_LocalPosition: {x: 4.9040966, y: 3.3228974, z: -4.107585}
+  m_LocalRotation: {x: 0.03755872, y: -0.66901547, z: 0.033886064, w: 0.74152505}
+  m_LocalPosition: {x: 5.5445366, y: 3.322898, z: -9.801844}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -14573,7 +14572,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6046018844230716822}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 7.4134083, y: 0, z: 9.420546}
+  m_LocalPosition: {x: 7.92, y: 0, z: 4.5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -14861,6 +14860,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _FlackCount: 3
   _healHPCount: 50
+  _effect: {fileID: 7792897842861799937, guid: 963a7ae303771c74f883c37d8d4bfe47, type: 3}
   _healFlask: {fileID: 26415084}
   _FlackCountText: {fileID: 768611527}
 --- !u!4 &6046018844635725962
@@ -14871,7 +14871,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6046018844635725967}
   m_LocalRotation: {x: 0.31622782, y: -0, z: -0, w: 0.9486833}
-  m_LocalPosition: {x: 1.5682907, y: 5.482134, z: -9.064157}
+  m_LocalPosition: {x: 2.0748825, y: 5.482134, z: -13.984702}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
