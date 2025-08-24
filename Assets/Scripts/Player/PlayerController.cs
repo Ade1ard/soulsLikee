@@ -200,8 +200,12 @@ public class PlayerController : MonoBehaviour
         _inAttack = true;
         _justAttacked = true;
         _animator.SetFloat("speed", 0);
-
-        if (Input.GetKey(KeyCode.LeftShift))
+        if (_isSprinting)
+        {
+            _animator.SetTrigger("RunAttack");
+            _stamina.SpentStamina(_stamina.GetCost("attack"));
+        }
+        else if (Input.GetKey(KeyCode.LeftShift))
         {
             _animator.SetTrigger("HeavyAttack");
             _stamina.SpentStamina(_stamina.GetCost("heavyAttack"));
@@ -259,7 +263,7 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    private void AllFlagsReload() ////called by events in hit animation
+    private void AllFlagsReload() ////called by event in hit animation
     {
         _inAttack = false;
         _isRolling = false;
