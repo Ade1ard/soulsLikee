@@ -15,6 +15,8 @@ public class DissolveController : MonoBehaviour
     List<Material> _skinnedMaterials = new List<Material>();
     void Start()
     {
+        _VFXGraph.Stop();
+
         if (_skinnedMeshes != null)
         {
             foreach(SkinnedMeshRenderer skinnedMesh in _skinnedMeshes)
