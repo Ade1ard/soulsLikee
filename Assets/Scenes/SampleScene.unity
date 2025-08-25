@@ -13399,6 +13399,7 @@ MonoBehaviour:
   _skinnedMeshes:
   - {fileID: 1525170451}
   - {fileID: 919658167}
+  _VFXGraph: {fileID: 0}
   _dissolveRate: 0.0075
   _dissolveDelay: 0.05
 --- !u!1 &1525271759
@@ -14471,8 +14472,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1962794637}
-  m_LocalRotation: {x: 0.038564898, y: -0.6463177, z: 0.032736424, w: 0.76138985}
-  m_LocalPosition: {x: 5.546111, y: 3.3228981, z: -10.030697}
+  m_LocalRotation: {x: 0.038589433, y: -0.6457468, z: 0.03270751, w: 0.7618741}
+  m_LocalPosition: {x: 5.5426207, y: 3.3228984, z: -10.056471}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
