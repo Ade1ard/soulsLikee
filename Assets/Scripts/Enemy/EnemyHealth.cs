@@ -21,6 +21,7 @@ public class EnemyHealth : MonoBehaviour
     [SerializeField] private Animator _playerAnimator;
 
     private EnemyController _enemyController;
+    private DissolveController _dissolveController;
 
     private NavMeshAgent _navMeshAgent;
 
@@ -35,6 +36,7 @@ public class EnemyHealth : MonoBehaviour
 
     void Start()
     {
+        _dissolveController = GetComponent<DissolveController>();
         _navMeshAgent = GetComponent<NavMeshAgent>();
         _enemyController = GetComponent<EnemyController>();
         SetBarVisible(false);
@@ -86,6 +88,7 @@ public class EnemyHealth : MonoBehaviour
         _enemyController.enabled = false;
         _navMeshAgent.ResetPath();
         SetBarVisible(false);
+        _dissolveController.Dissolve();
     }
 
     public void AddHealt(float amount)
