@@ -14,8 +14,8 @@ public class CameraModeChanger : MonoBehaviour
     [Header("Transform")]
     [SerializeField] private Transform _defaultLookAt;
 
-    private CinemachineVirtualCamera _lockOnCamera;
-    private CinemachineFreeLook _freeLookCamera;
+    [SerializeField] private CinemachineVirtualCamera _lockOnCamera;
+    [SerializeField] private CinemachineFreeLook _freeLookCamera;
 
     private Animator _animator;
     private Camera _camera;
@@ -29,8 +29,6 @@ public class CameraModeChanger : MonoBehaviour
         _camera = FindObjectOfType<Camera>();
         _animator = GetComponent<Animator>();
         _playerController = FindObjectOfType<PlayerController>();
-        _lockOnCamera = FindObjectOfType<CinemachineVirtualCamera>();
-        _freeLookCamera = FindObjectOfType<CinemachineFreeLook>();
 
         _lockOnCamera.LookAt = _defaultLookAt;
     }
@@ -56,10 +54,6 @@ public class CameraModeChanger : MonoBehaviour
             var screenPosition = Camera.main.WorldToScreenPoint(_enemyLockedOn._enemySpine.position);
             _EnemyTargetLockUI.rectTransform.position = screenPosition;
         }
-
-        Debug.Log(_freeLookCamera.Priority);
-        Debug.Log(_lockOnCamera.Priority);
-        Debug.Log(_lockOnCamera.LookAt);
     }
 
     private void ChangeCameraLookMod()
@@ -84,10 +78,10 @@ public class CameraModeChanger : MonoBehaviour
             if (_enemyLockedOn != null)
             {
                 _EnemyTargetLockUI.enabled = true;
-                _lockOnCamera.LookAt = _enemyLockedOn._cameralookAt.transform;
+                _lockOnCamera.LookAt = _enemyLockedOn._cameralookAt;
                 _isCameraLocked = true;
 
-                _playerController.TakeNearEnemy(_enemyLockedOn._cameralookAt.transform);
+                _playerController.TakeNearEnemy(_enemyLockedOn._cameralookAt);
 
                 _lockOnCamera.Priority = 20;
                 _freeLookCamera.Priority = 0;

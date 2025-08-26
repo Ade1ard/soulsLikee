@@ -19540,7 +19540,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1525271760}
   m_Layer: 0
-  m_Name: CameraLookAt
+  m_Name: CameraLookAtPlayer
   m_TagString: Untagged
   m_Icon: {fileID: -5487077368411116049, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
@@ -20994,7 +20994,7 @@ MonoBehaviour:
     m_SensorSize: {x: 1, y: 1}
   m_Transitions:
     m_BlendHint: 0
-    m_InheritPosition: 0
+    m_InheritPosition: 1
     m_OnCameraLive:
       m_PersistentCalls:
         m_Calls: []
@@ -21447,6 +21447,8 @@ MonoBehaviour:
   _FindEnemyRadius: 3
   _EnemyTargetLockUI: {fileID: 1372434865}
   _defaultLookAt: {fileID: 1191514873}
+  _lockOnCamera: {fileID: 1962794639}
+  _freeLookCamera: {fileID: 1608522472}
 --- !u!114 &6046018844230716830
 MonoBehaviour:
   m_ObjectHideFlags: 0
