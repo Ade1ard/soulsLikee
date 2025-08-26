@@ -8,6 +8,7 @@ TagManager:
   - Camera Ignore
   - Environment
   - EnemySword
+  - HitBox
   layers:
   - Default
   - TransparentFX

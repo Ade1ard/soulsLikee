@@ -22,6 +22,7 @@ public class EnemyHealth : MonoBehaviour
 
     private EnemyController _enemyController;
     private DissolveController _dissolveController;
+    private CapsuleCollider _capsuleCollider;
 
     private NavMeshAgent _navMeshAgent;
 
@@ -36,6 +37,7 @@ public class EnemyHealth : MonoBehaviour
 
     void Start()
     {
+        _capsuleCollider = GetComponent<CapsuleCollider>();
         _dissolveController = GetComponent<DissolveController>();
         _navMeshAgent = GetComponent<NavMeshAgent>();
         _enemyController = GetComponent<EnemyController>();
@@ -89,6 +91,7 @@ public class EnemyHealth : MonoBehaviour
         _navMeshAgent.ResetPath();
         SetBarVisible(false);
         _dissolveController.Dissolve();
+        _capsuleCollider.isTrigger = true;
     }
 
     public void AddHealt(float amount)

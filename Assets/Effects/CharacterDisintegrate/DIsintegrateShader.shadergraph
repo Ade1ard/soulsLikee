@@ -486,6 +486,7 @@
     "m_OutputNode": {
         "m_Id": ""
     },
+    "m_SubDatas": [],
     "m_ActiveTargets": [
         {
             "m_Id": "7c107bd46de34791b195bc680757f971"
@@ -505,7 +506,7 @@
     "m_StageCapability": 3,
     "m_BareResource": false,
     "m_Texture": {
-        "m_SerializedTexture": "{\"texture\":{\"instanceID\":0}}",
+        "m_SerializedTexture": "",
         "m_Guid": ""
     },
     "m_DefaultType": 3
@@ -2732,8 +2733,8 @@
     "m_ObjectId": "ca809f1d3932418db37658d65dd54d0c",
     "m_Title": "PRB Setttings",
     "m_Position": {
-        "x": -1171.9998779296875,
-        "y": -119.0
+        "x": -1172.0001220703125,
+        "y": -118.99996948242188
     }
 }
 
@@ -2903,7 +2904,7 @@
     "m_StageCapability": 3,
     "m_BareResource": false,
     "m_Texture": {
-        "m_SerializedTexture": "{\"texture\":{\"instanceID\":0}}",
+        "m_SerializedTexture": "",
         "m_Guid": ""
     },
     "m_DefaultType": 0

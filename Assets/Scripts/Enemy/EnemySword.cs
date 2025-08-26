@@ -13,10 +13,12 @@ public class EnemySword : MonoBehaviour
     private AudioSource _audioSource;
 
     private CapsuleCollider _capsuleCollider;
+    private PlayerHealth _playerHealth;
     private bool _hasAttacked;
 
     void Start()
     {
+        _playerHealth = FindObjectOfType<PlayerHealth>();
         _capsuleCollider = GetComponent<CapsuleCollider>();
         _audioSource = GetComponent<AudioSource>();
         _capsuleCollider.enabled = false;
@@ -29,9 +31,9 @@ public class EnemySword : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.TryGetComponent(out PlayerHealth playerHealth) && !_hasAttacked)
+        if (other.gameObject.CompareTag("HitBox") && !_hasAttacked)
         {
-            playerHealth.DealDamage(Random.Range(_minDamage, _maxDamage));
+            _playerHealth.DealDamage(Random.Range(_minDamage, _maxDamage));
 
             var ContactPoint = other.ClosestPoint(transform.position);
             Instantiate(_Blood, ContactPoint, Quaternion.LookRotation(Vector3.forward));
