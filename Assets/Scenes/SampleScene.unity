@@ -5548,7 +5548,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _minDamage: 25
   _maxDamage: 45
-  _Blood: {fileID: 8761645392988832587, guid: 4dfd7525f1936cf4a83e0174af938de1, type: 3}
   _SworsTrail: {fileID: 256430728}
   _hitSounds:
   - {fileID: 8300000, guid: 118ef8ae1e68e3145981fa2594891a2c, type: 3}
@@ -15938,6 +15937,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8294764487174099494, guid: 5997e8eb216917949b5c53fe235d3298,
         type: 3}
+      propertyPath: m_UpdateWhenOffscreen
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8294764487174099494, guid: 5997e8eb216917949b5c53fe235d3298,
+        type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: 2d52885ff545fa74da56fdce0c8e079b, type: 2}
@@ -16273,7 +16277,7 @@ MonoBehaviour:
   - {fileID: 442574460}
   - {fileID: 442574459}
   _VFXGraph: {fileID: 1702619898}
-  _dissolveRate: 0.0075
+  _dissolveRate: 0.01
   _dissolveDelay: 0.05
 --- !u!114 &442574468
 MonoBehaviour:
@@ -17270,6 +17274,55 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &987114722
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 987114724}
+  - component: {fileID: 987114723}
+  m_Layer: 0
+  m_Name: VFX_Blood_Controller
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &987114723
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 987114722}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 181c162a36495954f949a91d963e430d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _VFX_Blood: {fileID: 8356519188976531256, guid: 7282d47872c0ea148b9ce5fff92c0192,
+    type: 3}
+  _targetCollider: {fileID: 1560142377}
+  _centerPropertyName: CenterCollider
+  _sizePropertyName: SizeCollider
+--- !u!4 &987114724
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 987114722}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &991296895
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -17657,7 +17710,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _minDamage: 25
   _maxDamage: 45
-  _Blood: {fileID: 8761645392988832587, guid: 4dfd7525f1936cf4a83e0174af938de1, type: 3}
   _SworsTrail: {fileID: 200963834}
   _hitSounds:
   - {fileID: 8300000, guid: 118ef8ae1e68e3145981fa2594891a2c, type: 3}
@@ -18215,7 +18267,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _damage: 30
-  _blood: {fileID: 8761645392988832587, guid: 4dfd7525f1936cf4a83e0174af938de1, type: 3}
   _sparkl: {fileID: 5106805139924674257, guid: 794fc7da1e030ee44bdb7f67fed5c2c7, type: 3}
   _swordTrail: {fileID: 121330443}
   _hitSounds:
@@ -19148,6 +19199,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8294764487174099494, guid: 5997e8eb216917949b5c53fe235d3298,
         type: 3}
+      propertyPath: m_UpdateWhenOffscreen
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8294764487174099494, guid: 5997e8eb216917949b5c53fe235d3298,
+        type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: 2d52885ff545fa74da56fdce0c8e079b, type: 2}
@@ -19528,7 +19584,7 @@ MonoBehaviour:
   - {fileID: 1525170451}
   - {fileID: 919658167}
   _VFXGraph: {fileID: 1920667689}
-  _dissolveRate: 0.0075
+  _dissolveRate: 0.01
   _dissolveDelay: 0.05
 --- !u!1 &1525271759
 GameObject:
@@ -20276,10 +20332,10 @@ VisualEffect:
   m_PropertySheet:
     m_Float:
       m_Array:
-      - m_Value: 3.2
+      - m_Value: 2.3
         m_Name: Duration
         m_Overridden: 1
-      - m_Value: 1
+      - m_Value: 0.8
         m_Name: Delay
         m_Overridden: 1
     m_Vector2f:
@@ -20858,10 +20914,10 @@ VisualEffect:
   m_PropertySheet:
     m_Float:
       m_Array:
-      - m_Value: 3.2
+      - m_Value: 2.3
         m_Name: Duration
         m_Overridden: 1
-      - m_Value: 1
+      - m_Value: 0.8
         m_Name: Delay
         m_Overridden: 1
     m_Vector2f:
@@ -21009,7 +21065,7 @@ Transform:
   m_GameObject: {fileID: 1962794637}
   serializedVersion: 2
   m_LocalRotation: {x: 0.07703765, y: -0.632319, z: 0.0634064, w: 0.76825625}
-  m_LocalPosition: {x: 5.4095087, y: 3.6569524, z: -10.300413}
+  m_LocalPosition: {x: 5.4103384, y: 3.656952, z: -10.296164}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -21869,3 +21925,4 @@ SceneRoots:
   - {fileID: 1651939889}
   - {fileID: 63045568}
   - {fileID: 954710877}
+  - {fileID: 987114724}

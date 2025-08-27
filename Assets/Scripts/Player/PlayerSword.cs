@@ -1,11 +1,11 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.VFX;
 
 public class PlayerSword : MonoBehaviour
 {
     [SerializeField] private float _damage = 35;
 
-    [SerializeField] private ParticleSystem _blood;
     [SerializeField] private ParticleSystem _sparkl;
     [SerializeField] private ParticleSystem _swordTrail;
 
@@ -14,9 +14,12 @@ public class PlayerSword : MonoBehaviour
     private AudioSource _audioSource;
 
     private CapsuleCollider _capsuleCollider;
+    private BloodVFXController _Blood;
+
     private bool _hasAttacked;
     void Start()
     {
+        _Blood = FindObjectOfType<BloodVFXController>();
         _audioSource = GetComponent<AudioSource>();
         _capsuleCollider = GetComponent<CapsuleCollider>();
         _capsuleCollider.enabled = false;
@@ -36,7 +39,7 @@ public class PlayerSword : MonoBehaviour
                 enemyHealth.TakeDamage(_damage);
 
                 var ContactPoint = other.ClosestPoint(transform.position);
-                Instantiate(_blood, ContactPoint, Quaternion.LookRotation(Vector3.forward));
+                _Blood.SpawnVFXBlood(ContactPoint, transform.position);
 
                 _audioSource.PlayOneShot(_hitSounds[Random.Range(0, _hitSounds.Count)]);
 
