@@ -23,6 +23,7 @@ public class PlayerHealth : MonoBehaviour
     private Coroutine _drawHealthBarCorutine;
 
     private bool _inHyperarmor = false;
+    private bool _invulnerability = false;
 
     void Start()
     {
@@ -111,5 +112,20 @@ public class PlayerHealth : MonoBehaviour
     private void EndHyperArmor() //called by events in animations
     {
         _inHyperarmor = false;
+    }
+
+    public bool CheckInvulnerability()
+    {
+        return _invulnerability;
+    }
+
+    private void StartInvulnerability() //called by events in animations, frames in roll animation
+    {
+        _invulnerability = true;
+    }
+    
+    private void EndInvulnerability() //called by events in animations
+    {
+        _invulnerability = false;
     }
 }

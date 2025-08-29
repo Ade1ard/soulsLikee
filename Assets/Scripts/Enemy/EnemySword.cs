@@ -32,7 +32,7 @@ public class EnemySword : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.CompareTag("HitBox") && !_hasAttacked)
+        if (other.gameObject.CompareTag("HitBox") && !_hasAttacked && !_playerHealth.CheckInvulnerability())
         {
             _playerHealth.DealDamage(Random.Range(_minDamage, _maxDamage));
 

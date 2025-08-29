@@ -251,16 +251,9 @@ public class PlayerController : MonoBehaviour
         _isRolling = false;
     }
 
-    private void IsHealing(int _int) //called by events in animations
+    public void IsHealing(int _int) //called by events in animations
     {
-        if (_int == 1)
-        {
-            _isHealing = true;
-        }
-        else
-        {
-            _isHealing = false;
-        }
+        _isHealing = (_int == 1) ? true : false;
     }
 
     private void AllFlagsReload() ////called by event in hit animation
