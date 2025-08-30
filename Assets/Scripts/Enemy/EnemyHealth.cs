@@ -65,6 +65,8 @@ public class EnemyHealth : MonoBehaviour
             _value -= Mathf.Abs(damage);
             _value = Mathf.Clamp(_value, 0, _maxValue);
 
+            _enemyController.PlayerNoticedAfterHit();
+
             if (_inHyperarmor)
             {
 

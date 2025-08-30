@@ -206,6 +206,11 @@ public class EnemyController : MonoBehaviour
         _animator.speed = 1f;
     }
 
+    public void PlayerNoticedAfterHit()
+    {
+        _isPlayerNoticed = true;
+    }
+
     public bool CheckAlive()
     {
         return !_animator.GetCurrentAnimatorStateInfo(0).IsName("Death");

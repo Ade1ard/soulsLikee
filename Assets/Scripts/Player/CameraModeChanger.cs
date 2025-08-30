@@ -13,7 +13,6 @@ public class CameraModeChanger : MonoBehaviour
 
     [Header("Transform")]
     [SerializeField] private Transform _defaultLookAt;
-
     [SerializeField] private CinemachineVirtualCamera _lockOnCamera;
     [SerializeField] private CinemachineFreeLook _freeLookCamera;
 
@@ -21,11 +20,14 @@ public class CameraModeChanger : MonoBehaviour
     private Camera _camera;
     private PlayerController _playerController;
     private EnemyController _enemyLockedOn;
+    private CinemachineFramingTransposer _framingTransposer;
 
     private bool _isCameraLocked = false;
+    private bool _isCameraOnBonfire = false;
 
     private void Awake()
     {
+        _framingTransposer = _lockOnCamera.GetCinemachineComponent<CinemachineFramingTransposer>();
         _camera = FindObjectOfType<Camera>();
         _animator = GetComponent<Animator>();
         _playerController = FindObjectOfType<PlayerController>();
@@ -44,7 +46,7 @@ public class CameraModeChanger : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetMouseButtonDown(2))
+        if (Input.GetMouseButtonDown(2) && !_isCameraOnBonfire)
         {
             ChangeCameraLookMod();
         }
@@ -60,10 +62,10 @@ public class CameraModeChanger : MonoBehaviour
     {
         if (_isCameraLocked)
         {
+            _isCameraLocked = false;
             _EnemyTargetLockUI.enabled = false;
             _lockOnCamera.Priority = 0;
             _freeLookCamera.Priority = 20;
-            _isCameraLocked = false;
 
             _playerController.TakeNearEnemy(null);
 
@@ -77,9 +79,9 @@ public class CameraModeChanger : MonoBehaviour
 
             if (_enemyLockedOn != null)
             {
+                _isCameraLocked = true;
                 _EnemyTargetLockUI.enabled = true;
                 _lockOnCamera.LookAt = _enemyLockedOn._cameralookAt;
-                _isCameraLocked = true;
 
                 _playerController.TakeNearEnemy(_enemyLockedOn._cameralookAt);
 
@@ -87,6 +89,37 @@ public class CameraModeChanger : MonoBehaviour
                 _freeLookCamera.Priority = 0;
                 _animator.SetBool("IsCameraLocked", true);
             }
+        }
+    }
+
+    public void CameraOnBonfire(Transform bonfire)
+    {
+        if (_isCameraLocked)
+        {
+            ChangeCameraLookMod();
+        }
+
+        if (!_isCameraOnBonfire)
+        {
+            _isCameraOnBonfire = true;
+
+            _lockOnCamera.LookAt = bonfire;
+
+            _lockOnCamera.Priority = 20;
+            _freeLookCamera.Priority = 0;
+
+            _framingTransposer.m_ScreenX += 0.2f;
+        }
+        else
+        {
+            _isCameraOnBonfire = false;
+
+            _framingTransposer.m_ScreenX -= 0.2f;
+
+            _lockOnCamera.Priority = 0;
+            _freeLookCamera.Priority = 20;
+
+            _lockOnCamera.LookAt = null;
         }
     }
 
