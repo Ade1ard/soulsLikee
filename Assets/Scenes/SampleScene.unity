@@ -16230,7 +16230,7 @@ GameObject:
   - component: {fileID: 438299281}
   - component: {fileID: 438299280}
   m_Layer: 0
-  m_Name: Press F to sit
+  m_Name: Tutorial clue
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -16740,8 +16740,8 @@ MonoBehaviour:
   _runToPlayerSpeed: 4.5
   _WalkSpeed: 1.5
   _changeAnimationsSpeed: 2.5
-  _attackDistance: 20
-  _noticeDistance: 30
+  _attackDistance: 17
+  _noticeDistance: 25
   _fightDistance: 10
   _lowRangeAttackDelay: 2
   _highRangeAttackDelay: 4
@@ -18225,7 +18225,7 @@ MonoBehaviour:
   _cameraLookAt: {fileID: 668313743}
   _gamePlayUI: {fileID: 1733739186}
   _bonfireUI: {fileID: 568236280}
-  _PressToSitUI: {fileID: 438299278}
+  _tutorialText: Press F to sit
 --- !u!1 &987114722
 GameObject:
   m_ObjectHideFlags: 0
@@ -18496,7 +18496,7 @@ GameObject:
   - component: {fileID: 1027952995}
   m_Layer: 0
   m_Name: Cube
-  m_TagString: Untagged
+  m_TagString: Camera Ignore
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -20878,8 +20878,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -0.6479, y: 0.6479}
-  m_SizeDelta: {x: 219.4346, y: 42.2262}
+  m_AnchoredPosition: {x: -0.6479, y: 1.2205}
+  m_SizeDelta: {x: 219.4346, y: 36.5001}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1505655125
 MonoBehaviour:
@@ -20901,9 +20901,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Press F to sit
-
-'
+  m_text: press f to sit
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: ddbc6dccfeebfcf45a66fd88ae567f7b, type: 2}
   m_sharedMaterial: {fileID: 277879583322603636, guid: ddbc6dccfeebfcf45a66fd88ae567f7b,
@@ -20931,10 +20929,10 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 40
+  m_fontSize: 38.8
   m_fontSizeBase: 40
   m_fontWeight: 400
-  m_enableAutoSizing: 0
+  m_enableAutoSizing: 1
   m_fontSizeMin: 18
   m_fontSizeMax: 72
   m_fontStyle: 0
@@ -21307,8 +21305,8 @@ MonoBehaviour:
   _runToPlayerSpeed: 4.5
   _WalkSpeed: 1.5
   _changeAnimationsSpeed: 2.5
-  _attackDistance: 20
-  _noticeDistance: 30
+  _attackDistance: 17
+  _noticeDistance: 25
   _fightDistance: 10
   _lowRangeAttackDelay: 2
   _highRangeAttackDelay: 4
@@ -23564,6 +23562,7 @@ GameObject:
   - component: {fileID: 6046018844230716828}
   - component: {fileID: 6046018844230716832}
   - component: {fileID: 6046018844230716829}
+  - component: {fileID: 6046018844230716833}
   - component: {fileID: 6046018844230716826}
   - component: {fileID: 6046018844230716830}
   - component: {fileID: 6046018844230716831}
@@ -23659,7 +23658,7 @@ MonoBehaviour:
   _runCostPerSecond: 15
   _rollCost: 20
   _atttackCost: 20
-  _heavyAttackCost: 25
+  _heavyAttackCost: 40
 --- !u!114 &6046018844230716829
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -23807,6 +23806,21 @@ MonoBehaviour:
   _effect: {fileID: 8700035473269227422, guid: b21d155ec7ea5a349a0e36106f913148, type: 3}
   _healFlask: {fileID: 26415084}
   _FlackCountText: {fileID: 768611527}
+--- !u!114 &6046018844230716833
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6046018844230716822}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2b0dd18cd5940f440b00b5743d41c0ce, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _tutorialClueFrame: {fileID: 438299280}
+  _tutorialClueText: {fileID: 1505655125}
+  _tutorialFadeSpeed: 5
 --- !u!4 &6046018844635725962
 Transform:
   m_ObjectHideFlags: 0

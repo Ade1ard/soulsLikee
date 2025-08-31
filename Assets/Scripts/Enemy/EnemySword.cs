@@ -3,11 +3,14 @@ using UnityEngine;
 
 public class EnemySword : MonoBehaviour
 {
+    [Header("Floats")]
     [SerializeField] private float _minDamage = 25;
     [SerializeField] private float _maxDamage = 45;
 
+    [Header("Effects")]
     [SerializeField] private ParticleSystem _SworsTrail;
 
+    [Header("Sounds")]
     [SerializeField] private List<AudioClip> _hitSounds;
     private AudioSource _audioSource;
 

@@ -2,15 +2,18 @@ using UnityEngine;
 
 public class BonFireCont : MonoBehaviour
 {
+    [Header("Objects")]
     [SerializeField] private Animator _playerAnimator;
-
     [SerializeField] private Transform _cameraLookAt;
 
     [Header("UI")]
     [SerializeField] private GameObject _gamePlayUI;
     [SerializeField] private GameObject _bonfireUI;
-    [SerializeField] private GameObject _PressToSitUI;
 
+    [Header("String")]
+    [SerializeField] private string _tutorialText;
+
+    private TutorialClueCont _tutorialClueCont;
     private PlayerController _playerController;
     private CameraModeChanger _cameraChanger;
 
@@ -19,11 +22,11 @@ public class BonFireCont : MonoBehaviour
 
     void Start()
     {
+        _tutorialClueCont = FindObjectOfType<TutorialClueCont>();
         _cameraChanger = FindObjectOfType<CameraModeChanger>();
         _playerController = FindObjectOfType<PlayerController>();
 
         _bonfireUI.SetActive(false);
-        _PressToSitUI.SetActive(false);
     }
 
     void Update()
@@ -75,7 +78,7 @@ public class BonFireCont : MonoBehaviour
         _gamePlayUI.SetActive(false);
         _bonfireUI.SetActive(true);
 
-        _PressToSitUI.SetActive(false);
+        _tutorialClueCont.TutorialGetUnvisible();
 
         _cameraChanger.CameraOnBonfire(_cameraLookAt);
     }
@@ -85,13 +88,13 @@ public class BonFireCont : MonoBehaviour
         if (_playerController.gameObject == other.gameObject)
         {
             _NearBonFire = true;
-            _PressToSitUI.SetActive(true);
+            _tutorialClueCont.TutorialGetVisible(_tutorialText);
         }
     }
 
     private void OnTriggerExit(Collider other)
     {
         _NearBonFire = false;
-        _PressToSitUI.SetActive(false);
+        _tutorialClueCont.TutorialGetUnvisible();
     }
 }

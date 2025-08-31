@@ -4,11 +4,14 @@ using UnityEngine.VFX;
 
 public class PlayerSword : MonoBehaviour
 {
+    [Header("Floats")]
     [SerializeField] private float _damage = 35;
 
+    [Header("Effects")]
     [SerializeField] private ParticleSystem _sparkl;
     [SerializeField] private ParticleSystem _swordTrail;
 
+    [Header("Sounds")]
     [SerializeField] private List<AudioClip> _hitSounds;
     [SerializeField] private AudioClip _hitAtSomething;
     private AudioSource _audioSource;
