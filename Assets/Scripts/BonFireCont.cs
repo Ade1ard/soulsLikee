@@ -94,7 +94,10 @@ public class BonFireCont : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
-        _NearBonFire = false;
-        _tutorialClueCont.TutorialGetUnvisible();
+        if (_playerController.gameObject == other.gameObject)
+        {
+            _NearBonFire = false;
+            _tutorialClueCont.TutorialGetUnvisible();
+        }
     }
 }

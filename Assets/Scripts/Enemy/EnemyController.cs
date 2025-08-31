@@ -200,6 +200,11 @@ public class EnemyController : MonoBehaviour
         _animator.speed = 1.2f;
     }
 
+    private void KomboCanDamage() //called by events in animations
+    {
+        _enemySword.KomboCanDamage();
+    }
+
     private void EndAttack() //called by events in animations
     {
         _enemySword.EndAttack();

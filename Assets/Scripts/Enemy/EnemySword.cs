@@ -54,6 +54,11 @@ public class EnemySword : MonoBehaviour
         _SworsTrail.Play();
     }
 
+    public void KomboCanDamage()
+    {
+        _hasAttacked = false;
+    }
+
     public void EndAttack()
     {
         _capsuleCollider.enabled = false;
