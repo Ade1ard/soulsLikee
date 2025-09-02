@@ -4,9 +4,6 @@ using UnityEngine.VFX;
 
 public class PlayerSword : MonoBehaviour
 {
-    [Header("Floats")]
-    [SerializeField] private float _damage = 35;
-
     [Header("Effects")]
     [SerializeField] private ParticleSystem _sparkl;
     [SerializeField] private ParticleSystem _swordTrail;
@@ -15,6 +12,8 @@ public class PlayerSword : MonoBehaviour
     [SerializeField] private List<AudioClip> _hitSounds;
     [SerializeField] private AudioClip _hitAtSomething;
     private AudioSource _audioSource;
+
+    private float _damage;
 
     private CapsuleCollider _capsuleCollider;
     private BloodVFXController _Blood;
@@ -59,9 +58,9 @@ public class PlayerSword : MonoBehaviour
         } 
     }
 
-    public void AddDamage(float amount)
+    public void GetDamageValue(float amount)
     {
-        _damage += Mathf.Abs(amount);
+        _damage = Mathf.Abs(amount);
     }
 
     public void EndAttack()

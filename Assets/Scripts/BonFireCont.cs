@@ -9,6 +9,8 @@ public class BonFireCont : MonoBehaviour
     [Header("UI")]
     [SerializeField] private GameObject _gamePlayUI;
     [SerializeField] private GameObject _bonfireUI;
+    [SerializeField] private GameObject _menuUI;
+    [SerializeField] private GameObject _levelUpUI;
 
     [Header("String")]
     [SerializeField] private string _tutorialText;
@@ -20,12 +22,17 @@ public class BonFireCont : MonoBehaviour
     private bool _NearBonFire = false;
     private bool _isSitting = false;
 
+    private bool _inMenu;
+    private bool _inLevelUp;
+
     void Start()
     {
         _tutorialClueCont = FindObjectOfType<TutorialClueCont>();
         _cameraChanger = FindObjectOfType<CameraModeChanger>();
         _playerController = FindObjectOfType<PlayerController>();
 
+        _levelUpUI.SetActive(false);
+        _menuUI.SetActive(true);
         _bonfireUI.SetActive(false);
     }
 
@@ -40,7 +47,14 @@ public class BonFireCont : MonoBehaviour
 
             if (Input.GetKeyUp(KeyCode.Tab))
             {
-                QuitBonfire();
+                if (_inMenu)
+                {
+                    QuitBonfire();
+                }
+                if (_inLevelUp)
+                {
+                    LevelUpActive(false);
+                }
             }
 
             if (_isSitting)
@@ -83,11 +97,21 @@ public class BonFireCont : MonoBehaviour
         _cameraChanger.CameraOnBonfire(_cameraLookAt);
     }
 
+    public void LevelUpActive(bool _bool)
+    {
+        _menuUI.SetActive(!_bool);
+        _levelUpUI.SetActive(_bool);
+        _inLevelUp = _bool;
+        _inMenu = !_bool;
+        Debug.Log(!_bool);
+    }
+
     private void OnTriggerEnter(Collider other)
     {
         if (_playerController.gameObject == other.gameObject)
         {
             _NearBonFire = true;
+            _inMenu = true;
             _tutorialClueCont.TutorialGetVisible(_tutorialText);
         }
     }
@@ -97,6 +121,7 @@ public class BonFireCont : MonoBehaviour
         if (_playerController.gameObject == other.gameObject)
         {
             _NearBonFire = false;
+            _inMenu = false;
             _tutorialClueCont.TutorialGetUnvisible();
         }
     }

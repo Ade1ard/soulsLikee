@@ -20,9 +20,14 @@ public class EnemyHealth : MonoBehaviour
     [SerializeField] private Animator _animator;
     [SerializeField] private Animator _playerAnimator;
 
+    [Header("Floats")]
+    [SerializeField] private int _minMoneyDrop;
+    [SerializeField] private int _maxMoneyDrop;
+
     private EnemyController _enemyController;
     private DissolveController _dissolveController;
     private CapsuleCollider _capsuleCollider;
+    private MoneyCont _moneyCont;
 
     private NavMeshAgent _navMeshAgent;
 
@@ -37,6 +42,7 @@ public class EnemyHealth : MonoBehaviour
 
     void Start()
     {
+        _moneyCont = FindObjectOfType<MoneyCont>();
         _capsuleCollider = GetComponent<CapsuleCollider>();
         _dissolveController = GetComponent<DissolveController>();
         _navMeshAgent = GetComponent<NavMeshAgent>();
@@ -88,12 +94,13 @@ public class EnemyHealth : MonoBehaviour
     private void EnemyDeath()
     {
         _isDead = true;
-        _animator.SetTrigger("Death");
-        _enemyController.enabled = false;
         _navMeshAgent.ResetPath();
+        _enemyController.enabled = false;
+        _animator.SetTrigger("Death");
         SetBarVisible(false);
         _dissolveController.Dissolve();
         _capsuleCollider.isTrigger = true;
+        _moneyCont.GetMoney(Random.Range(_minMoneyDrop, _maxMoneyDrop));
     }
 
     public void AddHealt(float amount)

@@ -7,7 +7,7 @@ public class PlayerHealth : MonoBehaviour
     [Header("BarsUI")]
     [SerializeField] private Image _mainHealthValueImage;
     [SerializeField] private Image _mediumHealthValueImage;
-    [SerializeField] private float _maxValue = 100;
+    private float _maxValue;
     private float _value;
 
     [Header("BarsSpeeds")]
@@ -76,9 +76,10 @@ public class PlayerHealth : MonoBehaviour
         StartDrawBarCorutine();
     }
 
-    public void AddMaxHealth(float amount)
+    public void GetMaxHealth(float amount)
     {
-        _maxValue += Mathf.Abs(amount);
+        _maxValue = Mathf.Abs(amount);
+        _value = _maxValue;
         StartDrawBarCorutine();
     }
 

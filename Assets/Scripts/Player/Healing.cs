@@ -3,13 +3,14 @@ using UnityEngine;
 
 public class Healing : MonoBehaviour
 {
-    [SerializeField] private float _FlackCount;
-    [SerializeField] private float _healHPCount;
+    [SerializeField] private float _FlaskCount;
 
     [SerializeField] private ParticleSystem _effect;
 
     [SerializeField] private GameObject _healFlask;
-    [SerializeField] private TextMeshProUGUI _FlackCountText;
+    [SerializeField] private TextMeshProUGUI _FlaskCountText;
+
+    private float _healHPCount;
 
     private Animator _animator;
     private PlayerHealth _health;
@@ -18,7 +19,7 @@ public class Healing : MonoBehaviour
     {
         _animator = GetComponent<Animator>();
         _health = GetComponent<PlayerHealth>();
-        _FlackCountText.text = _FlackCount.ToString();
+        _FlaskCountText.text = _FlaskCount.ToString();
     }
 
     void Update()
@@ -29,13 +30,18 @@ public class Healing : MonoBehaviour
         }
     }
 
+    public void GetFlaskEfficiency(float amount)
+    {
+        _healHPCount = Mathf.Abs(amount);
+    }
+
     private void Heal() //called by events in animations
     {
-        if (_FlackCount > 0)
+        if (_FlaskCount > 0)
         {
             _health.AddHealt(_healHPCount);
-            _FlackCount -= 1;
-            _FlackCountText.text = _FlackCount.ToString();
+            _FlaskCount -= 1;
+            _FlaskCountText.text = _FlaskCount.ToString();
             Instantiate(_effect, transform.position + Vector3.up * 1.5f, Quaternion.identity);
         }
     }
