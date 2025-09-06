@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 using TMPro;
 
@@ -45,6 +46,8 @@ public class LevelUpCont : MonoBehaviour
     private MoneyCont _moneyCont;
 
     private int _levelWillUpCount = 0;
+
+    private Coroutine _changeColorCorutine;
 
     void Start()
     {
@@ -120,8 +123,8 @@ public class LevelUpCont : MonoBehaviour
     private bool CheckEnoughMoney()
     {
         float SumCost = _moneyCost + _OneUpgrateCost;
-
-        if (_currentMoneyCount >= SumCost)
+        
+        if (_currentMoneyCount >= SumCost && _currentSoulsCount >= _levelWillUpCount + 1)
         {
             _moneyCost = SumCost;
             _moneyCostText.gameObject.SetActive(true);
@@ -130,6 +133,14 @@ public class LevelUpCont : MonoBehaviour
         }
         else
         {
+            if (_currentMoneyCount < SumCost)
+            {
+                StartChangeColorCorutine(_currentMoneyCountText);
+            }
+            if (_currentSoulsCount < _levelWillUpCount + 1)
+            {
+                StartChangeColorCorutine(_currentSoulsCountText);
+            }
             return false;
         }
     }
@@ -183,11 +194,61 @@ public class LevelUpCont : MonoBehaviour
         UpdateAllValues();
     }
 
+    public void CanselChanges()
+    {
+        _willBeDamage = _currentDamage;
+        _willBeDamageText.text = _currentDamageText.text;
+
+        _willBeHealth = _currentMaxHealth;
+        _willBeHealthText.text = _currentHealthText.text;
+
+        _willBeFlaskEfficiency = _currentFlaskEfficiency;
+        _willBeFlaskEfficiencyText.text = _currentFlaskEfficiencyText.text;
+
+        while (_levelWillUpCount != 0)
+        {
+            _OneUpgrateCost /= 1.5f;
+            _levelWillUpCount -= 1;
+        }
+        _moneyCost = 0;
+
+        _soulsCostText.gameObject.SetActive(false);
+        _moneyCostText.gameObject.SetActive(false);
+
+    }
+
     private void UpdateAllValues()
     {
         _playerHealth.GetMaxHealth(_currentMaxHealth);
         _playerSword.GetDamageValue(_currentDamage);
         _Flask.GetFlaskEfficiency(_currentFlaskEfficiency);
+    }
+
+    private void StartChangeColorCorutine(TextMeshProUGUI Curriens)
+    {
+        if (_changeColorCorutine == null)
+        {
+            _changeColorCorutine = StartCoroutine(NotEnoughtCurriencies(Curriens));
+        }
+    }
+
+    private IEnumerator NotEnoughtCurriencies(TextMeshProUGUI Curriens)
+    {
+        while (Curriens.color.g != 0.3f)
+        {
+            float newAlpha = Mathf.MoveTowards(Curriens.color.g, 0.3f, 5 * Time.deltaTime);
+            Curriens.color = new Color(Curriens.color.r, newAlpha, newAlpha, Curriens.color.a);
+            yield return null;
+        }
+        yield return new WaitForSeconds(1);
+
+        while (Curriens.color.g != 1)
+        {
+            float newAlpha = Mathf.MoveTowards(Curriens.color.g, 1, 5 * Time.deltaTime);
+            Curriens.color = new Color(Curriens.color.r, newAlpha, newAlpha, Curriens.color.a);
+            yield return null;
+        }
+        _changeColorCorutine = null;
     }
 
     public void GetCurrienciesMoney()
@@ -196,9 +257,9 @@ public class LevelUpCont : MonoBehaviour
         _currentMoneyCount = int.Parse(_moneyCountGamePlayUI.text);
     }
 
-    public void GetCurrienciesSouls(float amount)
+    public void GetCurrienciesSouls()
     {
-        _currentSoulsCount += Mathf.Abs(amount);
+        _currentSoulsCount += 1;
         _currentSoulsCountText.text = _currentSoulsCount.ToString();
     }
 }

@@ -9,20 +9,26 @@ public class MoneyCont : MonoBehaviour
 
     [SerializeField] private float _getMoneyFadeSpeed = 5;
 
-    private float _currentMoneyCount = 10000;
-    private float _targetMoneyCount = 10000;
+    private float _currentMoneyCount;
+    private float _targetMoneyCount;
     private float _getMoneyCount;
 
     private Coroutine _DrawMoneyCorutine;
+
+    private LevelUpCont _levelUpCont;
     void Start()
     {
         _getMoneyCountText.color = new Color(_getMoneyCountText.color.r, _getMoneyCountText.color.g, _getMoneyCountText.color.b, 0);
-        GetMoney(10);
+        _levelUpCont = FindObjectOfType<LevelUpCont>();
     }
 
     void Update()
     {
-        
+        if (Input.GetKeyDown(KeyCode.X))
+        {
+            GetMoney(5000);
+            _levelUpCont.GetCurrienciesSouls();
+        }
     }
 
     public void GetMoney(int amount)

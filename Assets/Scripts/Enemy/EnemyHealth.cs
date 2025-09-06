@@ -23,6 +23,10 @@ public class EnemyHealth : MonoBehaviour
     [Header("Floats")]
     [SerializeField] private int _minMoneyDrop;
     [SerializeField] private int _maxMoneyDrop;
+    [SerializeField] private float _lootDropChanse = 0.05f;
+
+    [Header("LootPrefab")]
+    [SerializeField] LootSouls _lootSouls;
 
     private EnemyController _enemyController;
     private DissolveController _dissolveController;
@@ -100,7 +104,20 @@ public class EnemyHealth : MonoBehaviour
         SetBarVisible(false);
         _dissolveController.Dissolve();
         _capsuleCollider.isTrigger = true;
+
+        Invoke("DropLoot", 2);
+    }
+
+    private void DropLoot()
+    {
         _moneyCont.GetMoney(Random.Range(_minMoneyDrop, _maxMoneyDrop));
+        if (Random.value <= _lootDropChanse)
+        {
+            var DropPosition = transform.position;
+            DropPosition.y = 0;
+            Instantiate(_lootSouls, DropPosition, Quaternion.identity);
+        }
+
     }
 
     public void AddHealt(float amount)

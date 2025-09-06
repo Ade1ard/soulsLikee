@@ -57,15 +57,29 @@ ModelImporter:
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
       events:
-      - time: 0.5877193
-        functionName: AllFlagsReload
+      - time: 0
+        functionName: IsHealing
         data: 
         objectReferenceParameter: {instanceID: 0}
         floatParameter: 0
         intParameter: 0
         messageOptions: 0
-      - time: 0
-        functionName: IsHealing
+      - time: 0.44307068
+        functionName: StartInvulnerability
+        data: 
+        objectReferenceParameter: {instanceID: 0}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
+      - time: 0.5636066
+        functionName: EndInvulnerability
+        data: 
+        objectReferenceParameter: {instanceID: 0}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
+      - time: 0.5877193
+        functionName: AllFlagsReload
         data: 
         objectReferenceParameter: {instanceID: 0}
         floatParameter: 0
