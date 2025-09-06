@@ -88,7 +88,7 @@ public class LevelUpCont : MonoBehaviour
             _levelWillUpCount += 1;
             _soulsCostText.gameObject.SetActive(true);
             _soulsCostText.text = "~" + _levelWillUpCount.ToString();
-            _OneUpgrateCost *= 1.5f;
+            _OneUpgrateCost = Mathf.Floor(_OneUpgrateCost *= 1.5f);
         }
     }
 
@@ -157,7 +157,7 @@ public class LevelUpCont : MonoBehaviour
             _soulsCostText.text = "~" + _levelWillUpCount.ToString();
         }
 
-        _OneUpgrateCost /= 1.5f;
+        _OneUpgrateCost = Mathf.Floor(_OneUpgrateCost /= 1.5f);
         if ((_moneyCost -= _OneUpgrateCost) == 0)
         {
             _moneyCostText.gameObject.SetActive(false);

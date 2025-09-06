@@ -38,7 +38,7 @@ public class TutorialClueCont : MonoBehaviour
     {
         if (_tutCoroutine != null)
         {
-            StopCoroutine(TutGetVisible(0));
+            StopCoroutine(_tutCoroutine);
         }
         _tutCoroutine = StartCoroutine(TutGetVisible(_bool ? 1:0));
     }
@@ -52,6 +52,9 @@ public class TutorialClueCont : MonoBehaviour
             _tutorialClueText.color = new Color(_tutorialClueText.color.r, _tutorialClueText.color.g, _tutorialClueText.color.b, newAlpha);
             yield return null;
         }
+        _tutorialClueFrame.color = new Color(_tutorialClueFrame.color.r, _tutorialClueFrame.color.g, _tutorialClueFrame.color.b, amount);
+        _tutorialClueText.color = new Color(_tutorialClueText.color.r, _tutorialClueText.color.g, _tutorialClueText.color.b, amount);
+
         _tutCoroutine = null;
     }
 }

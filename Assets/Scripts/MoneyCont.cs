@@ -9,9 +9,9 @@ public class MoneyCont : MonoBehaviour
 
     [SerializeField] private float _getMoneyFadeSpeed = 5;
 
-    private float _currentMoneyCount;
-    private float _targetMoneyCount;
-    private float _getMoneyCount;
+    private int _currentMoneyCount;
+    private int _targetMoneyCount;
+    private int _getMoneyCount;
 
     private Coroutine _DrawMoneyCorutine;
 
@@ -38,7 +38,7 @@ public class MoneyCont : MonoBehaviour
 
         if (_DrawMoneyCorutine != null)
         {
-            StopCoroutine(DrawMoneyCount());
+            StopCoroutine(_DrawMoneyCorutine);
         }
         _DrawMoneyCorutine = StartCoroutine(DrawMoneyCount());
     }
@@ -72,8 +72,8 @@ public class MoneyCont : MonoBehaviour
 
     public void SpentMoney(float amount)
     {
-        _currentMoneyCount -= Mathf.Abs(amount);
-        _targetMoneyCount -= Mathf.Abs(amount);
+        _currentMoneyCount -= Mathf.Abs(Mathf.FloorToInt(amount));
+        _targetMoneyCount -= Mathf.Abs(Mathf.FloorToInt(amount));
         _MoneyText.text = _currentMoneyCount.ToString();
     }
 }

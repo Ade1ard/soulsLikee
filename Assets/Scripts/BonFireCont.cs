@@ -42,7 +42,7 @@ public class BonFireCont : MonoBehaviour
     {
         if (_NearBonFire)
         {
-            if (Input.GetKeyUp(KeyCode.F))
+            if (Input.GetKeyUp(KeyCode.F) && !_isSitting)
             {
                 SitBonfire();
             }
