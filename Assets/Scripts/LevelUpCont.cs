@@ -44,6 +44,7 @@ public class LevelUpCont : MonoBehaviour
     private PlayerSword _playerSword;
     private Healing _Flask;
     private MoneyCont _moneyCont;
+    private GetSoulsUI _getSoulsUI;
 
     private int _levelWillUpCount = 0;
 
@@ -51,6 +52,7 @@ public class LevelUpCont : MonoBehaviour
 
     void Start()
     {
+        _getSoulsUI = GetComponent<GetSoulsUI>();
         _moneyCont = FindObjectOfType<MoneyCont>();
         _playerHealth = FindObjectOfType<PlayerHealth>();
         _playerSword = FindObjectOfType<PlayerSword>();
@@ -261,5 +263,6 @@ public class LevelUpCont : MonoBehaviour
     {
         _currentSoulsCount += 1;
         _currentSoulsCountText.text = _currentSoulsCount.ToString();
+        _getSoulsUI.GetSoulsVisualisation();
     }
 }
