@@ -24,6 +24,7 @@ public class EnemyHealth : MonoBehaviour
     [SerializeField] private int _minMoneyDrop;
     [SerializeField] private int _maxMoneyDrop;
     [SerializeField] private float _lootDropChanse = 0.05f;
+    [SerializeField] private float _lootDrobDelay = 2;
 
     [Header("LootPrefab")]
     [SerializeField] LootSouls _lootSouls;
@@ -105,7 +106,7 @@ public class EnemyHealth : MonoBehaviour
         _dissolveController.Dissolve();
         _capsuleCollider.isTrigger = true;
 
-        Invoke("DropLoot", 2);
+        Invoke("DropLoot", _lootDrobDelay);
     }
 
     private void DropLoot()
