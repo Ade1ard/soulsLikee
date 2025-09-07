@@ -57,14 +57,14 @@ ModelImporter:
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
       events:
-      - time: 0.14051174
+      - time: 0.10589635
         functionName: StartInvulnerability
         data: 
         objectReferenceParameter: {instanceID: 0}
         floatParameter: 0
         intParameter: 0
         messageOptions: 0
-      - time: 0.27694184
+      - time: 0.35001877
         functionName: EndInvulnerability
         data: 
         objectReferenceParameter: {instanceID: 0}
