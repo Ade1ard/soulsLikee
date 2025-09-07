@@ -57,7 +57,7 @@ public class PlayerHealth : MonoBehaviour
 
         if (_value <= 0 && !_playerAnimator.GetCurrentAnimatorStateInfo(0).IsName("Death"))
         {
-            //PlayerIsDead();
+            PlayerIsDead();
         }
 
         StartDrawBarCorutine();

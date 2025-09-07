@@ -24,11 +24,7 @@ public class MoneyCont : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.X))
-        {
-            GetMoney(5000);
-            _levelUpCont.GetCurrienciesSouls();
-        }
+
     }
 
     public void GetMoney(int amount)

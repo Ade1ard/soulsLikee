@@ -22,13 +22,18 @@ public class EnemyController : MonoBehaviour
     [SerializeField] private float _lowRangeAttackDelay;
     [SerializeField] private float _highRangeAttackDelay;
     [SerializeField] private EnemySword _enemySword;
+
+    [Header("Sounds")]
+    [SerializeField] private List<AudioClip> _swordSwingSounds;
+
     private float _attackDelay;
 
     private bool _inAggression = false;
     private float _timeLastAttack;
     private float _timeLastSeen;
     private Animator _animator;
-    
+    private AudioSource _audioSource;
+
     private NavMeshAgent _navMeshAgent;
 
     [Header("PLayer")]
@@ -42,6 +47,7 @@ public class EnemyController : MonoBehaviour
 
     void Start()
     {
+        _audioSource = GetComponent<AudioSource>();
         _player = FindObjectOfType<PlayerController>();
         _navMeshAgent = GetComponent<NavMeshAgent>();
         _animator = GetComponent<Animator>();
@@ -198,11 +204,13 @@ public class EnemyController : MonoBehaviour
     {
         _enemySword.StartAttack();
         _animator.speed = 1.2f;
+        _audioSource.PlayOneShot(_swordSwingSounds[Random.Range(0, _swordSwingSounds.Count)]);
     }
 
     private void KomboCanDamage() //called by events in animations
     {
         _enemySword.KomboCanDamage();
+        _audioSource.PlayOneShot(_swordSwingSounds[Random.Range(0, _swordSwingSounds.Count)]);
     }
 
     private void EndAttack() //called by events in animations

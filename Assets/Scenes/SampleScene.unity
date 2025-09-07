@@ -23005,6 +23005,9 @@ MonoBehaviour:
   _lowRangeAttackDelay: 2
   _highRangeAttackDelay: 4
   _enemySword: {fileID: 195306520}
+  _swordSwingSounds:
+  - {fileID: 8300000, guid: ce688dad37759714994f2f85381e0745, type: 3}
+  - {fileID: 8300000, guid: 46bdd9ca88d498f49a8228c9bd3cc50a, type: 3}
   _enemySpine: {fileID: 442574457}
   _cameralookAt: {fileID: 1981203411}
 --- !u!195 &442574470
@@ -27898,6 +27901,7 @@ MonoBehaviour:
   _lowRangeAttackDelay: 2
   _highRangeAttackDelay: 7
   _enemySword: {fileID: 1415946387}
+  _swordSwingSounds: []
   _enemySpine: {fileID: 5742672707909849607}
   _cameralookAt: {fileID: 872486994}
 --- !u!195 &1204947618
@@ -30609,6 +30613,9 @@ MonoBehaviour:
   _lowRangeAttackDelay: 2
   _highRangeAttackDelay: 4
   _enemySword: {fileID: 1178316079}
+  _swordSwingSounds:
+  - {fileID: 8300000, guid: ce688dad37759714994f2f85381e0745, type: 3}
+  - {fileID: 8300000, guid: 46bdd9ca88d498f49a8228c9bd3cc50a, type: 3}
   _enemySpine: {fileID: 878708857}
   _cameralookAt: {fileID: 765416298}
 --- !u!137 &1525170451 stripped
@@ -33356,7 +33363,7 @@ Transform:
   m_GameObject: {fileID: 1962794637}
   serializedVersion: 2
   m_LocalRotation: {x: 0.07703765, y: -0.632319, z: 0.0634064, w: 0.76825625}
-  m_LocalPosition: {x: 5.411065, y: 3.656952, z: -10.292457}
+  m_LocalPosition: {x: 5.410882, y: 3.6569521, z: -10.293393}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:

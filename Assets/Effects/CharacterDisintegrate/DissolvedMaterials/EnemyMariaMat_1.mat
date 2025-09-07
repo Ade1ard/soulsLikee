@@ -27,7 +27,7 @@ Material:
     serializedVersion: 3
     m_TexEnvs:
     - _Albedo:
-        m_Texture: {fileID: 2800000, guid: 803664046ce39bc4787bdbf1a3d35ce4, type: 3}
+        m_Texture: {fileID: 2800000, guid: 0839182b2448b004088bd1d8b38900af, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _BaseMap:
@@ -113,7 +113,7 @@ Material:
     - _GlossMapScale: 0
     - _Glossiness: 0
     - _GlossyReflections: 0
-    - _Metalic: 0
+    - _Metalic: 0.3
     - _Metallic: 0
     - _NormalsStraigth: 1
     - _OcclusionStrength: 1
@@ -131,9 +131,9 @@ Material:
     - _ZTest: 4
     - _ZWrite: 1
     - _ZWriteControl: 0
-    - _smoothness: 0.5
+    - _smoothness: 0.3
     m_Colors:
-    - _BasaColor: {r: 1, g: 1, b: 1, a: 1}
+    - _BasaColor: {r: 0.7264151, g: 0.7264151, b: 0.7264151, a: 1}
     - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _DissolveColor: {r: 0, g: 0.19392234, b: 5.992156, a: 0}
