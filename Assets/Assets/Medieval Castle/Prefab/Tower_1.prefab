@@ -123,7 +123,7 @@ GameObject:
   - component: {fileID: 5064494655973580183}
   m_Layer: 0
   m_Name: Tower1_LOD0
-  m_TagString: Untagged
+  m_TagString: Environment
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -215,7 +215,7 @@ MeshCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 5
-  m_Convex: 0
+  m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: -110136817238074192, guid: 111e490940fb9de46bcc88f858044203, type: 3}
 --- !u!1 &8340536802921573560
