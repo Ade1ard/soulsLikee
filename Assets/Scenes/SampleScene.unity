@@ -23467,15 +23467,15 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 0
-  m_Volume: 0.5
+  m_Volume: 0.2
   m_Pitch: 1
   Loop: 0
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
-  Priority: 128
+  Priority: 50
   DopplerLevel: 1
-  MinDistance: 1
+  MinDistance: 0.1
   MaxDistance: 500
   Pan2D: 0
   rolloffMode: 0
@@ -28780,15 +28780,15 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 0
-  m_Volume: 0.5
+  m_Volume: 0.2
   m_Pitch: 1
   Loop: 0
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
-  Priority: 128
+  Priority: 50
   DopplerLevel: 1
-  MinDistance: 1
+  MinDistance: 0.1
   MaxDistance: 500
   Pan2D: 0
   rolloffMode: 0
@@ -29118,7 +29118,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1214445950}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.31622782, y: 0, z: 0, w: 0.9486833}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -32476,15 +32476,15 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 0
-  m_Volume: 0.5
+  m_Volume: 0.2
   m_Pitch: 1
   Loop: 0
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
-  Priority: 128
+  Priority: 50
   DopplerLevel: 1
-  MinDistance: 1
+  MinDistance: 0.1
   MaxDistance: 500
   Pan2D: 0
   rolloffMode: 0
@@ -33153,7 +33153,7 @@ MonoBehaviour:
   m_YAxis:
     Value: 1
     m_SpeedMode: 0
-    m_MaxSpeed: 10
+    m_MaxSpeed: 7
     m_AccelTime: 0.05
     m_DecelTime: 0.05
     m_InputAxisName: Mouse Y
@@ -33177,7 +33177,7 @@ MonoBehaviour:
   m_XAxis:
     Value: 0
     m_SpeedMode: 0
-    m_MaxSpeed: 700
+    m_MaxSpeed: 400
     m_AccelTime: 0.07
     m_DecelTime: 0.07
     m_InputAxisName: Mouse X
@@ -34224,7 +34224,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -9.000366, y: 0}
+  m_AnchoredPosition: {x: -9.000305, y: 0}
   m_SizeDelta: {x: -1064, y: -500}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1001 &1734005370
@@ -35788,7 +35788,7 @@ Transform:
   m_GameObject: {fileID: 1962794637}
   serializedVersion: 2
   m_LocalRotation: {x: 0.07703765, y: -0.632319, z: 0.0634064, w: 0.76825625}
-  m_LocalPosition: {x: 15.631321, y: 3.8569522, z: -11.191152}
+  m_LocalPosition: {x: 15.620905, y: 3.8569522, z: -11.244307}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -38964,7 +38964,7 @@ Camera:
   m_ShutterSpeed: 0.005
   m_Aperture: 16
   m_FocusDistance: 10
-  m_FocalLength: 50
+  m_FocalLength: 32.96973
   m_BladeCount: 5
   m_Curvature: {x: 2, y: 11}
   m_BarrelClipping: 0.25
@@ -39147,7 +39147,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0cd44c1031e13a943bb63640046fad76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_UiScaleMode: 0
+  m_UiScaleMode: 1
   m_ReferencePixelsPerUnit: 100
   m_ScaleFactor: 1
   m_ReferenceResolution: {x: 800, y: 600}
