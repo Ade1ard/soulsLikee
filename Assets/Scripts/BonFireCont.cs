@@ -19,15 +19,18 @@ public class BonFireCont : MonoBehaviour
     private PlayerController _playerController;
     private CameraModeChanger _cameraChanger;
     private LevelUpCont _levelUpCont;
+    private GameSettings _gameSettings;
 
     private bool _NearBonFire = false;
     private bool _isSitting = false;
 
     private bool _inMenu;
     private bool _inLevelUp;
+    private bool _inSettings;
 
     void Start()
     {
+        _gameSettings = FindObjectOfType<GameSettings>();
         _levelUpCont = FindObjectOfType<LevelUpCont>();
         _tutorialClueCont = FindObjectOfType<TutorialClueCont>();
         _cameraChanger = FindObjectOfType<CameraModeChanger>();
@@ -57,6 +60,10 @@ public class BonFireCont : MonoBehaviour
                 {
                     LevelUpActive(false);
                     _levelUpCont.CanselChanges();
+                }
+                if (_inSettings)
+                {
+                    GameSettingsActive(false);
                 }
             }
 
@@ -106,6 +113,15 @@ public class BonFireCont : MonoBehaviour
         _levelUpUI.SetActive(_bool);
         _inLevelUp = _bool;
         _inMenu = !_bool;
+    }
+
+    public void GameSettingsActive(bool _bool)
+    {
+        _menuUI.SetActive(!_bool);
+        _gameSettings.GetActive(_bool);
+        _inSettings = _bool;
+        _inMenu = !_bool;
+
     }
 
     private void OnTriggerEnter(Collider other)

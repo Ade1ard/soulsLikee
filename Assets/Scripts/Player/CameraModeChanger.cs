@@ -11,7 +11,7 @@ public class CameraModeChanger : MonoBehaviour
     [Header("UI")]
     [SerializeField] private Image _EnemyTargetLockUI;
 
-    [Header("Transform")]
+    [Header("Objects")]
     [SerializeField] private Transform _defaultLookAt;
     [SerializeField] private CinemachineVirtualCamera _lockOnCamera;
     [SerializeField] private CinemachineFreeLook _freeLookCamera;
