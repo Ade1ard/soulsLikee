@@ -16,15 +16,15 @@ public class GameSettings : MonoBehaviour
     [SerializeField] private Scrollbar _scrollbarCameraSpeed;
     [SerializeField] private Scrollbar _scrollbarUISize;
 
-    private float _UISize = 1.5f;
+    private float _UISize = 1.7f;
 
     private float _freeLookCameraSpeedOffset_X = 1000f;
     private float _freeLookCameraSpeedOffset_Y = 15f;
 
-    private float _lockOnCameraDistanseOffset = 7f;
+    private float _lockOnCameraDistanseOffset = 6f;
 
-    private float _topAndBottomRigCameraDistanseOffset = 7f;
-    private float _middleRigCameraDistanseOffset = 9f;
+    private float _topAndBottomRigCameraDistanseOffset = 6f;
+    private float _middleRigCameraDistanseOffset = 8f;
 
     void Start()
     {
@@ -39,14 +39,15 @@ public class GameSettings : MonoBehaviour
 
     public void GetUISize()
     {
-        float amoint = Mathf.Clamp(_scrollbarUISize.value, 0.3f, 1f);
+        float amoint = 0.25f + (Mathf.Clamp(_scrollbarUISize.value, 0.1f, 1) - 0.1f) * (0.5f / 0.9f);
 
         _playerCanvas.scaleFactor = _UISize * amoint;
     }
 
     public void GetCameraSpeed()
     {
-        float amoint = Mathf.Clamp(_scrollbarCameraSpeed.value, 0.1f, 1f);
+        float amoint = 0.25f + (Mathf.Clamp(_scrollbarCameraSpeed.value, 0.1f, 1) - 0.1f) * (0.5f / 0.9f);
+
 
         _freeLookCamera.m_XAxis.m_MaxSpeed = amoint * _freeLookCameraSpeedOffset_X;
         _freeLookCamera.m_YAxis.m_MaxSpeed = amoint * _freeLookCameraSpeedOffset_Y;
@@ -54,7 +55,7 @@ public class GameSettings : MonoBehaviour
 
     public void GetCameraDistanse()
     {
-        float amoint = Mathf.Clamp(_scrollbarCameraDist.value, 0.3f, 1f);
+        float amoint = 0.25f + (Mathf.Clamp(_scrollbarCameraDist.value, 0.1f, 1) - 0.1f) * (0.5f / 0.9f);
 
         _freeLookCamera.m_Orbits[0].m_Radius = amoint * _topAndBottomRigCameraDistanseOffset;
         _freeLookCamera.m_Orbits[1].m_Radius = amoint * _middleRigCameraDistanseOffset;

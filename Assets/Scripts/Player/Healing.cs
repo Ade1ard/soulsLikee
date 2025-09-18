@@ -12,6 +12,8 @@ public class Healing : MonoBehaviour
 
     private float _healHPCount;
 
+    private bool _isHealing = false;
+
     private Animator _animator;
     private PlayerHealth _health;
 
@@ -24,9 +26,10 @@ public class Healing : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetKeyUp(KeyCode.R))
+        if (Input.GetKeyUp(KeyCode.R) && !_isHealing)
         {
             _animator.SetTrigger("Heal");
+            _isHealing = true;
         }
     }
 
@@ -49,5 +52,6 @@ public class Healing : MonoBehaviour
     private void IsHealing(int _int) //called by events in animations
     {
         _healFlask.SetActive(_int == 1 ? true : false);
+        _isHealing = _int == 1 ? true : false;
     }
 }
