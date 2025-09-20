@@ -21,10 +21,10 @@ public class GameSettings : MonoBehaviour
     private float _freeLookCameraSpeedOffset_X = 1000f;
     private float _freeLookCameraSpeedOffset_Y = 15f;
 
-    private float _lockOnCameraDistanseOffset = 6f;
+    private float _lockOnCameraDistanseOffset = 8f;
 
-    private float _topAndBottomRigCameraDistanseOffset = 6f;
-    private float _middleRigCameraDistanseOffset = 8f;
+    private float _topAndBottomRigCameraDistanseOffset = 8f;
+    private float _middleRigCameraDistanseOffset = 10f;
 
     void Start()
     {
