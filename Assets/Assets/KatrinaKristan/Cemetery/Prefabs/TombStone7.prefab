@@ -95,6 +95,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: TombStone_7
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: b6e329fa5bbe130468f4b14cba829fce,
+        type: 3}
+      propertyPath: m_TagString
+      value: Environment
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
