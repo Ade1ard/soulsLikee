@@ -195,14 +195,14 @@ LODGroup:
   m_LocalReferencePoint: {x: -0.0000019073486, y: 8.353533, z: 0.4226582}
   m_Size: 17.898922
   m_FadeMode: 1
-  m_AnimateCrossFading: 0
+  m_AnimateCrossFading: 1
   m_LastLODIsBillboard: 0
   m_LODs:
-  - screenRelativeHeight: 0.6378932
+  - screenRelativeHeight: 0.41576016
     fadeTransitionWidth: 0
     renderers:
     - renderer: {fileID: 4288644334522078473}
-  - screenRelativeHeight: 0.23703593
+  - screenRelativeHeight: 0.0568433
     fadeTransitionWidth: 0
     renderers:
     - renderer: {fileID: 4905927935297033143}
@@ -353,7 +353,7 @@ MeshRenderer:
   m_RendererPriority: 0
   m_Materials:
   - {fileID: 2100000, guid: 87bef58f9e1e6d94892e5006c08a38ed, type: 2}
-  - {fileID: 2100000, guid: dd9fbe382d961ff46bd9ed06b3a43616, type: 2}
+  - {fileID: 2100000, guid: fb673fe1ab4b33e42b2ad0fdc15d54b7, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
