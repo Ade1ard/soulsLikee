@@ -16,7 +16,7 @@ public class GameSettings : MonoBehaviour
     [SerializeField] private Scrollbar _scrollbarCameraSpeed;
     [SerializeField] private Scrollbar _scrollbarUISize;
 
-    private float _UISize = 1.7f;
+    private float _UISize = 2f;
 
     private float _freeLookCameraSpeedOffset_X = 1000f;
     private float _freeLookCameraSpeedOffset_Y = 15f;
