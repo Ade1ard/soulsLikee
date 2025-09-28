@@ -14,7 +14,7 @@ GameObject:
   m_TagString: Environment
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &8337544750905580740
 Transform:
@@ -100,10 +100,25 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[1]
       value: 
       objectReference: {fileID: 2100000, guid: 06fdaa5fc0141e6409ab1214e506cdad, type: 2}
+    - target: {fileID: 256462919948369656, guid: 94d7d577104a50849885d9afabd21ce0,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 94d7d577104a50849885d9afabd21ce0,
         type: 3}
       propertyPath: m_Name
       value: StoneBig
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 94d7d577104a50849885d9afabd21ce0,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
+    - target: {fileID: 2731368820644339108, guid: 94d7d577104a50849885d9afabd21ce0,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
       objectReference: {fileID: 0}
     - target: {fileID: 4043283185501508479, guid: 94d7d577104a50849885d9afabd21ce0,
         type: 3}
@@ -130,6 +145,11 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[2]
       value: 
       objectReference: {fileID: 2100000, guid: 06fdaa5fc0141e6409ab1214e506cdad, type: 2}
+    - target: {fileID: 7561944401599010044, guid: 94d7d577104a50849885d9afabd21ce0,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -172,8 +192,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1.5581532, y: 1, z: 4.4835777}
-  m_Center: {x: 0.12475109, y: 0, z: 1.6071901}
+  m_Size: {x: 1.5581532, y: 0.7632439, z: 4.4835777}
+  m_Center: {x: 0.12475109, y: 0.11837804, z: 1.6071901}
 --- !u!65 &5732818253839542192
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -193,8 +213,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1.1099184, y: 0.6449325, z: 2.7072754}
-  m_Center: {x: 1.5039047, y: -0.17753375, z: 2.0945911}
+  m_Size: {x: 1.1099184, y: 0.41611862, z: 2.7072754}
+  m_Center: {x: 1.5039047, y: -0.06312686, z: 2.0945911}
 --- !u!65 &4884406262775394391
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -214,8 +234,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.60701, y: 0.80628246, z: 2.4781253}
-  m_Center: {x: -0.97743016, y: -0.09685877, z: 1.6142048}
+  m_Size: {x: 0.60701, y: 0.5604842, z: 2.4781253}
+  m_Center: {x: -0.97743016, y: 0.02604039, z: 1.6142048}
 --- !u!4 &5751700471132722821 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 94d7d577104a50849885d9afabd21ce0,

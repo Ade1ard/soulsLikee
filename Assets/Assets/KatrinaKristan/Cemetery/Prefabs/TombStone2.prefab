@@ -16,7 +16,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &957478746415560342
 Transform:
@@ -133,7 +133,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &2937503718166962018
 Transform:
@@ -224,6 +224,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_TagString
       value: Environment
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 2db3d3f8ef2d0e74d9bb993d5e2ebb90,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -379,6 +384,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: vfx_Flames_01 (4)
+      objectReference: {fileID: 0}
+    - target: {fileID: 8793510976239746625, guid: 8fa5143051527e949b0ae174c8430414,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
+    - target: {fileID: 9064956068904258685, guid: 8fa5143051527e949b0ae174c8430414,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

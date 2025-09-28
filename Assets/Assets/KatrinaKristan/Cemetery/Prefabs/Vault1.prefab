@@ -14,7 +14,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &5596517427572035278
 Transform:
@@ -95,10 +95,25 @@ PrefabInstance:
       propertyPath: m_Name
       value: Vault_1
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 04d1c266da82ca94bacda18331d553c2,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     - target: {fileID: 3523087379327757451, guid: 04d1c266da82ca94bacda18331d553c2,
         type: 3}
       propertyPath: m_TagString
       value: Environment
+      objectReference: {fileID: 0}
+    - target: {fileID: 3523087379327757451, guid: 04d1c266da82ca94bacda18331d553c2,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
+    - target: {fileID: 7561944401599010044, guid: 04d1c266da82ca94bacda18331d553c2,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
