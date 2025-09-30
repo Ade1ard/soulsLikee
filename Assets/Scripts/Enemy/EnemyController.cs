@@ -129,7 +129,7 @@ public class EnemyController : MonoBehaviour
                 _attackDelay = Random.Range(_lowRangeAttackDelay, _highRangeAttackDelay);
                 _timeLastAttack = Time.time;
                 _navMeshAgent.ResetPath();
-                _animator.SetFloat("Attack", Random.Range(1, _AttacksAnimationCount + 1));
+                _animator.SetFloat("Attack", Random.Range(0.1f, _AttacksAnimationCount + 1));
                 _animator.SetFloat("Speed", Mathf.Lerp(_animator.GetFloat("Speed"), 0, _changeAnimationsSpeed * Time.deltaTime));
             }
             else

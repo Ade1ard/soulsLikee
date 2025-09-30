@@ -21,7 +21,11 @@ public class DissolveController : MonoBehaviour
         {
             foreach(SkinnedMeshRenderer skinnedMesh in _skinnedMeshes)
             {
-                _skinnedMaterials.Add(skinnedMesh.material);
+                
+                foreach(Material material in skinnedMesh.materials)
+                {
+                    _skinnedMaterials.Add(material);
+                }
             }
         }
     }
