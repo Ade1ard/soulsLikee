@@ -56,6 +56,7 @@ public class CameraModeChanger : MonoBehaviour
             var screenPosition = Camera.main.WorldToScreenPoint(_enemyLockedOn._enemySpine.position);
             _EnemyTargetLockUI.rectTransform.position = screenPosition;
         }
+
     }
 
     private void ChangeCameraLookMod()
@@ -81,9 +82,9 @@ public class CameraModeChanger : MonoBehaviour
             {
                 _isCameraLocked = true;
                 _EnemyTargetLockUI.enabled = true;
-                _lockOnCamera.LookAt = _enemyLockedOn._cameralookAt;
+                _lockOnCamera.LookAt = _enemyLockedOn._cameraLookAt;
 
-                _playerController.TakeNearEnemy(_enemyLockedOn._cameralookAt);
+                _playerController.TakeNearEnemy(_enemyLockedOn._cameraLookAt);
 
                 _lockOnCamera.Priority = 20;
                 _freeLookCamera.Priority = 0;
@@ -127,7 +128,7 @@ public class CameraModeChanger : MonoBehaviour
     {
         if (_isCameraLocked)
         {
-            if (Vector3.Distance(_enemyLockedOn._cameralookAt.transform.position, transform.position) > _cameraLockDistance)
+            if (Vector3.Distance(_enemyLockedOn._cameraLookAt.transform.position, transform.position) > _cameraLockDistance)
             {
                 ChangeCameraLookMod();
             }

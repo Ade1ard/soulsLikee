@@ -42,8 +42,9 @@ public class EnemyController : MonoBehaviour
     private bool _isPlayerNoticed;
 
     [Header("Objects for camera")]
-    public Transform _enemySpine;
-    public Transform _cameralookAt;
+    [SerializeField] private Transform _CameraLookAt;
+    public Transform _cameraLookAt => _CameraLookAt;
+    public Transform _enemySpine { get; private set; }
 
 
     void Start()
@@ -52,6 +53,8 @@ public class EnemyController : MonoBehaviour
         _player = FindObjectOfType<PlayerController>();
         _navMeshAgent = GetComponent<NavMeshAgent>();
         _animator = GetComponent<Animator>();
+
+        _enemySpine = _animator.GetBoneTransform(HumanBodyBones.Spine);
 
         PickNewTarget();
     }

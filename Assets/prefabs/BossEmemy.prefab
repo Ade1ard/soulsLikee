@@ -1634,7 +1634,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6077082426604900780}
   m_Layer: 0
-  m_Name: CameraLookAtt
+  m_Name: CameraLookAt
   m_TagString: Untagged
   m_Icon: {fileID: 4422084297763085224, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
@@ -8264,8 +8264,7 @@ MonoBehaviour:
   _swordSwingSounds:
   - {fileID: 8300000, guid: 46bdd9ca88d498f49a8228c9bd3cc50a, type: 3}
   - {fileID: 8300000, guid: ce688dad37759714994f2f85381e0745, type: 3}
-  _enemySpine: {fileID: 6560240068154984999}
-  _cameralookAt: {fileID: 6077082426604900780}
+  _CameraLookAt: {fileID: 6077082426604900780}
 --- !u!114 &5264788568584591049
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9071,7 +9070,7 @@ VFXRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8843382556332812515}
-  m_Enabled: 0
+  m_Enabled: 1
   m_CastShadows: 0
   m_ReceiveShadows: 0
   m_DynamicOccludee: 1
