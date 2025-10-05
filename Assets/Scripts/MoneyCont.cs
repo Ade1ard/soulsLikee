@@ -10,16 +10,14 @@ public class MoneyCont : MonoBehaviour
     [SerializeField] private float _getMoneyFadeSpeed = 5;
 
     private int _currentMoneyCount;
-    private int _targetMoneyCount;
+    public int _targetMoneyCount { get; private set; }
     private int _getMoneyCount;
 
     private Coroutine _DrawMoneyCorutine;
 
-    private LevelUpCont _levelUpCont;
     void Start()
     {
         _getMoneyCountText.color = new Color(_getMoneyCountText.color.r, _getMoneyCountText.color.g, _getMoneyCountText.color.b, 0);
-        _levelUpCont = FindObjectOfType<LevelUpCont>();
     }
 
     void Update()

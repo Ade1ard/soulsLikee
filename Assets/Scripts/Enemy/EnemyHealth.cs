@@ -9,7 +9,8 @@ public class EnemyHealth : MonoBehaviour
     [SerializeField] private Image _HealthValue;
     [SerializeField] private Image _HealthBar;
     [SerializeField] private float _maxValue;
-    private float _value;
+    public float maxValue => _maxValue;
+    public float _value { get; private set; }
 
     [Header("BarSpeed")]
     [SerializeField] private float _healthBarSpeed;
@@ -89,14 +90,14 @@ public class EnemyHealth : MonoBehaviour
 
             if (_value <= 0 && !_isDead)
             {
-                EnemyDeath();
+                EnemyDeath(true);
             }
 
             StartDrawBarCorutine();
         }
     }
 
-    private void EnemyDeath()
+    public void EnemyDeath(bool _bool)
     {
         _isDead = true;
         _navMeshAgent.ResetPath();
@@ -106,7 +107,10 @@ public class EnemyHealth : MonoBehaviour
         _dissolveController.Dissolve();
         _capsuleCollider.isTrigger = true;
 
-        Invoke("DropLoot", _lootDrobDelay);
+        if (_bool)
+        {
+            Invoke("DropLoot", _lootDrobDelay); 
+        }
     }
 
     private void DropLoot()

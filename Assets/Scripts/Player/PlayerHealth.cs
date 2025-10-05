@@ -7,8 +7,8 @@ public class PlayerHealth : MonoBehaviour
     [Header("BarsUI")]
     [SerializeField] private Image _mainHealthValueImage;
     [SerializeField] private Image _mediumHealthValueImage;
-    private float _maxValue;
-    private float _value;
+    public float _maxValue {  get; private set; }
+    public float _value { get; private set; }
 
     [Header("BarsSpeeds")]
     [SerializeField] private float _mainBarSpeed;

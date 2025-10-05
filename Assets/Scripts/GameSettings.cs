@@ -12,9 +12,9 @@ public class GameSettings : MonoBehaviour
     private CinemachineFramingTransposer _transposer;
 
     [Header("Scrollbars")]
-    [SerializeField] private Scrollbar _scrollbarCameraDist;
-    [SerializeField] private Scrollbar _scrollbarCameraSpeed;
-    [SerializeField] private Scrollbar _scrollbarUISize;
+    public Scrollbar _scrollbarCameraDist;
+    public Scrollbar _scrollbarCameraSpeed;
+    public Scrollbar _scrollbarUISize;
 
     private float _UISize = 2f;
 

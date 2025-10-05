@@ -1,22 +1,22 @@
 using System.Collections;
 using UnityEngine;
 using TMPro;
+using Unity.Mathematics;
 
 public class LevelUpCont : MonoBehaviour
 {
     [Header("StartStatsFloats")]
-    [SerializeField] private float _currentMaxHealth = 100;
-    [SerializeField] private float _currentDamage = 30;
-    [SerializeField] private float _currentFlaskEfficiency = 50;
-
-    [SerializeField] private float _OneUpgrateCost = 1200;
+    public float _currentMaxHealth = 100;
+    public float _currentDamage = 30;
+    public float _currentFlaskEfficiency = 50;
+    public float _oneUpgrateCost = 1200;
 
     private float _willBeHealth;
     private float _willBeDamage;
     private float _willBeFlaskEfficiency;
 
     private float _currentMoneyCount;
-    private float _currentSoulsCount;
+    public float _currentSoulsCount { get; private set; }
 
     private float _moneyCost;
 
@@ -90,7 +90,7 @@ public class LevelUpCont : MonoBehaviour
             _levelWillUpCount += 1;
             _soulsCostText.gameObject.SetActive(true);
             _soulsCostText.text = "~" + _levelWillUpCount.ToString();
-            _OneUpgrateCost = Mathf.Floor(_OneUpgrateCost *= 1.5f);
+            _oneUpgrateCost = Mathf.Floor(_oneUpgrateCost *= 1.5f);
         }
     }
 
@@ -124,7 +124,7 @@ public class LevelUpCont : MonoBehaviour
 
     private bool CheckEnoughMoney()
     {
-        float SumCost = _moneyCost + _OneUpgrateCost;
+        float SumCost = _moneyCost + _oneUpgrateCost;
         
         if (_currentMoneyCount >= SumCost && _currentSoulsCount >= _levelWillUpCount + 1)
         {
@@ -159,8 +159,8 @@ public class LevelUpCont : MonoBehaviour
             _soulsCostText.text = "~" + _levelWillUpCount.ToString();
         }
 
-        _OneUpgrateCost = Mathf.Floor(_OneUpgrateCost /= 1.5f);
-        if ((_moneyCost -= _OneUpgrateCost) == 0)
+        _oneUpgrateCost = Mathf.Floor(_oneUpgrateCost /= 1.5f);
+        if ((_moneyCost -= _oneUpgrateCost) == 0)
         {
             _moneyCostText.gameObject.SetActive(false);
         }
@@ -191,7 +191,7 @@ public class LevelUpCont : MonoBehaviour
         _moneyCost = 0;
         _moneyCostText.gameObject.SetActive(false);
         _currentMoneyCountText.text = _currentMoneyCount.ToString();
-        _costValueMoney.text = _OneUpgrateCost.ToString();
+        _costValueMoney.text = _oneUpgrateCost.ToString();
 
         UpdateAllValues();
     }
@@ -209,7 +209,7 @@ public class LevelUpCont : MonoBehaviour
 
         while (_levelWillUpCount != 0)
         {
-            _OneUpgrateCost /= 1.5f;
+            _oneUpgrateCost /= 1.5f;
             _levelWillUpCount -= 1;
         }
         _moneyCost = 0;
@@ -259,9 +259,9 @@ public class LevelUpCont : MonoBehaviour
         _currentMoneyCount = int.Parse(_moneyCountGamePlayUI.text);
     }
 
-    public void GetCurrienciesSouls()
+    public void GetCurrienciesSouls(float amount)
     {
-        _currentSoulsCount += 1;
+        _currentSoulsCount += math.abs(amount);
         _currentSoulsCountText.text = _currentSoulsCount.ToString();
         _getSoulsUI.GetSoulsVisualisation();
     }

@@ -22,7 +22,7 @@ public class LootSouls : MonoBehaviour
         {
             if (Input.GetKeyDown(KeyCode.F))
             {
-                _levelUpCont.GetCurrienciesSouls();
+                _levelUpCont.GetCurrienciesSouls(1);
                 _tutClueCont.TutorialGetUnvisible();
                 Destroy(gameObject);
             }

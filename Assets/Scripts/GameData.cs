@@ -5,9 +5,10 @@ using UnityEngine;
 public class GameData
 {
     public int money;
-    public int souls;
+    public float souls;
 
     public float maxHealth;
+    public float health;
     public float damage;
     public float flaskEfficiency;
     public float oneUpgrateCost;
@@ -25,6 +26,7 @@ public class GameData
         souls = 0;
 
         maxHealth = 100;
+        health = 0;
         damage = 30;
         flaskEfficiency = 50;
         oneUpgrateCost = 1200;
@@ -34,12 +36,16 @@ public class GameData
 [System.Serializable]
 public class EnemyData
 {
+    public string enemyID;
     public Vector3 enemyPosition;
+    public bool isAlive;
     public float health;
 
     public EnemyData()
     {
+        enemyID = "";
         health = 100;
+        isAlive = true;
         enemyPosition = Vector3.zero;
     }
 }
