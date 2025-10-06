@@ -29,14 +29,14 @@ public class BonFireCont : MonoBehaviour
     private bool _inLevelUp;
     private bool _inSettings;
 
-    void Start()
+    public void Initialize(BootStrap bootStrap)
     {
-        _gameSettings = FindObjectOfType<GameSettings>();
-        _levelUpCont = FindObjectOfType<LevelUpCont>();
-        _tutorialClueCont = FindObjectOfType<TutorialClueCont>();
-        _cameraChanger = FindObjectOfType<CameraModeChanger>();
-        _playerController = FindObjectOfType<PlayerController>();
-        _saveSystem = FindObjectOfType<JsonSaveSystem>();
+        _gameSettings = bootStrap.Resolve<GameSettings>();
+        _levelUpCont = bootStrap.Resolve<LevelUpCont>();
+        _tutorialClueCont = bootStrap.Resolve<TutorialClueCont>();
+        _cameraChanger = bootStrap.Resolve<CameraModeChanger>();
+        _playerController = bootStrap.Resolve<PlayerController>();
+        _saveSystem = bootStrap.Resolve<JsonSaveSystem>();
 
         _levelUpUI.SetActive(false);
         _menuUI.SetActive(true);

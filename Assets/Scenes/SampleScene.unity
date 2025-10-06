@@ -23888,10 +23888,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e2b6b842c408c1e4c86c28c39073901e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _gameSettingsUI: {fileID: 0}
-  _freeLookCamera: {fileID: 1608522472}
-  _lockOnCamera: {fileID: 1962794639}
-  _playerCanvas: {fileID: 6046018845972358557}
+  _gameSettingsUI: {fileID: 176780699}
   _scrollbarCameraDist: {fileID: 2014545524}
   _scrollbarCameraSpeed: {fileID: 1335904584}
   _scrollbarUISize: {fileID: 1423103348}
@@ -50059,7 +50056,7 @@ Transform:
   m_GameObject: {fileID: 1962794637}
   serializedVersion: 2
   m_LocalRotation: {x: 0.31622782, y: 0, z: 0, w: 0.9486833}
-  m_LocalPosition: {x: 20.366745, y: 4.9738317, z: -87.39093}
+  m_LocalPosition: {x: 20.38672, y: 4.973831, z: -87.39093}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:

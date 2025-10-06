@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class BootStrap : MonoBehaviour
 {
@@ -11,7 +12,11 @@ public class BootStrap : MonoBehaviour
     private void Start()
     {
         // порядок инициализации
-
+        Resolve<GameSettings>().Initialize(_instance);
+        Resolve<BonFireCont>().Initialize(_instance);
+        Resolve<LevelUpCont>().Initialize(_instance);
+        foreach (EnemyCanvasLookAtCamera enemyCanvas in ResolveAll<EnemyCanvasLookAtCamera>())
+            enemyCanvas.Initialize(_instance);
 
     }
 
@@ -28,8 +33,10 @@ public class BootStrap : MonoBehaviour
             {
                 _servises[type] = new List<object>();
                 _servises[type].Add(behaivor);
-                Debug.Log($"зарегистрирован {type}");
-                Debug.Log(behaivor);
+            }
+            else
+            {
+                _servises[type].Add(behaivor);
             }
 
             foreach (var iface in type.GetInterfaces())

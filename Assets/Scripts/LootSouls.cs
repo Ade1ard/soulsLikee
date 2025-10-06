@@ -9,11 +9,11 @@ public class LootSouls : MonoBehaviour
     private TutorialClueCont _tutClueCont;
     private LevelUpCont _levelUpCont;
     private PlayerController _playerController;
-    void Start()
+    public void Initialize(BootStrap bootStrap)
     {
-        _tutClueCont = FindObjectOfType<TutorialClueCont>();
-        _levelUpCont = FindObjectOfType<LevelUpCont>();
-        _playerController = FindObjectOfType<PlayerController>();
+        _tutClueCont = bootStrap.Resolve<TutorialClueCont>();
+        _levelUpCont = bootStrap.Resolve<LevelUpCont>();
+        _playerController = bootStrap.Resolve<PlayerController>();
     }
 
     void Update()

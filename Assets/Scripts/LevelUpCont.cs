@@ -50,13 +50,13 @@ public class LevelUpCont : MonoBehaviour
 
     private Coroutine _changeColorCorutine;
 
-    void Start()
+    public void Initialize(BootStrap bootStrap)
     {
-        _getSoulsUI = GetComponent<GetSoulsUI>();
-        _moneyCont = FindObjectOfType<MoneyCont>();
-        _playerHealth = FindObjectOfType<PlayerHealth>();
-        _playerSword = FindObjectOfType<PlayerSword>();
-        _Flask = FindObjectOfType<Healing>();
+        _getSoulsUI = bootStrap.Resolve<GetSoulsUI>();
+        _moneyCont = bootStrap.Resolve<MoneyCont>();
+        _playerHealth = bootStrap.Resolve<PlayerHealth>();
+        _playerSword = bootStrap.Resolve<PlayerSword>();
+        _Flask = bootStrap.Resolve<Healing>();
 
         UpdateAllValues();
 

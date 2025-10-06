@@ -1,4 +1,5 @@
 using Cinemachine;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -6,9 +7,8 @@ public class GameSettings : MonoBehaviour, ISaveable
 {
     [Header("Objects")]
     [SerializeField] private GameObject _gameSettingsUI;
-    [SerializeField] private CinemachineFreeLook _freeLookCamera;
-    [SerializeField] private CinemachineVirtualCamera _lockOnCamera;
-    [SerializeField] private CanvasScaler _playerCanvas;
+    private CinemachineFreeLook _freeLookCamera;
+    private CanvasScaler _playerCanvas;
     private CinemachineFramingTransposer _transposer;
 
     [Header("Scrollbars")]
@@ -35,10 +35,13 @@ public class GameSettings : MonoBehaviour, ISaveable
     {
 
     }
-    public void Initialize()
+
+    public void Initialize(BootStrap bootStrap)
     {
         _gameSettingsUI.SetActive(false);
-        _transposer = _lockOnCamera.GetCinemachineComponent<CinemachineFramingTransposer>();
+        _transposer = bootStrap.Resolve<CinemachineFramingTransposer>();
+        _freeLookCamera = bootStrap.Resolve<CinemachineFreeLook>();
+        _playerCanvas = bootStrap.ResolveAll<CanvasScaler>().FirstOrDefault(e => e.name == "Canvas");
     }
 
     public void GetUISize()
