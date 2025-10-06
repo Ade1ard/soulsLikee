@@ -2,13 +2,13 @@ using Cinemachine;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class GameSettings : MonoBehaviour
+public class GameSettings : MonoBehaviour, ISaveable
 {
     [Header("Objects")]
+    [SerializeField] private GameObject _gameSettingsUI;
     [SerializeField] private CinemachineFreeLook _freeLookCamera;
     [SerializeField] private CinemachineVirtualCamera _lockOnCamera;
     [SerializeField] private CanvasScaler _playerCanvas;
-    [SerializeField] private GameObject _gameSettings;
     private CinemachineFramingTransposer _transposer;
 
     [Header("Scrollbars")]
@@ -26,15 +26,19 @@ public class GameSettings : MonoBehaviour
     private float _topAndBottomRigCameraDistanseOffset = 8f;
     private float _middleRigCameraDistanseOffset = 10f;
 
-    void Start()
+    public void SaveTo(GameData data)
     {
-        _gameSettings.SetActive(false);
-        _transposer = _lockOnCamera.GetCinemachineComponent<CinemachineFramingTransposer>();
+
     }
 
-    void Update()
+    public void LoadFrom(GameData data)
     {
-        
+
+    }
+    public void Initialize()
+    {
+        _gameSettingsUI.SetActive(false);
+        _transposer = _lockOnCamera.GetCinemachineComponent<CinemachineFramingTransposer>();
     }
 
     public void GetUISize()
@@ -66,6 +70,6 @@ public class GameSettings : MonoBehaviour
 
     public void GetActive(bool _bool)
     {
-        _gameSettings.SetActive(_bool);
+        _gameSettingsUI.SetActive(_bool);
     }
 }
