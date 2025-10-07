@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -22,7 +23,6 @@ public class EnemyController : MonoBehaviour
     [SerializeField] private float _lowRangeAttackDelay;
     [SerializeField] private float _highRangeAttackDelay;
     [SerializeField] private float _AttacksAnimationCount;
-    [SerializeField] private EnemySword _enemySword;
 
     [Header("Sounds")]
     [SerializeField] private List<AudioClip> _swordSwingSounds;
@@ -34,10 +34,10 @@ public class EnemyController : MonoBehaviour
     private float _timeLastSeen;
     private Animator _animator;
     private AudioSource _audioSource;
+    private EnemySword _enemySword;
 
     private NavMeshAgent _navMeshAgent;
 
-    [Header("PLayer")]
     private PlayerController _player;
     private bool _isPlayerNoticed;
 
@@ -47,12 +47,15 @@ public class EnemyController : MonoBehaviour
     public Transform _enemySpine { get; private set; }
 
 
-    void Start()
+    public void Initialize(BootStrap bootStrap)
     {
-        _audioSource = GetComponent<AudioSource>();
-        _player = FindObjectOfType<PlayerController>();
-        _navMeshAgent = GetComponent<NavMeshAgent>();
-        _animator = GetComponent<Animator>();
+        _player = bootStrap.Resolve<PlayerController>();
+        _audioSource = bootStrap.ResolveAll<AudioSource>().FirstOrDefault(e => e.name == gameObject.name);
+        _navMeshAgent = bootStrap.ResolveAll<NavMeshAgent>().FirstOrDefault(e => e.name == gameObject.name);
+        _animator = bootStrap.ResolveAll<Animator>().FirstOrDefault(e => e.name == gameObject.name);
+        _enemySword = bootStrap.ResolveAll<EnemySword>().FirstOrDefault(e => e.name == gameObject.name);
+        Debug.Log(_navMeshAgent.gameObject.name);
+        Debug.Log(gameObject.name);
 
         _enemySpine = _animator.GetBoneTransform(HumanBodyBones.Spine);
 

@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class EnemySword : MonoBehaviour
@@ -19,12 +20,12 @@ public class EnemySword : MonoBehaviour
     private BloodVFXController _blood;
     private bool _hasAttacked;
 
-    void Start()
+    public void Initialize(BootStrap bootStrap)
     {
-        _blood = FindObjectOfType<BloodVFXController>();
-        _playerHealth = FindObjectOfType<PlayerHealth>();
-        _capsuleCollider = GetComponent<CapsuleCollider>();
-        _audioSource = GetComponent<AudioSource>();
+        _blood = bootStrap.Resolve<BloodVFXController>();
+        _playerHealth = bootStrap.Resolve<PlayerHealth>();
+        _capsuleCollider = bootStrap.ResolveAll<CapsuleCollider>().FirstOrDefault(e => e.name == gameObject.name);
+        _audioSource = bootStrap.ResolveAll<AudioSource>().FirstOrDefault(e => e.name == gameObject.name);
         _capsuleCollider.enabled = false;
     }
 

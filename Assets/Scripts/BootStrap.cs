@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class BootStrap : MonoBehaviour
 {
@@ -15,9 +14,20 @@ public class BootStrap : MonoBehaviour
         Resolve<GameSettings>().Initialize(_instance);
         Resolve<BonFireCont>().Initialize(_instance);
         Resolve<LevelUpCont>().Initialize(_instance);
+        foreach (LootSouls lootSouls in ResolveAll<LootSouls>())
+        {
+            lootSouls.Initialize(_instance);
+        }
+        foreach (EnemyController enemy in ResolveAll<EnemyController>())
+        {
+            enemy.Initialize(_instance);
+        }
         foreach (EnemyCanvasLookAtCamera enemyCanvas in ResolveAll<EnemyCanvasLookAtCamera>())
             enemyCanvas.Initialize(_instance);
-
+        foreach (EnemyHealth enemyHealth in ResolveAll<EnemyHealth>())
+            enemyHealth.Initialize(_instance);
+        foreach (EnemySword enemySword in ResolveAll<EnemySword>())
+            enemySword.Initialize(_instance);
     }
 
     private void Awake()

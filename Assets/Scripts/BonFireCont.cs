@@ -20,7 +20,6 @@ public class BonFireCont : MonoBehaviour
     private CameraModeChanger _cameraChanger;
     private LevelUpCont _levelUpCont;
     private GameSettings _gameSettings;
-    private JsonSaveSystem _saveSystem;
 
     private bool _NearBonFire = false;
     private bool _isSitting = false;
@@ -36,7 +35,6 @@ public class BonFireCont : MonoBehaviour
         _tutorialClueCont = bootStrap.Resolve<TutorialClueCont>();
         _cameraChanger = bootStrap.Resolve<CameraModeChanger>();
         _playerController = bootStrap.Resolve<PlayerController>();
-        _saveSystem = bootStrap.Resolve<JsonSaveSystem>();
 
         _levelUpUI.SetActive(false);
         _menuUI.SetActive(true);

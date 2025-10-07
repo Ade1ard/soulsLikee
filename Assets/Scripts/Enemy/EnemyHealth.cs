@@ -2,6 +2,7 @@ using System.Collections;
 using UnityEngine.UI;
 using UnityEngine;
 using UnityEngine.AI;
+using System.Linq;
 
 public class EnemyHealth : MonoBehaviour
 {
@@ -17,9 +18,7 @@ public class EnemyHealth : MonoBehaviour
     [SerializeField] private float _healthBarFadeSpeed;
     [SerializeField] private float _barFadeDelay;
 
-    [Header("Animators")]
-    [SerializeField] private Animator _animator;
-    [SerializeField] private Animator _playerAnimator;
+    private Animator _animator;
 
     [Header("Floats")]
     [SerializeField] private int _minMoneyDrop;
@@ -46,13 +45,14 @@ public class EnemyHealth : MonoBehaviour
 
     private float _timeLastHit;
 
-    void Start()
+    public void Initialize(BootStrap bootStrap)
     {
-        _moneyCont = FindObjectOfType<MoneyCont>();
-        _capsuleCollider = GetComponent<CapsuleCollider>();
-        _dissolveController = GetComponent<DissolveController>();
-        _navMeshAgent = GetComponent<NavMeshAgent>();
-        _enemyController = GetComponent<EnemyController>();
+        _moneyCont = bootStrap.Resolve<MoneyCont>();
+        _capsuleCollider = bootStrap.ResolveAll<CapsuleCollider>().FirstOrDefault(e => e.name == gameObject.name);
+        _dissolveController = bootStrap.ResolveAll<DissolveController>().FirstOrDefault(e => e.name == gameObject.name);
+        _navMeshAgent = bootStrap.ResolveAll<NavMeshAgent>().FirstOrDefault(e => e.name == gameObject.name);
+        _enemyController = bootStrap.ResolveAll<EnemyController>().FirstOrDefault(e => e.name == gameObject.name);
+        _animator = bootStrap.ResolveAll<Animator>().FirstOrDefault(e => e.name == gameObject.name);
         SetBarVisible(false);
         _value = _maxValue;
         
