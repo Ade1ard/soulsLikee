@@ -19971,8 +19971,6 @@ MonoBehaviour:
   _healthBarSpeed: 0.01
   _healthBarFadeSpeed: 1
   _barFadeDelay: 5
-  _animator: {fileID: 442574466}
-  _playerAnimator: {fileID: 6046018844230716826}
   _minMoneyDrop: 1000
   _maxMoneyDrop: 1500
   _lootDropChanse: 0.05
@@ -20004,7 +20002,6 @@ MonoBehaviour:
   _lowRangeAttackDelay: 2
   _highRangeAttackDelay: 4
   _AttacksAnimationCount: 5
-  _enemySword: {fileID: 195306520}
   _swordSwingSounds:
   - {fileID: 8300000, guid: ce688dad37759714994f2f85381e0745, type: 3}
   - {fileID: 8300000, guid: 46bdd9ca88d498f49a8228c9bd3cc50a, type: 3}
@@ -34201,7 +34198,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1214445950}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.000000009512302, y: -0.048862718, z: 0.036647048, w: 0.998133}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -46889,7 +46886,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2c1203a2e961bb34bafd1d46bbbb31a9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _cameraTransform: {fileID: 6046018844635725962}
 --- !u!114 &1810288249
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -50056,7 +50052,7 @@ Transform:
   m_GameObject: {fileID: 1962794637}
   serializedVersion: 2
   m_LocalRotation: {x: 0.31622782, y: 0, z: 0, w: 0.9486833}
-  m_LocalPosition: {x: 20.38672, y: 4.973831, z: -87.39093}
+  m_LocalPosition: {x: 20.390902, y: 4.97383, z: -87.39093}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -53241,7 +53237,7 @@ PrefabInstance:
     - target: {fileID: 716848478014345781, guid: 4ecd3af12fb5c684c944696bc47adee8,
         type: 3}
       propertyPath: m_Enabled
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 992506479580327236, guid: 4ecd3af12fb5c684c944696bc47adee8,
         type: 3}
@@ -53321,7 +53317,7 @@ PrefabInstance:
     - target: {fileID: 8145293058431960550, guid: 4ecd3af12fb5c684c944696bc47adee8,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8197831098486911110, guid: 4ecd3af12fb5c684c944696bc47adee8,
         type: 3}
@@ -54177,12 +54173,12 @@ PrefabInstance:
     - target: {fileID: 4450390539690654577, guid: 09f6dcb262ab3a2458d29a104604a0e9,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5560641634896316371, guid: 09f6dcb262ab3a2458d29a104604a0e9,
         type: 3}
       propertyPath: m_Enabled
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8609555984939665820, guid: 09f6dcb262ab3a2458d29a104604a0e9,
         type: 3}
