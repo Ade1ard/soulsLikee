@@ -8,33 +8,38 @@ public class BootStrap : MonoBehaviour
     private static BootStrap _instance;
     private Dictionary<Type, List<object>> _servises = new Dictionary<Type, List<object>>();
 
-    private void Start()
+    private void Awake()
     {
+        GetServises();
+
         // порядок инициализации
+        Resolve<PlayerController>().Initialize(_instance);
+        Resolve<PlayerHealth>().Initialize(_instance);
+        Resolve<PlayerSword>().Initialize(_instance);
         Resolve<GameSettings>().Initialize(_instance);
         Resolve<BonFireCont>().Initialize(_instance);
         Resolve<LevelUpCont>().Initialize(_instance);
         foreach (LootSouls lootSouls in ResolveAll<LootSouls>())
-        {
             lootSouls.Initialize(_instance);
-        }
         foreach (EnemyController enemy in ResolveAll<EnemyController>())
-        {
             enemy.Initialize(_instance);
-        }
         foreach (EnemyCanvasLookAtCamera enemyCanvas in ResolveAll<EnemyCanvasLookAtCamera>())
             enemyCanvas.Initialize(_instance);
         foreach (EnemyHealth enemyHealth in ResolveAll<EnemyHealth>())
             enemyHealth.Initialize(_instance);
         foreach (EnemySword enemySword in ResolveAll<EnemySword>())
             enemySword.Initialize(_instance);
+        Resolve<CameraModeChanger>().Initialize(_instance);
+        Resolve<Healing>().Initialize(_instance);
     }
 
-    private void Awake()
+    private void GetServises()
     {
         _instance = this;
 
-        var behaivors = FindObjectsOfType<MonoBehaviour>(true);
+        var monoBehaivors = FindObjectsOfType<MonoBehaviour>(true);
+        var behaivors = monoBehaivors.Concat(FindObjectsOfType<Behaviour>(true));
+
         foreach (var behaivor in behaivors)
         {
             var type = behaivor.GetType();

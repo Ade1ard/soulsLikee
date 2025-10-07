@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour
@@ -46,14 +47,14 @@ public class PlayerController : MonoBehaviour
     private const string Horizontal = nameof(Horizontal);
     private const string Vertical = nameof(Vertical);
 
-    private void Start()
+    public void Initialize(BootStrap bootStrap)
     {
-        _audioSource = GetComponent<AudioSource>();
-        _stamina = GetComponent<StaminaPlayerController>();
-        _camera = FindObjectOfType<Camera>();
-        _characterController = FindObjectOfType<CharacterController>();
-        _sword = FindObjectOfType<PlayerSword>();
-        _animator = GetComponent<Animator>();
+        _audioSource = bootStrap.ResolveAll<AudioSource>().FirstOrDefault(e => e.name == gameObject.name);
+        _stamina = bootStrap.Resolve<StaminaPlayerController>();
+        _camera = bootStrap.Resolve<Camera>();
+        _characterController = GetComponent<CharacterController>();
+        _sword = bootStrap.Resolve<PlayerSword>();
+        _animator = bootStrap.ResolveAll<Animator>().FirstOrDefault(e => e.name == gameObject.name);
 
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;

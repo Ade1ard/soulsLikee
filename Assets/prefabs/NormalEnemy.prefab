@@ -115,7 +115,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2c1203a2e961bb34bafd1d46bbbb31a9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _cameraTransform: {fileID: 0}
 --- !u!1 &3509547426140820909
 GameObject:
   m_ObjectHideFlags: 0
@@ -5394,7 +5393,7 @@ Transform:
   m_GameObject: {fileID: 7492810435663912662}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: -0.7071068, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: 24.1, y: -0.4, z: -0.6}
+  m_LocalPosition: {x: 24.2, y: -0.4, z: -0.1}
   m_LocalScale: {x: 25, y: 25, z: 25}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -5420,7 +5419,7 @@ CapsuleCollider:
   m_Enabled: 1
   serializedVersion: 2
   m_Radius: 0.06
-  m_Height: 2.4
+  m_Height: 2.6
   m_Direction: 2
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &6629029283161909776
@@ -5687,7 +5686,6 @@ MonoBehaviour:
   _lowRangeAttackDelay: 2
   _highRangeAttackDelay: 5
   _AttacksAnimationCount: 4
-  _enemySword: {fileID: 6629029283161909776}
   _swordSwingSounds:
   - {fileID: 8300000, guid: 46bdd9ca88d498f49a8228c9bd3cc50a, type: 3}
   - {fileID: 8300000, guid: ce688dad37759714994f2f85381e0745, type: 3}
@@ -5710,8 +5708,6 @@ MonoBehaviour:
   _healthBarSpeed: 0.01
   _healthBarFadeSpeed: 1
   _barFadeDelay: 5
-  _animator: {fileID: 3748989677619324325}
-  _playerAnimator: {fileID: 0}
   _minMoneyDrop: 100
   _maxMoneyDrop: 500
   _lootDropChanse: 0.05

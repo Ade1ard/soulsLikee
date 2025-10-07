@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -14,10 +15,7 @@ public class PlayerHealth : MonoBehaviour
     [SerializeField] private float _mainBarSpeed;
     [SerializeField] private float _mediumBarSpeed;
 
-    [Header("Animators")]
-    [SerializeField] private Animator _playerAnimator;
-    [SerializeField] private Animator _enemyAnimator;
-
+    private Animator _playerAnimator;
     private PlayerController _playerController;
 
     private Coroutine _drawHealthBarCorutine;
@@ -25,11 +23,16 @@ public class PlayerHealth : MonoBehaviour
     private bool _inHyperarmor = false;
     private bool _invulnerability = false;
 
-    void Start()
+    public void Initialize(BootStrap bootStrap)
     {
-        _playerController = GetComponent<PlayerController>();
+        _playerController = bootStrap.Resolve<PlayerController>();
+        _playerAnimator = bootStrap.ResolveAll<Animator>().FirstOrDefault(e => e.name == gameObject.name);
         _value = _maxValue;
 
+    }
+
+    private void Start()
+    {
         StartDrawBarCorutine();
     }
 

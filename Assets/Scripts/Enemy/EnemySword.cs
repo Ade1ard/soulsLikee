@@ -24,8 +24,9 @@ public class EnemySword : MonoBehaviour
     {
         _blood = bootStrap.Resolve<BloodVFXController>();
         _playerHealth = bootStrap.Resolve<PlayerHealth>();
-        _capsuleCollider = bootStrap.ResolveAll<CapsuleCollider>().FirstOrDefault(e => e.name == gameObject.name);
         _audioSource = bootStrap.ResolveAll<AudioSource>().FirstOrDefault(e => e.name == gameObject.name);
+
+        _capsuleCollider = GetComponent<CapsuleCollider>();
         _capsuleCollider.enabled = false;
     }
 

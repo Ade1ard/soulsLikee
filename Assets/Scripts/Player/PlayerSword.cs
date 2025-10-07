@@ -19,9 +19,9 @@ public class PlayerSword : MonoBehaviour
     private BloodVFXController _Blood;
 
     private bool _hasAttacked;
-    void Start()
+    public void Initialize(BootStrap bootStrap)
     {
-        _Blood = FindObjectOfType<BloodVFXController>();
+        _Blood = bootStrap.Resolve<BloodVFXController>();
         _audioSource = GetComponent<AudioSource>();
         _capsuleCollider = GetComponent<CapsuleCollider>();
         _capsuleCollider.enabled = false;

@@ -1,4 +1,5 @@
 using Cinemachine;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -13,10 +14,10 @@ public class CameraModeChanger : MonoBehaviour
 
     [Header("Objects")]
     [SerializeField] private Transform _defaultLookAt;
-    [SerializeField] private CinemachineVirtualCamera _lockOnCamera;
-    [SerializeField] private CinemachineFreeLook _freeLookCamera;
 
-    private Animator _animator;
+    private CinemachineFreeLook _freeLookCamera;
+    private CinemachineVirtualCamera _lockOnCamera;
+    private Animator _playerAnimator;
     private Camera _camera;
     private PlayerController _playerController;
     private EnemyController _enemyLockedOn;
@@ -25,17 +26,17 @@ public class CameraModeChanger : MonoBehaviour
     private bool _isCameraLocked = false;
     private bool _isCameraOnBonfire = false;
 
-    private void Awake()
+    public void Initialize(BootStrap bootStrap)
     {
-        _framingTransposer = _lockOnCamera.GetCinemachineComponent<CinemachineFramingTransposer>();
-        _camera = FindObjectOfType<Camera>();
-        _animator = GetComponent<Animator>();
-        _playerController = FindObjectOfType<PlayerController>();
+        _framingTransposer = bootStrap.Resolve<CinemachineFramingTransposer>();
+        _camera = bootStrap.Resolve<Camera>();
+        _playerAnimator = bootStrap.ResolveAll<Animator>().FirstOrDefault(e => e.name == "Player");
+        _playerController = bootStrap.Resolve<PlayerController>();
+        _freeLookCamera = bootStrap.Resolve<CinemachineFreeLook>();
+        _lockOnCamera = bootStrap.ResolveAll<CinemachineVirtualCamera>().FirstOrDefault(e => e.name == "LockOnCamera");
 
         _lockOnCamera.LookAt = _defaultLookAt;
-    }
-    void Start()
-    {
+
         _EnemyTargetLockUI.enabled = false;
 
         _freeLookCamera.Priority = 20;
@@ -72,7 +73,7 @@ public class CameraModeChanger : MonoBehaviour
 
             _lockOnCamera.LookAt = null;
             _enemyLockedOn = null;
-            _animator.SetBool("IsCameraLocked", false);
+            _playerAnimator.SetBool("IsCameraLocked", false);
         }
         else
         {
@@ -88,7 +89,7 @@ public class CameraModeChanger : MonoBehaviour
 
                 _lockOnCamera.Priority = 20;
                 _freeLookCamera.Priority = 0;
-                _animator.SetBool("IsCameraLocked", true);
+                _playerAnimator.SetBool("IsCameraLocked", true);
             }
         }
     }

@@ -8,7 +8,7 @@ public class EnemyCanvasLookAtCamera : MonoBehaviour
 
     public void Initialize(BootStrap bootStrap)
     {
-        _cameraTransform = bootStrap.Resolve<CinemachineBrain>().transform;
+        _cameraTransform = bootStrap.Resolve<Camera>().transform;
     }
 
     void Update()

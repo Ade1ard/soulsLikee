@@ -48,14 +48,17 @@ public class EnemyHealth : MonoBehaviour
     public void Initialize(BootStrap bootStrap)
     {
         _moneyCont = bootStrap.Resolve<MoneyCont>();
-        _capsuleCollider = bootStrap.ResolveAll<CapsuleCollider>().FirstOrDefault(e => e.name == gameObject.name);
+        _capsuleCollider = GetComponent<CapsuleCollider>();
         _dissolveController = bootStrap.ResolveAll<DissolveController>().FirstOrDefault(e => e.name == gameObject.name);
         _navMeshAgent = bootStrap.ResolveAll<NavMeshAgent>().FirstOrDefault(e => e.name == gameObject.name);
         _enemyController = bootStrap.ResolveAll<EnemyController>().FirstOrDefault(e => e.name == gameObject.name);
         _animator = bootStrap.ResolveAll<Animator>().FirstOrDefault(e => e.name == gameObject.name);
         SetBarVisible(false);
         _value = _maxValue;
-        
+    }
+
+    private void Start()
+    {
         StartDrawBarCorutine();
     }
 

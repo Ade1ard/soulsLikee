@@ -5597,7 +5597,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2c1203a2e961bb34bafd1d46bbbb31a9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _cameraTransform: {fileID: 0}
 --- !u!1001 &3531841682528536096
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5820,9 +5819,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e5ae717044f905648b537e54add6502d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _targetPoints:
-  - {fileID: 0}
-  - {fileID: 0}
+  _targetPoints: []
   _viewAngle: 110
   _runToPlayerSpeed: 4
   _WalkSpeed: 1.75
@@ -5833,7 +5830,6 @@ MonoBehaviour:
   _lowRangeAttackDelay: 2
   _highRangeAttackDelay: 4
   _AttacksAnimationCount: 5
-  _enemySword: {fileID: 7407452387146672972}
   _swordSwingSounds:
   - {fileID: 8300000, guid: ce688dad37759714994f2f85381e0745, type: 3}
   - {fileID: 8300000, guid: 46bdd9ca88d498f49a8228c9bd3cc50a, type: 3}
@@ -5856,8 +5852,6 @@ MonoBehaviour:
   _healthBarSpeed: 0.01
   _healthBarFadeSpeed: 1
   _barFadeDelay: 5
-  _animator: {fileID: 3471537572053161717}
-  _playerAnimator: {fileID: 0}
   _minMoneyDrop: 1000
   _maxMoneyDrop: 1500
   _lootDropChanse: 0.05

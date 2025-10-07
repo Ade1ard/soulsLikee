@@ -1,3 +1,4 @@
+using System.Linq;
 using TMPro;
 using UnityEngine;
 
@@ -17,10 +18,10 @@ public class Healing : MonoBehaviour
     private Animator _animator;
     private PlayerHealth _health;
 
-    void Start()
+    public void Initialize(BootStrap bootStrap)
     {
-        _animator = GetComponent<Animator>();
-        _health = GetComponent<PlayerHealth>();
+        _animator = bootStrap.ResolveAll<Animator>().FirstOrDefault(e => e.name == "Player");
+        _health = bootStrap.Resolve<PlayerHealth>();
         _FlaskCountText.text = _FlaskCount.ToString();
     }
 
