@@ -3,7 +3,7 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class GameSettings : MonoBehaviour, ISaveable
+public class GameSettings : ISaveable
 {
     [Header("Objects")]
     [SerializeField] private GameObject _gameSettingsUI;

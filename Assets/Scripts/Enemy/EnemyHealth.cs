@@ -20,19 +20,16 @@ public class EnemyHealth : MonoBehaviour
 
     private Animator _animator;
 
-    [Header("Floats")]
+    [Header("LootParameters")]
     [SerializeField] private int _minMoneyDrop;
     [SerializeField] private int _maxMoneyDrop;
     [SerializeField] private float _lootDropChanse = 0.05f;
     [SerializeField] private float _lootDrobDelay = 2;
 
-    [Header("LootPrefab")]
-    [SerializeField] LootSouls _lootSouls;
-
     private EnemyController _enemyController;
     private DissolveController _dissolveController;
     private CapsuleCollider _capsuleCollider;
-    private MoneyCont _moneyCont;
+    private LootSpawner _lootSpawner;
 
     private NavMeshAgent _navMeshAgent;
 
@@ -47,7 +44,7 @@ public class EnemyHealth : MonoBehaviour
 
     public void Initialize(BootStrap bootStrap)
     {
-        _moneyCont = bootStrap.Resolve<MoneyCont>();
+        _lootSpawner = bootStrap.Resolve<LootSpawner>();
         _capsuleCollider = GetComponent<CapsuleCollider>();
         _dissolveController = bootStrap.ResolveAll<DissolveController>().FirstOrDefault(e => e.name == gameObject.name);
         _navMeshAgent = bootStrap.ResolveAll<NavMeshAgent>().FirstOrDefault(e => e.name == gameObject.name);
@@ -110,22 +107,12 @@ public class EnemyHealth : MonoBehaviour
         _dissolveController.Dissolve();
         _capsuleCollider.isTrigger = true;
 
-        if (_bool)
-        {
-            Invoke("DropLoot", _lootDrobDelay); 
-        }
+        Invoke("DropLoot", _lootDrobDelay);
     }
 
     private void DropLoot()
     {
-        _moneyCont.GetMoney(Random.Range(_minMoneyDrop, _maxMoneyDrop));
-        if (Random.value <= _lootDropChanse)
-        {
-            var DropPosition = transform.position;
-            DropPosition.y = 0;
-            Instantiate(_lootSouls, DropPosition, Quaternion.identity);
-        }
-
+        _lootSpawner.DropLoot(transform.position, _minMoneyDrop, _maxMoneyDrop, _lootDropChanse);
     }
 
     public void AddHealt(float amount)

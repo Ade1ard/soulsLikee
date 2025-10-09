@@ -2,24 +2,19 @@ using System.IO;
 using UnityEngine;
 using System.Collections.Generic;
 
-public class JsonSaveSystem : MonoBehaviour
+public class JsonSaveSystem
 {
     private string savePath;
     private GameData currentGameData;
 
     public static JsonSaveSystem Instance { get; private set; }
 
-    void Awake()
+    public void Initialize()
     {
         if (Instance == null)
         {
             Instance = this;
-            DontDestroyOnLoad(gameObject);
             InitializeSaveSystem();
-        }
-        else
-        {
-            Destroy(gameObject);
         }
     }
 
@@ -42,12 +37,6 @@ public class JsonSaveSystem : MonoBehaviour
 
     public void SaveGame(string saveName = "autosave")
     {
-        currentGameData = new GameData();
-
-        CollectPlayerData();
-        CollectCurrencyData();
-        CollectEnemyData();
-        CollectSettingsData();
 
         string json = JsonUtility.ToJson(currentGameData, true);
 
@@ -70,11 +59,6 @@ public class JsonSaveSystem : MonoBehaviour
                 string json = File.ReadAllText(filePath);
                 currentGameData = JsonUtility.FromJson<GameData>(json);
 
-                ApplyPlayerData();
-                ApplyCurrencyData();
-                ApplyEnemyData();
-                ApplySettingsData();
-
                 Debug.Log($"Игра загружена: {filePath}");
                 return true;
             }
@@ -89,147 +73,6 @@ public class JsonSaveSystem : MonoBehaviour
             currentGameData = new GameData();
             Debug.Log("Сохранение не найдено, созданы новые данные");
             return false;
-        }
-    }
-
-    private void CollectPlayerData()
-    {
-        PlayerController player = FindObjectOfType<PlayerController>();
-        if (player != null)
-        {
-            currentGameData.playerPosition = player.transform.position;
-        }
-
-        PlayerHealth playerStats = FindObjectOfType<PlayerHealth>();
-        if (playerStats != null)
-        {
-            currentGameData.health = playerStats._value;
-        }
-
-        LevelUpCont level = FindObjectOfType<LevelUpCont>();
-        if (level != null)
-        {
-            currentGameData.maxHealth = level._currentMaxHealth;
-            currentGameData.damage = level._currentDamage;
-            currentGameData.oneUpgrateCost = level._oneUpgrateCost;
-            currentGameData.flaskEfficiency = level._currentFlaskEfficiency;
-
-            currentGameData.souls = level._currentSoulsCount;
-        }
-    }
-
-    private void CollectCurrencyData()
-    {
-        MoneyCont currencyManager = FindObjectOfType<MoneyCont>();
-        if (currencyManager != null)
-        {
-            currentGameData.money = currencyManager._targetMoneyCount;
-        }
-    }
-
-    private void CollectEnemyData()
-    {
-        currentGameData.enemies.Clear();
-
-        EnemyController[] enemyObjects = EnemyController.FindObjectsOfType<EnemyController>();
-        foreach (EnemyController enemy in enemyObjects)
-        {
-            if (enemy != null)
-            {
-                EnemyData enemyData = new EnemyData();
-                enemyData.enemyID = enemy.name;
-                enemyData.enemyPosition = enemy.transform.position;
-                enemyData.isAlive = enemy.CheckAlive();
-                enemyData.health = enemy.GetComponent<EnemyHealth>()._value;
-                currentGameData.enemies.Add(enemyData);
-            }
-        }
-    }
-
-    private void CollectSettingsData()
-    {
-        GameSettings gameSettings = FindObjectOfType<GameSettings>();
-
-        SettingsData settingsData = new SettingsData();
-        settingsData.cameraDistanse = gameSettings._scrollbarCameraDist.value;
-        settingsData.cameraSensity = gameSettings._scrollbarCameraSpeed.value;
-        settingsData.UIsize = gameSettings._scrollbarUISize.value;
-
-        currentGameData.settings = settingsData;
-    }
-
-    private void ApplyPlayerData()
-    {
-        PlayerController player = FindObjectOfType<PlayerController>();
-        if (player != null)
-        {
-            player.transform.position = currentGameData.playerPosition;
-        }
-
-        PlayerHealth playerStats = FindObjectOfType<PlayerHealth>();
-        if (playerStats != null)
-        {
-            playerStats.DealDamage(playerStats._maxValue - currentGameData.health);
-        }
-
-        LevelUpCont level = FindObjectOfType<LevelUpCont>();
-        if (level != null)
-        {
-            level.GetCurrienciesSouls(currentGameData.souls);
-
-            level._currentMaxHealth = currentGameData.maxHealth;
-            level._currentDamage = currentGameData.damage;
-            level._currentFlaskEfficiency = currentGameData.flaskEfficiency;
-            level._oneUpgrateCost = currentGameData.oneUpgrateCost;
-        }
-    }
-
-    private void ApplyCurrencyData()
-    {
-        MoneyCont currencyManager = FindObjectOfType<MoneyCont>();
-        if (currencyManager != null)
-        {
-            currencyManager.GetMoney(currentGameData.money);
-        }
-    }
-
-    private void ApplyEnemyData()
-    {
-        foreach (EnemyData enemyData in currentGameData.enemies)
-        {
-            GameObject enemy = GameObject.Find(enemyData.enemyID);
-            if (enemy != null)
-            {
-                EnemyController enemyController = enemy.GetComponent<EnemyController>();
-                if (enemyController != null)
-                {
-                    enemyController.transform.position = enemyData.enemyPosition;
-                    EnemyHealth enemyHealth = enemyController.GetComponent<EnemyHealth>();
-                    if (enemyData.isAlive)
-                    {
-                        enemyHealth.TakeDamage(enemyHealth.maxValue - enemyData.health);
-                    }
-                    else
-                    {
-                        enemyHealth.EnemyDeath(false);
-                    }
-                }
-            }
-        }
-    }
-
-    private void ApplySettingsData()
-    {
-        GameSettings gameSettings = FindObjectOfType<GameSettings>();
-        SettingsData settingsData = currentGameData.settings;
-        if (gameSettings != null)
-        {
-            gameSettings._scrollbarCameraDist.value = settingsData.cameraDistanse;
-            gameSettings.GetCameraDistanse();
-            gameSettings._scrollbarCameraSpeed.value = settingsData.cameraSensity;
-            gameSettings.GetCameraSpeed();
-            gameSettings._scrollbarUISize.value = settingsData.UIsize;
-            gameSettings.GetUISize();
         }
     }
 
