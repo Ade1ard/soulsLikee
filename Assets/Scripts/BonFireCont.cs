@@ -7,10 +7,8 @@ public class BonFireCont : MonoBehaviour
     [SerializeField] private Transform _cameraLookAt;
 
     [Header("UI")]
-    [SerializeField] private GameObject _gamePlayUI;
-    [SerializeField] private GameObject _bonfireUI;
-    [SerializeField] private GameObject _menuUI;
-    [SerializeField] private GameObject _levelUpUI;
+    [SerializeField] private CanvasGroup _gamePlayUI;
+    [SerializeField] private CanvasGroup _menuUI;
 
     [Header("String")]
     [SerializeField] private string _tutorialText;
@@ -18,27 +16,19 @@ public class BonFireCont : MonoBehaviour
     private TutorialClueCont _tutorialClueCont;
     private PlayerController _playerController;
     private CameraModeChanger _cameraChanger;
-    private LevelUpCont _levelUpCont;
-    private GameSettings _gameSettings;
+    private UIFader _uiFader;
 
     private bool _NearBonFire = false;
     private bool _isSitting = false;
 
     private bool _inMenu;
-    private bool _inLevelUp;
-    private bool _inSettings;
 
     public void Initialize(BootStrap bootStrap)
     {
-        _gameSettings = bootStrap.Resolve<GameSettings>();
-        _levelUpCont = bootStrap.Resolve<LevelUpCont>();
         _tutorialClueCont = bootStrap.Resolve<TutorialClueCont>();
         _cameraChanger = bootStrap.Resolve<CameraModeChanger>();
         _playerController = bootStrap.Resolve<PlayerController>();
-
-        _levelUpUI.SetActive(false);
-        _menuUI.SetActive(true);
-        _bonfireUI.SetActive(false);
+        _uiFader = bootStrap.Resolve<UIFader>();
     }
 
     void Update()
@@ -55,15 +45,6 @@ public class BonFireCont : MonoBehaviour
                 if (_inMenu)
                 {
                     QuitBonfire();
-                }
-                if (_inLevelUp)
-                {
-                    LevelUpActive(false);
-                    _levelUpCont.CanselChanges();
-                }
-                if (_inSettings)
-                {
-                    GameSettingsActive(false);
                 }
             }
 
@@ -84,8 +65,8 @@ public class BonFireCont : MonoBehaviour
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
 
-        _gamePlayUI.SetActive(true);
-        _bonfireUI.SetActive(false);
+        _uiFader.Fade(_menuUI, false);
+        _uiFader.Fade(_gamePlayUI, true);
 
         _cameraChanger.CameraOnBonfire(_cameraLookAt);
     }
@@ -99,29 +80,12 @@ public class BonFireCont : MonoBehaviour
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
 
-        _gamePlayUI.SetActive(false);
-        _bonfireUI.SetActive(true);
+        _uiFader.Fade(_menuUI, true);
+        _uiFader.Fade(_gamePlayUI, false);
 
         _tutorialClueCont.TutorialGetUnvisible();
 
         _cameraChanger.CameraOnBonfire(_cameraLookAt);
-    }
-
-    public void LevelUpActive(bool _bool)
-    {
-        _menuUI.SetActive(!_bool);
-        _levelUpUI.SetActive(_bool);
-        _inLevelUp = _bool;
-        _inMenu = !_bool;
-    }
-
-    public void GameSettingsActive(bool _bool)
-    {
-        _menuUI.SetActive(!_bool);
-        _gameSettings.GetActive(_bool);
-        _inSettings = _bool;
-        _inMenu = !_bool;
-
     }
 
     private void OnTriggerEnter(Collider other)
@@ -142,5 +106,10 @@ public class BonFireCont : MonoBehaviour
             _inMenu = false;
             _tutorialClueCont.TutorialGetUnvisible();
         }
+    }
+
+    private void Start()
+    {
+        _uiFader.Fade(_menuUI, false);
     }
 }

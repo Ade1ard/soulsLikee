@@ -3,20 +3,22 @@ using UnityEngine;
 using TMPro;
 using Unity.Mathematics;
 
-public class LevelUpCont : MonoBehaviour
+public class LevelUpCont : MonoBehaviour, ISaveable
 {
+    [SerializeField] private CanvasGroup _levelUpUI;
+
     [Header("StartStatsFloats")]
-    public float _currentMaxHealth = 100;
-    public float _currentDamage = 30;
-    public float _currentFlaskEfficiency = 50;
-    public float _oneUpgrateCost = 1200;
+    [SerializeField] private float _currentMaxHealth = 100;
+    [SerializeField] private float _currentDamage = 30;
+    [SerializeField] private float _currentFlaskEfficiency = 50;
+    [SerializeField] private float _oneUpgrateCost = 1200;
 
     private float _willBeHealth;
     private float _willBeDamage;
     private float _willBeFlaskEfficiency;
 
     private float _currentMoneyCount;
-    public float _currentSoulsCount { get; private set; }
+    private float _currentSoulsCount;
 
     private float _moneyCost;
 
@@ -45,10 +47,12 @@ public class LevelUpCont : MonoBehaviour
     private Healing _Flask;
     private MoneyCont _moneyCont;
     private GetSoulsUI _getSoulsUI;
+    private UIFader _uiFader;
 
     private int _levelWillUpCount = 0;
 
     private Coroutine _changeColorCorutine;
+
 
     public void Initialize(BootStrap bootStrap)
     {
@@ -57,6 +61,7 @@ public class LevelUpCont : MonoBehaviour
         _playerHealth = bootStrap.Resolve<PlayerHealth>();
         _playerSword = bootStrap.Resolve<PlayerSword>();
         _Flask = bootStrap.Resolve<Healing>();
+        _uiFader = bootStrap.Resolve<UIFader>();
 
         UpdateAllValues();
 
@@ -65,9 +70,14 @@ public class LevelUpCont : MonoBehaviour
         _willBeFlaskEfficiency = _currentFlaskEfficiency;
     }
 
-    void Update()
+    public void SaveTo(GameData gameData)
     {
-        
+
+    }
+
+    public void LoadFrom(GameData gameData)
+    {
+
     }
 
     public void StatPlus(string statName)
@@ -251,6 +261,13 @@ public class LevelUpCont : MonoBehaviour
             yield return null;
         }
         _changeColorCorutine = null;
+    }
+
+    public void SetActive(bool _bool)
+    {
+        if (!_bool)
+            CanselChanges();
+        _uiFader.Fade(_levelUpUI, _bool);
     }
 
     public void GetCurrienciesMoney()

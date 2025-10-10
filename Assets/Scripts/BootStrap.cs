@@ -18,11 +18,18 @@ public class BootStrap : MonoBehaviour
         Resolve<PlayerController>().Initialize(_instance);
         Resolve<PlayerHealth>().Initialize(_instance);
         Resolve<PlayerSword>().Initialize(_instance);
+
         Resolve<CameraModeChanger>().Initialize(_instance);
+
         Resolve<GameSettings>().Initialize(_instance);
+        Resolve<GameSettingsView>().Initialize(_instance);
+
         Resolve<BonFireCont>().Initialize(_instance);
         Resolve<LevelUpCont>().Initialize(_instance);
         Resolve<Healing>().Initialize(_instance);
+        Resolve<TutorialClueCont>().Initialize(_instance);
+        Resolve<GetSoulsUI>().Initialize(_instance);
+
         foreach (LootSouls lootSouls in ResolveAll<LootSouls>())
             lootSouls.Initialize(_instance);
         foreach (EnemyController enemy in ResolveAll<EnemyController>())
@@ -33,15 +40,14 @@ public class BootStrap : MonoBehaviour
             enemyHealth.Initialize(_instance);
         foreach (EnemySword enemySword in ResolveAll<EnemySword>())
             enemySword.Initialize(_instance);
+
         Resolve<LootSpawner>().Initialize(_instance);
-        Resolve<TutorialClueCont>().Initialize(_instance);
     }
 
     private void RegisterNotMonoBehObjects()
     {
         RegisterObject(new GameSettings());
         RegisterObject(new JsonSaveSystem());
-        RegisterObject(new TutorialClueCont());
     }
 
     private void RegisterObject(object obj)

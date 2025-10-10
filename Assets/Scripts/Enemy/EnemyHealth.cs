@@ -50,13 +50,13 @@ public class EnemyHealth : MonoBehaviour
         _navMeshAgent = bootStrap.ResolveAll<NavMeshAgent>().FirstOrDefault(e => e.name == gameObject.name);
         _enemyController = bootStrap.ResolveAll<EnemyController>().FirstOrDefault(e => e.name == gameObject.name);
         _animator = bootStrap.ResolveAll<Animator>().FirstOrDefault(e => e.name == gameObject.name);
-        SetBarVisible(false);
         _value = _maxValue;
     }
 
     private void Start()
     {
         StartDrawBarCorutine();
+        SetBarVisible(false);
     }
 
     void Update()

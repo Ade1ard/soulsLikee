@@ -2,7 +2,7 @@ using System.Collections;
 using UnityEngine;
 using TMPro;
 
-public class MoneyCont : MonoBehaviour
+public class MoneyCont : MonoBehaviour, ISaveable
 {
     [SerializeField] private TextMeshProUGUI _MoneyText;
     [SerializeField] private TextMeshProUGUI _getMoneyCountText;
@@ -20,7 +20,12 @@ public class MoneyCont : MonoBehaviour
         _getMoneyCountText.color = new Color(_getMoneyCountText.color.r, _getMoneyCountText.color.g, _getMoneyCountText.color.b, 0);
     }
 
-    void Update()
+    public void SaveTo(GameData gameData)
+    {
+
+    }
+
+    public void LoadFrom(GameData gameData)
     {
 
     }

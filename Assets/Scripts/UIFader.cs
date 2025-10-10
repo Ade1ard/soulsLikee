@@ -7,15 +7,26 @@ public class UIFader : MonoBehaviour
 
     public void Fade(CanvasGroup ui, bool _bool)
     {
-        var target = _bool ? 1 : 0;
-        StartCoroutine(Fading(ui, target));
+        StartCoroutine(Fading(ui, _bool));
     }
-    private IEnumerator Fading(CanvasGroup ui, float target)
+
+    public IEnumerator Fading(CanvasGroup ui, bool _bool)
     {
+        if (_bool)
+        {
+            ui.gameObject.SetActive(true);
+        }
+
+        var target = _bool ? 1 : 0;
         while (ui.alpha != target)
         {
             ui.alpha = Mathf.MoveTowards(ui.alpha, target, _fadeSpeed * Time.deltaTime);
             yield return null;
+        }
+        
+        if (!_bool)
+        {
+            ui.gameObject.SetActive(false);
         }
     }
 }

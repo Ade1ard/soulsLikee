@@ -9223,7 +9223,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &176780700
 RectTransform:
   m_ObjectHideFlags: 0
@@ -15949,7 +15949,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 968364688}
+      - m_Target: {fileID: 672784377}
         m_TargetAssemblyTypeName: BonFireCont, Assembly-CSharp
         m_MethodName: 
         m_Mode: 1
@@ -16224,8 +16224,8 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 2041595852}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMin: {x: 0.475, y: 0}
+  m_AnchorMax: {x: 0.525, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 20, y: 20}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -23828,6 +23828,9 @@ GameObject:
   - component: {fileID: 672784381}
   - component: {fileID: 672784382}
   - component: {fileID: 672784384}
+  - component: {fileID: 672784385}
+  - component: {fileID: 672784386}
+  - component: {fileID: 672784387}
   m_Layer: 0
   m_Name: UI
   m_TagString: Untagged
@@ -23877,6 +23880,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f4ab2082c3451364d9d65ae81af34839, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _levelUpUI: {fileID: 1944321354}
   _currentMaxHealth: 100
   _currentDamage: 30
   _currentFlaskEfficiency: 50
@@ -23905,8 +23909,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3151e1bed176aa647ab30b67342e9ec6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _icon: {fileID: 209665461}
-  _getSoulsText: {fileID: 301434341}
+  _getSoulsUI: {fileID: 301434343}
 --- !u!114 &672784384
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -23921,6 +23924,49 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _lootSouls: {fileID: 7511332836381665387, guid: 0c28a5231e356e34d981174612325560,
     type: 3}
+--- !u!114 &672784385
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 672784377}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 76353b94c7d6a8d4d85ecab11d783848, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _fadeSpeed: 5
+--- !u!114 &672784386
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 672784377}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 34d1773f4d970754f91ee2f2d57ee48d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _gameSettingsUI: {fileID: 176780701}
+  _scrollbarCameraDist: {fileID: 2014545524}
+  _scrollbarCameraSpeed: {fileID: 1335904584}
+  _scrollbarUISize: {fileID: 1423103348}
+--- !u!114 &672784387
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 672784377}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2b0dd18cd5940f440b00b5743d41c0ce, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _tutorialClue: {fileID: 438299282}
+  _tutorialClueText: {fileID: 1505655125}
 --- !u!1 &673396759
 GameObject:
   m_ObjectHideFlags: 0
@@ -27559,9 +27605,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 968364688}
-        m_TargetAssemblyTypeName: BonFireCont, Assembly-CSharp
-        m_MethodName: GameSettingsActive
+      - m_Target: {fileID: 672784386}
+        m_TargetAssemblyTypeName: GameSettingsView, Assembly-CSharp
+        m_MethodName: SetActive
         m_Mode: 6
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -29993,8 +30039,8 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 241052979}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMin: {x: 0.475, y: 0}
+  m_AnchorMax: {x: 0.525, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 20, y: 20}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -36958,9 +37004,9 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: GameSettings, Assembly-CSharp
-        m_MethodName: GetCameraSpeed
+      - m_Target: {fileID: 672784386}
+        m_TargetAssemblyTypeName: GameSettingsView, Assembly-CSharp
+        m_MethodName: CameraSpeedChanged
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -38730,9 +38776,9 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: GameSettings, Assembly-CSharp
-        m_MethodName: GetUISize
+      - m_Target: {fileID: 672784386}
+        m_TargetAssemblyTypeName: GameSettingsView, Assembly-CSharp
+        m_MethodName: UISizeChanged
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -39880,22 +39926,10 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 968364688}
-        m_TargetAssemblyTypeName: BonFireCont, Assembly-CSharp
-        m_MethodName: LevelUpActive
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 1
-        m_CallState: 2
       - m_Target: {fileID: 672784381}
-        m_TargetAssemblyTypeName: LevelUpMenuCont, Assembly-CSharp
-        m_MethodName: GetCurrienciesMoney
-        m_Mode: 1
+        m_TargetAssemblyTypeName: LevelUpCont, Assembly-CSharp
+        m_MethodName: SetActive
+        m_Mode: 6
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -40940,8 +40974,8 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 1151223581}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMin: {x: 0.475, y: 0}
+  m_AnchorMax: {x: 0.525, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 20, y: 20}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -50117,7 +50151,7 @@ Transform:
   m_GameObject: {fileID: 1962794637}
   serializedVersion: 2
   m_LocalRotation: {x: 0.31622782, y: 0, z: 0, w: 0.9486833}
-  m_LocalPosition: {x: 20.402758, y: 4.973832, z: -16.930927}
+  m_LocalPosition: {x: 20.41097, y: 4.9738326, z: -16.930927}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -50412,6 +50446,11 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 690980796633205035, guid: dac169ee2c5ce3b4fa9424ec2a798578,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1786726106720489179, guid: dac169ee2c5ce3b4fa9424ec2a798578,
         type: 3}
       propertyPath: m_Camera
@@ -50476,6 +50515,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: NormalEnem
+      objectReference: {fileID: 0}
+    - target: {fileID: 8099267249003893141, guid: dac169ee2c5ce3b4fa9424ec2a798578,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -50968,9 +51012,9 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: GameSettings, Assembly-CSharp
-        m_MethodName: GetCameraDistanse
+      - m_Target: {fileID: 672784386}
+        m_TargetAssemblyTypeName: GameSettingsView, Assembly-CSharp
+        m_MethodName: CameraDistChanged
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -53539,7 +53583,7 @@ PrefabInstance:
         type: 3}
       propertyPath: _menuUI
       value: 
-      objectReference: {fileID: 1418319127}
+      objectReference: {fileID: 1418319131}
     - target: {fileID: 1573121181109249901, guid: 8746d9c8d911a024c9c0f5139917342f,
         type: 3}
       propertyPath: _bonfireUI
@@ -53549,12 +53593,12 @@ PrefabInstance:
         type: 3}
       propertyPath: _levelUpUI
       value: 
-      objectReference: {fileID: 1944321350}
+      objectReference: {fileID: 1944321354}
     - target: {fileID: 1573121181109249901, guid: 8746d9c8d911a024c9c0f5139917342f,
         type: 3}
       propertyPath: _gamePlayUI
       value: 
-      objectReference: {fileID: 1733739186}
+      objectReference: {fileID: 1733739188}
     - target: {fileID: 1573121181109249901, guid: 8746d9c8d911a024c9c0f5139917342f,
         type: 3}
       propertyPath: _playerAnimator

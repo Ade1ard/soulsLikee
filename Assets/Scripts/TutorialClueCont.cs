@@ -2,7 +2,7 @@ using System;
 using TMPro;
 using UnityEngine;
 
-public class TutorialClueCont
+public class TutorialClueCont : MonoBehaviour
 {
     [SerializeField] private CanvasGroup _tutorialClue;
     [SerializeField] private TextMeshProUGUI _tutorialClueText;

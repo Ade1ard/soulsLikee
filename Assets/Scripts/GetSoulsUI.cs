@@ -1,24 +1,21 @@
 using System.Collections;
-using TMPro;
-using UnityEngine.UI;
 using UnityEngine;
 
 public class GetSoulsUI : MonoBehaviour
 {
-    [SerializeField] private Image _icon;
-    [SerializeField] private TextMeshProUGUI _getSoulsText;
+    [SerializeField] private CanvasGroup _getSoulsUI;
 
     private Coroutine _corutine;
+    private UIFader _uiFader;
+
+    public void Initialize(BootStrap bootStrap)
+    {
+        _uiFader = bootStrap.Resolve<UIFader>();
+    }
 
     void Start()
     {
-        _getSoulsText.color = new Color(_getSoulsText.color.r, _getSoulsText.color.g, _getSoulsText.color.b, 0);
-        _icon.color = new Color(_icon.color.r, _icon.color.g, _icon.color.b, 0);
-    }
-
-    void Update()
-    {
-        
+        _uiFader.Fade(_getSoulsUI, false);
     }
 
     public void GetSoulsVisualisation()
@@ -29,24 +26,12 @@ public class GetSoulsUI : MonoBehaviour
         }
     }
 
-    IEnumerator GetSoulsVisible()
+    private IEnumerator GetSoulsVisible()
     {
-        while (_getSoulsText.color.a != 1)
-        {
-            float newAlpha = Mathf.MoveTowards(_getSoulsText.color.a, 1, 5 * Time.deltaTime);
-            _getSoulsText.color = new Color(_getSoulsText.color.r, _getSoulsText.color.g, _getSoulsText.color.b, newAlpha);
-            _icon.color = new Color(_icon.color.r, _icon.color.g, _icon.color.b, newAlpha);
-            yield return null;
-        }
+        yield return StartCoroutine(_uiFader.Fading(_getSoulsUI, true));
         yield return new WaitForSeconds(2);
+        StartCoroutine(_uiFader.Fading(_getSoulsUI, false));
 
-        while (_getSoulsText.color.a != 0)
-        {
-            float newAlpha = Mathf.MoveTowards(_getSoulsText.color.a, 0, 5 * Time.deltaTime);
-            _getSoulsText.color = new Color(_getSoulsText.color.r, _getSoulsText.color.g, _getSoulsText.color.b, newAlpha);
-            _icon.color = new Color(_icon.color.r, _icon.color.g, _icon.color.b, newAlpha);
-            yield return null;
-        }
         _corutine = null;
     }
 }
