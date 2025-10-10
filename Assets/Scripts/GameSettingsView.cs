@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-public class GameSettingsView : MonoBehaviour
+public class GameSettingsView : MonoBehaviour, IMenu
 {
     [Header("Objects")]
     [SerializeField] private CanvasGroup _gameSettingsUI;
@@ -12,6 +12,7 @@ public class GameSettingsView : MonoBehaviour
     [SerializeField] private Scrollbar _scrollbarUISize;
 
     private UIFader _uiFader;
+    private MenuesController _menuesController;
     private GameSettings _gameSettings;
 
     public void CameraDistChanged()
@@ -33,6 +34,7 @@ public class GameSettingsView : MonoBehaviour
     {
         _gameSettings = bootStrap.Resolve<GameSettings>();
         _uiFader = bootStrap.Resolve<UIFader>();
+        _menuesController = bootStrap.Resolve<MenuesController>();
     }
 
     void Start()
@@ -42,6 +44,8 @@ public class GameSettingsView : MonoBehaviour
 
     public void SetActive(bool _bool)
     {
+        if (_bool)
+            _menuesController.SetCurrnetMenu(this);
         _uiFader.Fade(_gameSettingsUI, _bool);
     }
 }

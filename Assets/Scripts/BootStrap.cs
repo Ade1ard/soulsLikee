@@ -25,6 +25,7 @@ public class BootStrap : MonoBehaviour
         Resolve<GameSettingsView>().Initialize(_instance);
 
         Resolve<BonFireCont>().Initialize(_instance);
+        Resolve<BonFireMenu>().Initialize(_instance);  
         Resolve<LevelUpCont>().Initialize(_instance);
         Resolve<Healing>().Initialize(_instance);
         Resolve<TutorialClueCont>().Initialize(_instance);
@@ -48,6 +49,7 @@ public class BootStrap : MonoBehaviour
     {
         RegisterObject(new GameSettings());
         RegisterObject(new JsonSaveSystem());
+        RegisterObject(new MenuesController());
     }
 
     private void RegisterObject(object obj)

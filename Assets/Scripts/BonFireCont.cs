@@ -8,7 +8,6 @@ public class BonFireCont : MonoBehaviour
 
     [Header("UI")]
     [SerializeField] private CanvasGroup _gamePlayUI;
-    [SerializeField] private CanvasGroup _menuUI;
 
     [Header("String")]
     [SerializeField] private string _tutorialText;
@@ -17,11 +16,11 @@ public class BonFireCont : MonoBehaviour
     private PlayerController _playerController;
     private CameraModeChanger _cameraChanger;
     private UIFader _uiFader;
+    private MenuesController _menuesController;
+    private BonFireMenu _bonFireMenu;
 
     private bool _NearBonFire = false;
     private bool _isSitting = false;
-
-    private bool _inMenu;
 
     public void Initialize(BootStrap bootStrap)
     {
@@ -29,6 +28,8 @@ public class BonFireCont : MonoBehaviour
         _cameraChanger = bootStrap.Resolve<CameraModeChanger>();
         _playerController = bootStrap.Resolve<PlayerController>();
         _uiFader = bootStrap.Resolve<UIFader>();
+        _menuesController = bootStrap.Resolve<MenuesController>();
+        _bonFireMenu = bootStrap.Resolve<BonFireMenu>();
     }
 
     void Update()
@@ -42,10 +43,7 @@ public class BonFireCont : MonoBehaviour
 
             if (Input.GetKeyUp(KeyCode.Tab))
             {
-                if (_inMenu)
-                {
-                    QuitBonfire();
-                }
+                _menuesController.CloseMenu();
             }
 
             if (_isSitting)
@@ -65,7 +63,6 @@ public class BonFireCont : MonoBehaviour
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
 
-        _uiFader.Fade(_menuUI, false);
         _uiFader.Fade(_gamePlayUI, true);
 
         _cameraChanger.CameraOnBonfire(_cameraLookAt);
@@ -80,8 +77,8 @@ public class BonFireCont : MonoBehaviour
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
 
-        _uiFader.Fade(_menuUI, true);
         _uiFader.Fade(_gamePlayUI, false);
+        _bonFireMenu.SetActive(true);
 
         _tutorialClueCont.TutorialGetUnvisible();
 
@@ -93,7 +90,6 @@ public class BonFireCont : MonoBehaviour
         if (_playerController.gameObject == other.gameObject)
         {
             _NearBonFire = true;
-            _inMenu = true;
             _tutorialClueCont.TutorialGetVisible(_tutorialText);
         }
     }
@@ -103,13 +99,7 @@ public class BonFireCont : MonoBehaviour
         if (_playerController.gameObject == other.gameObject)
         {
             _NearBonFire = false;
-            _inMenu = false;
             _tutorialClueCont.TutorialGetUnvisible();
         }
-    }
-
-    private void Start()
-    {
-        _uiFader.Fade(_menuUI, false);
     }
 }

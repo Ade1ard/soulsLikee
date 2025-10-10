@@ -23831,6 +23831,7 @@ GameObject:
   - component: {fileID: 672784385}
   - component: {fileID: 672784386}
   - component: {fileID: 672784387}
+  - component: {fileID: 672784388}
   m_Layer: 0
   m_Name: UI
   m_TagString: Untagged
@@ -23936,7 +23937,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 76353b94c7d6a8d4d85ecab11d783848, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _fadeSpeed: 5
+  _fadeSpeed: 4
 --- !u!114 &672784386
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -23967,6 +23968,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _tutorialClue: {fileID: 438299282}
   _tutorialClueText: {fileID: 1505655125}
+--- !u!114 &672784388
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 672784377}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 91689525daf74d248b6b20a7712f5cf4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  BonFireMenuUI: {fileID: 1418319131}
 --- !u!1 &673396759
 GameObject:
   m_ObjectHideFlags: 0
@@ -38327,7 +38341,7 @@ GameObject:
   - component: {fileID: 1418319129}
   - component: {fileID: 1418319131}
   m_Layer: 0
-  m_Name: Menu
+  m_Name: BonFireMenu
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

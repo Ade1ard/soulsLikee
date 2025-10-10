@@ -3,7 +3,7 @@ using UnityEngine;
 using TMPro;
 using Unity.Mathematics;
 
-public class LevelUpCont : MonoBehaviour, ISaveable
+public class LevelUpCont : MonoBehaviour, ISaveable, IMenu
 {
     [SerializeField] private CanvasGroup _levelUpUI;
 
@@ -48,6 +48,7 @@ public class LevelUpCont : MonoBehaviour, ISaveable
     private MoneyCont _moneyCont;
     private GetSoulsUI _getSoulsUI;
     private UIFader _uiFader;
+    private MenuesController _menuesController;
 
     private int _levelWillUpCount = 0;
 
@@ -62,6 +63,7 @@ public class LevelUpCont : MonoBehaviour, ISaveable
         _playerSword = bootStrap.Resolve<PlayerSword>();
         _Flask = bootStrap.Resolve<Healing>();
         _uiFader = bootStrap.Resolve<UIFader>();
+        _menuesController = bootStrap.Resolve<MenuesController>();
 
         UpdateAllValues();
 
@@ -265,8 +267,15 @@ public class LevelUpCont : MonoBehaviour, ISaveable
 
     public void SetActive(bool _bool)
     {
-        if (!_bool)
+        if (_bool)
+        {
+            _menuesController.SetCurrnetMenu(this);
+        }
+        else
+        {
             CanselChanges();
+        }
+
         _uiFader.Fade(_levelUpUI, _bool);
     }
 
