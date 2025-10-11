@@ -1,16 +1,37 @@
+using System.Collections.Generic;
+
 public class MenuesController
 {
-    private IMenu _currentMenu;
+    private Stack<IMenu> _MenusStack = new Stack<IMenu>();
 
     public void SetCurrnetMenu(IMenu menu)
     {
-        if (_currentMenu != null)
-            _currentMenu.SetActive(false);
-        _currentMenu = menu;
+        if (!_MenusStack.Contains(menu))
+        {
+            CurrentMenu(false);
+            _MenusStack.Push(menu);
+        }
     }
 
-    public void CloseMenu()
+    public bool CloseMenu()
     {
-        _currentMenu.SetActive(false);
+        CurrentMenu(false);
+        _MenusStack.Pop();
+
+        if (_MenusStack.Count > 0)
+        {
+            CurrentMenu(true);
+            return false;
+        }
+        else
+        {
+            return true;
+        }
+    }
+
+    private void CurrentMenu(bool _bool)
+    {
+        if ( _MenusStack.Count > 0)
+            _MenusStack.Peek().SetActive(_bool);
     }
 }

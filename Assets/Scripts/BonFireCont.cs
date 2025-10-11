@@ -43,7 +43,10 @@ public class BonFireCont : MonoBehaviour
 
             if (Input.GetKeyUp(KeyCode.Tab))
             {
-                _menuesController.CloseMenu();
+                if (_menuesController.CloseMenu())
+                {
+                    QuitBonfire();
+                }
             }
 
             if (_isSitting)
