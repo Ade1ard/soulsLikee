@@ -46,7 +46,6 @@ public class LevelUpCont : MonoBehaviour, ISaveable, IMenu
     private PlayerSword _playerSword;
     private Healing _Flask;
     private MoneyCont _moneyCont;
-    private GetSoulsUI _getSoulsUI;
     private UIFader _uiFader;
     private MenuesController _menuesController;
 
@@ -57,7 +56,6 @@ public class LevelUpCont : MonoBehaviour, ISaveable, IMenu
 
     public void Initialize(BootStrap bootStrap)
     {
-        _getSoulsUI = bootStrap.Resolve<GetSoulsUI>();
         _moneyCont = bootStrap.Resolve<MoneyCont>();
         _playerHealth = bootStrap.Resolve<PlayerHealth>();
         _playerSword = bootStrap.Resolve<PlayerSword>();
@@ -270,6 +268,7 @@ public class LevelUpCont : MonoBehaviour, ISaveable, IMenu
         if (_bool)
         {
             _menuesController.SetCurrnetMenu(this);
+            GetCurriencies();
         }
         else
         {
@@ -279,16 +278,12 @@ public class LevelUpCont : MonoBehaviour, ISaveable, IMenu
         _uiFader.Fade(_levelUpUI, _bool);
     }
 
-    public void GetCurrienciesMoney()
+    public void GetCurriencies()
     {
-        _currentMoneyCountText.text = _moneyCountGamePlayUI.text;
-        _currentMoneyCount = int.Parse(_moneyCountGamePlayUI.text);
-    }
+        _currentMoneyCount = _moneyCont._targetMoneyCount;
+        _currentSoulsCount = _moneyCont._currentSoulsCount;
 
-    public void GetCurrienciesSouls(float amount)
-    {
-        _currentSoulsCount += math.abs(amount);
-        _currentSoulsCountText.text = _currentSoulsCount.ToString();
-        _getSoulsUI.GetSoulsVisualisation();
+        _currentMoneyCountText.text = _moneyCont._targetMoneyCount.ToString();
+        _currentSoulsCountText.text = _moneyCont._currentSoulsCount.ToString();
     }
 }

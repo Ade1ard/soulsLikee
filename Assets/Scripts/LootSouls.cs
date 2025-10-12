@@ -7,13 +7,13 @@ public class LootSouls : MonoBehaviour
     private bool _nearLoot;
 
     private TutorialClueCont _tutClueCont;
-    private LevelUpCont _levelUpCont;
+    private MoneyCont _moneyCont;
     private PlayerController _playerController;
 
     public void Initialize(BootStrap bootStrap)
     {
         _tutClueCont = bootStrap.Resolve<TutorialClueCont>();
-        _levelUpCont = bootStrap.Resolve<LevelUpCont>();
+        _moneyCont = bootStrap.Resolve<MoneyCont>();
         _playerController = bootStrap.Resolve<PlayerController>();
     }
 
@@ -23,7 +23,7 @@ public class LootSouls : MonoBehaviour
         {
             if (Input.GetKeyDown(KeyCode.F))
             {
-                _levelUpCont.GetCurrienciesSouls(1);
+                _moneyCont.GetSouls(1);
                 _tutClueCont.TutorialGetUnvisible();
                 Destroy(gameObject);
             }

@@ -9,11 +9,19 @@ public class MoneyCont : MonoBehaviour, ISaveable
 
     [SerializeField] private float _getMoneyFadeSpeed = 5;
 
+    private GetSoulsUI _getSoulsUI;
+
     private int _currentMoneyCount;
+    public int _currentSoulsCount { get; private set; }
     public int _targetMoneyCount { get; private set; }
     private int _getMoneyCount;
 
     private Coroutine _DrawMoneyCorutine;
+
+    public void Initialize(BootStrap bootStrap)
+    {
+        _getSoulsUI = bootStrap.Resolve<GetSoulsUI>();
+    }
 
     void Start()
     {
@@ -40,6 +48,12 @@ public class MoneyCont : MonoBehaviour, ISaveable
             StopCoroutine(_DrawMoneyCorutine);
         }
         _DrawMoneyCorutine = StartCoroutine(DrawMoneyCount());
+    }
+
+    public void GetSouls(int amount)
+    {
+        _currentSoulsCount += Mathf.Abs(amount);
+        _getSoulsUI.GetSoulsVisualisation();
     }
 
     private IEnumerator DrawMoneyCount()

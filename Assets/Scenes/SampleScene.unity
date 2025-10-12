@@ -23832,6 +23832,7 @@ GameObject:
   - component: {fileID: 672784386}
   - component: {fileID: 672784387}
   - component: {fileID: 672784388}
+  - component: {fileID: 672784389}
   m_Layer: 0
   m_Name: UI
   m_TagString: Untagged
@@ -23981,6 +23982,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   BonFireMenuUI: {fileID: 1418319131}
+--- !u!114 &672784389
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 672784377}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f40eb65b6add9bc4785878099ba282e8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &673396759
 GameObject:
   m_ObjectHideFlags: 0
@@ -33261,10 +33274,10 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 672784388}
-        m_TargetAssemblyTypeName: BonFireMenu, Assembly-CSharp
-        m_MethodName: SetActive
-        m_Mode: 6
+      - m_Target: {fileID: 672784377}
+        m_TargetAssemblyTypeName: QuitButton, Assembly-CSharp
+        m_MethodName: 
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -50153,7 +50166,7 @@ Transform:
   m_GameObject: {fileID: 1962794637}
   serializedVersion: 2
   m_LocalRotation: {x: 0.31622782, y: 0, z: 0, w: 0.9486833}
-  m_LocalPosition: {x: 20.41097, y: 4.9738326, z: -16.930927}
+  m_LocalPosition: {x: 20.390902, y: 4.973832, z: -16.930927}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:

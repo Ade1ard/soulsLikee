@@ -41,7 +41,7 @@ public class BonFireCont : MonoBehaviour
                 SitBonfire();
             }
 
-            if (Input.GetKeyUp(KeyCode.Tab))
+            if (Input.GetKeyUp(KeyCode.Tab) && _isSitting)
             {
                 if (_menuesController.CloseMenu())
                 {
@@ -60,22 +60,22 @@ public class BonFireCont : MonoBehaviour
 
     public void QuitBonfire()
     {
-        _playerAnimator.SetTrigger("BonFireStandUp");
         _isSitting = false;
+        _playerAnimator.SetTrigger("BonFireStandUp");
 
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
 
         _uiFader.Fade(_gamePlayUI, true);
 
-        _cameraChanger.CameraOnBonfire(_cameraLookAt);
+        _cameraChanger.CameraOnBonfire(_cameraLookAt, false);
     }
 
     private void SitBonfire()
     {
-        _playerAnimator.SetTrigger("BonFireSitDown");
-        _playerController.IsHealing(1);
         _isSitting = true;
+        _playerController.IsHealing(1);
+        _playerAnimator.SetTrigger("BonFireSitDown");
 
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
@@ -85,7 +85,7 @@ public class BonFireCont : MonoBehaviour
 
         _tutorialClueCont.TutorialGetUnvisible();
 
-        _cameraChanger.CameraOnBonfire(_cameraLookAt);
+        _cameraChanger.CameraOnBonfire(_cameraLookAt, true);
     }
 
     private void OnTriggerEnter(Collider other)

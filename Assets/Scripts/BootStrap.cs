@@ -18,6 +18,7 @@ public class BootStrap : MonoBehaviour
         Resolve<PlayerController>().Initialize(_instance);
         Resolve<PlayerHealth>().Initialize(_instance);
         Resolve<PlayerSword>().Initialize(_instance);
+        Resolve<Healing>().Initialize(_instance);
 
         Resolve<CameraModeChanger>().Initialize(_instance);
 
@@ -25,11 +26,13 @@ public class BootStrap : MonoBehaviour
         Resolve<GameSettingsView>().Initialize(_instance);
 
         Resolve<BonFireCont>().Initialize(_instance);
-        Resolve<BonFireMenu>().Initialize(_instance);  
+        Resolve<BonFireMenu>().Initialize(_instance);
+
+        Resolve<MoneyCont>().Initialize(_instance);
         Resolve<LevelUpCont>().Initialize(_instance);
-        Resolve<Healing>().Initialize(_instance);
-        Resolve<TutorialClueCont>().Initialize(_instance);
+
         Resolve<GetSoulsUI>().Initialize(_instance);
+        Resolve<TutorialClueCont>().Initialize(_instance);
 
         foreach (LootSouls lootSouls in ResolveAll<LootSouls>())
             lootSouls.Initialize(_instance);

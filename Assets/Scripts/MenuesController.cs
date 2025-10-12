@@ -15,13 +15,18 @@ public class MenuesController
 
     public bool CloseMenu()
     {
-        CurrentMenu(false);
-        _MenusStack.Pop();
-
-        if (_MenusStack.Count > 0)
+        if (_MenusStack.Count > 1)
         {
+            CurrentMenu(false);
+            _MenusStack.Pop();
             CurrentMenu(true);
             return false;
+        }
+        else if (_MenusStack.Count > 0)
+        {
+            CurrentMenu(false);
+            _MenusStack.Pop();
+            return true;
         }
         else
         {

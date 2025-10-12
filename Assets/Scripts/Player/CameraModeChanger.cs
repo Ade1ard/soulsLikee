@@ -94,14 +94,14 @@ public class CameraModeChanger : MonoBehaviour
         }
     }
 
-    public void CameraOnBonfire(Transform bonfire)
+    public void CameraOnBonfire(Transform bonfire, bool _bool)
     {
         if (_isCameraLocked)
         {
             ChangeCameraLookMod();
         }
 
-        if (!_isCameraOnBonfire)
+        if (_bool)
         {
             _isCameraOnBonfire = true;
 
