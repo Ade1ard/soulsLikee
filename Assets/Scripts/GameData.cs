@@ -17,7 +17,7 @@ public class GameData
 
     public SettingsData settings;
 
-    public List<EnemyData> enemies;
+    public List<EnemyData> enemies = new List<EnemyData>();
 }
 
 [System.Serializable]

@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.VFX;
+using static UnityEditor.Experimental.AssetDatabaseExperimental.AssetDatabaseCounters;
 
 public class DissolveController : MonoBehaviour
 {
@@ -30,17 +31,22 @@ public class DissolveController : MonoBehaviour
         }
     }
 
-    void Update()
+    public void Dissolve(bool _bool)
     {
-        
+        if (_bool)
+        {
+            StartCoroutine(DissolveCoroutine());
+        }
+        else
+        {
+            foreach (Material skinnedMaterial in _skinnedMaterials)
+            {
+                skinnedMaterial.SetFloat("_DissolveAmount", 1);
+            }
+        }
     }
 
-    public void Dissolve()
-    {
-        StartCoroutine(DissolveCorutine());
-    }
-
-    IEnumerator DissolveCorutine()
+    IEnumerator DissolveCoroutine()
     {
         if (_VFXGraph != null)
         {

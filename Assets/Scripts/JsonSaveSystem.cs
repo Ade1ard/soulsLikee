@@ -140,16 +140,4 @@ public class JsonSaveSystem
         if (File.Exists(backupPath))
             File.Delete(backupPath);
     }
-
-    private float lastAutoSaveTime;
-    public float autoSaveInterval = 60f;
-
-    void Update()
-    {
-        if (Time.time - lastAutoSaveTime > autoSaveInterval)
-        {
-            SaveGame("autosave");
-            lastAutoSaveTime = Time.time;
-        }
-    }
 }

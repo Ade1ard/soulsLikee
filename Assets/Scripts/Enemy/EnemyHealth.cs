@@ -68,6 +68,7 @@ public class EnemyHealth : MonoBehaviour, ISaveable
         enemyData.health = _value;
         enemyData.isAlive = CheckAlive();
 
+        Debug.Log($"{name} + {enemyData.isAlive}");
         gameData.enemies.Add(enemyData);
     }
 
@@ -137,7 +138,7 @@ public class EnemyHealth : MonoBehaviour, ISaveable
         _enemyController.enabled = false;
         _animator.SetTrigger("Death");
         SetBarVisible(false);
-        _dissolveController.Dissolve();
+        _dissolveController.Dissolve(_bool);
         _capsuleCollider.isTrigger = true;
 
         if (_bool)
@@ -218,6 +219,13 @@ public class EnemyHealth : MonoBehaviour, ISaveable
 
     public bool CheckAlive()
     {
-        return !_animator.GetCurrentAnimatorStateInfo(0).IsName("Death");
+        if (_value <= 0)
+        {
+            return false;
+        }
+        else
+        {
+            return true;
+        }
     }
 }
