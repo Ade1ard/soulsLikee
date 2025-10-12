@@ -30,12 +30,16 @@ public class MoneyCont : MonoBehaviour, ISaveable
 
     public void SaveTo(GameData gameData)
     {
-
+        gameData.money = _currentMoneyCount;
+        gameData.souls = _currentSoulsCount;
     }
 
     public void LoadFrom(GameData gameData)
     {
-
+        _currentMoneyCount = gameData.money;
+        _targetMoneyCount = gameData.money;
+        _currentSoulsCount = gameData.souls;
+        _MoneyText.text = _currentMoneyCount.ToString();
     }
 
     public void GetMoney(int amount)

@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.AI;
 using System.Linq;
 
-public class EnemyHealth : MonoBehaviour
+public class EnemyHealth : MonoBehaviour, ISaveable
 {
     [Header("UI")]
     [SerializeField] private Image _HealthValue;
@@ -59,6 +59,39 @@ public class EnemyHealth : MonoBehaviour
         SetBarVisible(false);
     }
 
+    public void SaveTo(GameData gameData)
+    {
+        var enemyData = new EnemyData();
+
+        enemyData.enemyID = gameObject.name;
+        enemyData.enemyPosition = transform.position;
+        enemyData.health = _value;
+        enemyData.isAlive = CheckAlive();
+
+        gameData.enemies.Add(enemyData);
+    }
+
+    public void LoadFrom(GameData gameData)
+    {
+        foreach (EnemyData enemyData in gameData.enemies)
+        {
+            if (enemyData.enemyID == gameObject.name)
+            {
+                transform.position = enemyData.enemyPosition;
+                if (enemyData.isAlive)
+                {
+                    _value = enemyData.health;
+                }
+                else
+                {
+                    _value = 0;
+                    EnemyDeath(false);
+                }
+                break;
+            }
+        }
+    }
+
     void Update()
     {
         if (Time.time - _timeLastHit > _barFadeDelay)
@@ -107,7 +140,8 @@ public class EnemyHealth : MonoBehaviour
         _dissolveController.Dissolve();
         _capsuleCollider.isTrigger = true;
 
-        Invoke("DropLoot", _lootDrobDelay);
+        if (_bool)
+            Invoke("DropLoot", _lootDrobDelay);
     }
 
     private void DropLoot()
@@ -182,7 +216,7 @@ public class EnemyHealth : MonoBehaviour
         _inHyperarmor = false;
     }
 
-        public bool CheckAlive()
+    public bool CheckAlive()
     {
         return !_animator.GetCurrentAnimatorStateInfo(0).IsName("Death");
     }

@@ -23832,7 +23832,6 @@ GameObject:
   - component: {fileID: 672784386}
   - component: {fileID: 672784387}
   - component: {fileID: 672784388}
-  - component: {fileID: 672784389}
   m_Layer: 0
   m_Name: UI
   m_TagString: Untagged
@@ -23891,10 +23890,10 @@ MonoBehaviour:
   _currentMoneyCountText: {fileID: 620613807}
   _moneyCostText: {fileID: 1313194348}
   _soulsCostText: {fileID: 646529315}
-  _costValueMoney: {fileID: 1128862499}
   _currentHealthText: {fileID: 1584455668}
   _currentDamageText: {fileID: 495775110}
   _currentFlaskEfficiencyText: {fileID: 1316748497}
+  _costValueMoney: {fileID: 1128862499}
   _willBeHealthText: {fileID: 1933550643}
   _willBeDamageText: {fileID: 958290319}
   _willBeFlaskEfficiencyText: {fileID: 1203612153}
@@ -23982,18 +23981,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   BonFireMenuUI: {fileID: 1418319131}
---- !u!114 &672784389
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 672784377}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f40eb65b6add9bc4785878099ba282e8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &673396759
 GameObject:
   m_ObjectHideFlags: 0
@@ -50166,7 +50153,7 @@ Transform:
   m_GameObject: {fileID: 1962794637}
   serializedVersion: 2
   m_LocalRotation: {x: 0.31622782, y: 0, z: 0, w: 0.9486833}
-  m_LocalPosition: {x: 20.390902, y: 4.973832, z: -16.930927}
+  m_LocalPosition: {x: 20.396135, y: 4.973832, z: -16.930927}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:

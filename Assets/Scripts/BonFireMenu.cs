@@ -7,6 +7,8 @@ public class BonFireMenu : MonoBehaviour, IMenu
     private UIFader _uiFader;
     private MenuesController _menuesController;
 
+    private Coroutine _coroutine;
+
     public void Initialize(BootStrap bootStrap)
     {
         _uiFader = bootStrap.Resolve<UIFader>();
@@ -15,6 +17,10 @@ public class BonFireMenu : MonoBehaviour, IMenu
 
     public void SetActive(bool _bool)
     {
+        if (_coroutine != null)
+            StopCoroutine(_coroutine);
+        _coroutine = StartCoroutine(_uiFader.Fading(BonFireMenuUI, _bool));
+
         _uiFader.Fade(BonFireMenuUI, _bool);
         if (_bool)
             _menuesController.SetCurrnetMenu(this);

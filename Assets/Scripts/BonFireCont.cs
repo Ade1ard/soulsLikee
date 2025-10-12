@@ -18,12 +18,14 @@ public class BonFireCont : MonoBehaviour
     private UIFader _uiFader;
     private MenuesController _menuesController;
     private BonFireMenu _bonFireMenu;
+    private JsonSaveSystem _saveSystem;
 
     private bool _NearBonFire = false;
     private bool _isSitting = false;
 
     public void Initialize(BootStrap bootStrap)
     {
+        _saveSystem = bootStrap.Resolve<JsonSaveSystem>();
         _tutorialClueCont = bootStrap.Resolve<TutorialClueCont>();
         _cameraChanger = bootStrap.Resolve<CameraModeChanger>();
         _playerController = bootStrap.Resolve<PlayerController>();
@@ -69,6 +71,8 @@ public class BonFireCont : MonoBehaviour
         _uiFader.Fade(_gamePlayUI, true);
 
         _cameraChanger.CameraOnBonfire(_cameraLookAt, false);
+
+        _saveSystem.SaveGame();
     }
 
     private void SitBonfire()
@@ -86,6 +90,8 @@ public class BonFireCont : MonoBehaviour
         _tutorialClueCont.TutorialGetUnvisible();
 
         _cameraChanger.CameraOnBonfire(_cameraLookAt, true);
+
+        _saveSystem.SaveGame();
     }
 
     private void OnTriggerEnter(Collider other)

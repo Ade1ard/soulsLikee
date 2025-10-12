@@ -48,4 +48,11 @@ public class GameSettingsView : MonoBehaviour, IMenu
             _menuesController.SetCurrnetMenu(this);
         _uiFader.Fade(_gameSettingsUI, _bool);
     }
+
+    public void LoadScrollBars(float cameraDist, float cameraSpeed, float uiSize)
+    {
+        _scrollbarCameraDist.value = cameraDist;
+        _scrollbarCameraSpeed.value = cameraSpeed;
+        _scrollbarUISize.value = uiSize;
+    }
 }

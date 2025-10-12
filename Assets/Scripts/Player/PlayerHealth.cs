@@ -3,7 +3,7 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class PlayerHealth : MonoBehaviour
+public class PlayerHealth : MonoBehaviour, ISaveable
 {
     [Header("BarsUI")]
     [SerializeField] private Image _mainHealthValueImage;
@@ -27,8 +27,6 @@ public class PlayerHealth : MonoBehaviour
     {
         _playerController = bootStrap.Resolve<PlayerController>();
         _playerAnimator = bootStrap.ResolveAll<Animator>().FirstOrDefault(e => e.name == gameObject.name);
-        _value = _maxValue;
-
     }
 
     private void Start()
@@ -36,9 +34,16 @@ public class PlayerHealth : MonoBehaviour
         StartDrawBarCorutine();
     }
 
-    void Update()
+    public void SaveTo(GameData gameData)
     {
+        gameData.playerPosition = transform.position;
+        gameData.health = _value;
+    }
 
+    public void LoadFrom(GameData gameData)
+    {
+        _value = gameData.health;
+        transform.position = gameData.playerPosition;
     }
 
     public void DealDamage(float damage)
@@ -82,7 +87,6 @@ public class PlayerHealth : MonoBehaviour
     public void GetMaxHealth(float amount)
     {
         _maxValue = Mathf.Abs(amount);
-        _value = _maxValue;
         StartDrawBarCorutine();
     }
 

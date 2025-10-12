@@ -10,6 +10,7 @@ public class BootStrap : MonoBehaviour
 
     private void Awake()
     {
+        RegisterInterfases();
         GetServises();
         RegisterNotMonoBehObjects();
 
@@ -46,6 +47,8 @@ public class BootStrap : MonoBehaviour
             enemySword.Initialize(_instance);
 
         Resolve<LootSpawner>().Initialize(_instance);
+
+        Resolve<JsonSaveSystem>().Initialize(_instance);
     }
 
     private void RegisterNotMonoBehObjects()
@@ -53,6 +56,12 @@ public class BootStrap : MonoBehaviour
         RegisterObject(new GameSettings());
         RegisterObject(new JsonSaveSystem());
         RegisterObject(new MenuesController());
+    }
+
+    private void RegisterInterfases()
+    {
+        _servises[typeof(ISaveable)] = new List<object>();
+        _servises[typeof(IMenu)] = new List<object>();
     }
 
     private void RegisterObject(object obj)
@@ -67,6 +76,12 @@ public class BootStrap : MonoBehaviour
         else
         {
             _servises[type].Add(obj);
+        }
+
+        foreach (var iface in type.GetInterfaces())
+        {
+            if (_servises.ContainsKey(iface))
+                _servises[iface].Add(obj);
         }
     }
 
@@ -111,10 +126,7 @@ public class BootStrap : MonoBehaviour
             foreach (var iface in type.GetInterfaces())
             {
                 if (_servises.ContainsKey(iface))
-                {
-                    _servises[type] = new List<object>();
-                    _servises[type].Add(behaivor);
-                }
+                    _servises[iface].Add(behaivor);
             }
         }
 

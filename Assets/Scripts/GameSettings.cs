@@ -16,18 +16,33 @@ public class GameSettings : ISaveable
     private float _freeLookCameraSpeedOffset_Y = 15f;
 
     private float _lockOnCameraDistanseOffset = 8f;
-
     private float _topAndBottomRigCameraDistanseOffset = 8f;
     private float _middleRigCameraDistanseOffset = 10f;
 
+    private float _cameraDistTarget;
+    private float _cameraSpeedTarget;
+    private float _uiSizeTarget;
+
     public void SaveTo(GameData data)
     {
+        var settingsData = new SettingsData();
 
+        settingsData.cameraDistanse = _cameraDistTarget;
+        settingsData.cameraSensity = _cameraSpeedTarget;
+        settingsData.UIsize = _uiSizeTarget;
+
+        data.settings = settingsData;
     }
 
     public void LoadFrom(GameData data)
     {
+        var settingsData = data.settings;
 
+        GetCameraDistanse(settingsData.cameraDistanse);
+        GetCameraSpeed(settingsData.cameraSensity);
+        GetUISize(settingsData.UIsize);
+
+        _view.LoadScrollBars(settingsData.cameraDistanse, settingsData.cameraSensity, settingsData.UIsize);
     }
 
     public void Initialize(BootStrap bootStrap)
@@ -40,6 +55,7 @@ public class GameSettings : ISaveable
 
     public void GetUISize(float target)
     {
+        _uiSizeTarget = target;
         float amoint = 0.25f + (Mathf.Clamp(target, 0.1f, 1) - 0.1f) * (0.5f / 0.9f);
 
         _playerCanvas.scaleFactor = _UISize * amoint;
@@ -47,6 +63,7 @@ public class GameSettings : ISaveable
 
     public void GetCameraSpeed(float target)
     {
+        _cameraSpeedTarget = target;
         float amoint = 0.25f + (Mathf.Clamp(target, 0.1f, 1) - 0.1f) * (0.5f / 0.9f);
 
 
@@ -56,6 +73,7 @@ public class GameSettings : ISaveable
 
     public void GetCameraDistanse(float target)
     {
+        _cameraDistTarget = target;
         float amoint = 0.25f + (Mathf.Clamp(target, 0.1f, 1) - 0.1f) * (0.5f / 0.9f);
 
         _freeLookCamera.m_Orbits[0].m_Radius = amoint * _topAndBottomRigCameraDistanseOffset;

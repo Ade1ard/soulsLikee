@@ -1,7 +1,6 @@
 using System.Collections;
 using UnityEngine;
 using TMPro;
-using Unity.Mathematics;
 
 public class LevelUpCont : MonoBehaviour, ISaveable, IMenu
 {
@@ -29,11 +28,10 @@ public class LevelUpCont : MonoBehaviour, ISaveable, IMenu
     [SerializeField] private TextMeshProUGUI _moneyCostText;
     [SerializeField] private TextMeshProUGUI _soulsCostText;
 
-    [SerializeField] private TextMeshProUGUI _costValueMoney;
-
     [SerializeField] private TextMeshProUGUI _currentHealthText;
     [SerializeField] private TextMeshProUGUI _currentDamageText;
     [SerializeField] private TextMeshProUGUI _currentFlaskEfficiencyText;
+    [SerializeField] private TextMeshProUGUI _costValueMoney;
 
     [SerializeField] private TextMeshProUGUI _willBeHealthText;
     [SerializeField] private TextMeshProUGUI _willBeDamageText;
@@ -63,21 +61,41 @@ public class LevelUpCont : MonoBehaviour, ISaveable, IMenu
         _uiFader = bootStrap.Resolve<UIFader>();
         _menuesController = bootStrap.Resolve<MenuesController>();
 
-        UpdateAllValues();
-
         _willBeHealth = _currentMaxHealth;
         _willBeDamage = _currentDamage;
         _willBeFlaskEfficiency = _currentFlaskEfficiency;
     }
 
+    private void Start()
+    {
+        _currentHealthText.text = _currentMaxHealth.ToString();
+        _currentDamageText.text = _currentDamage.ToString();
+        _currentFlaskEfficiencyText.text = _currentFlaskEfficiency.ToString();
+        _costValueMoney.text = _oneUpgrateCost.ToString();
+
+        UpdateAllValues();
+        CanselChanges();
+    }
+
     public void SaveTo(GameData gameData)
     {
-
+        gameData.maxHealth = _currentMaxHealth;
+        gameData.damage = _currentDamage;
+        gameData.flaskEfficiency = _currentFlaskEfficiency;
+        gameData.oneUpgrateCost = _oneUpgrateCost;
     }
 
     public void LoadFrom(GameData gameData)
     {
+        _currentMaxHealth = gameData.maxHealth;
+        _currentDamage = gameData.damage;
+        _currentFlaskEfficiency = gameData.flaskEfficiency;
+        _oneUpgrateCost = gameData.oneUpgrateCost;
 
+        _currentHealthText.text = _currentMaxHealth.ToString();
+        _currentDamageText.text = _currentDamage.ToString();
+        _currentFlaskEfficiencyText.text = _currentFlaskEfficiency.ToString();
+        _costValueMoney.text = _oneUpgrateCost.ToString();
     }
 
     public void StatPlus(string statName)

@@ -6,11 +6,14 @@ public class JsonSaveSystem
 {
     private string savePath;
     private GameData currentGameData;
+    private BootStrap _bootStrap;
 
     public static JsonSaveSystem Instance { get; private set; }
 
-    public void Initialize()
+    public void Initialize(BootStrap bootStrap)
     {
+        _bootStrap = bootStrap;
+
         if (Instance == null)
         {
             Instance = this;
@@ -37,6 +40,8 @@ public class JsonSaveSystem
 
     public void SaveGame(string saveName = "autosave")
     {
+        foreach (ISaveable saveable in _bootStrap.ResolveAll<ISaveable>())
+            saveable.SaveTo(currentGameData);
 
         string json = JsonUtility.ToJson(currentGameData, true);
 
@@ -58,6 +63,9 @@ public class JsonSaveSystem
             {
                 string json = File.ReadAllText(filePath);
                 currentGameData = JsonUtility.FromJson<GameData>(json);
+
+                foreach (ISaveable saveable in _bootStrap.ResolveAll<ISaveable>())
+                    saveable.LoadFrom(currentGameData);
 
                 Debug.Log($"Игра загружена: {filePath}");
                 return true;
@@ -134,7 +142,7 @@ public class JsonSaveSystem
     }
 
     private float lastAutoSaveTime;
-    public float autoSaveInterval = 300f; // 5 минут
+    public float autoSaveInterval = 60f;
 
     void Update()
     {
