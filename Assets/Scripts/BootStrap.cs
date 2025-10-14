@@ -106,8 +106,7 @@ public class BootStrap : MonoBehaviour
     {
         _instance = this;
 
-        var monoBehaivors = FindObjectsOfType<MonoBehaviour>(true);
-        var behaivors = monoBehaivors.Concat(FindObjectsOfType<Behaviour>(true));
+        var behaivors = FindObjectsOfType<Behaviour>(true);
 
         foreach (var behaivor in behaivors)
         {

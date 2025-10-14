@@ -10,8 +10,7 @@ public class EnemyHealth : MonoBehaviour, ISaveable
     [SerializeField] private Image _HealthValue;
     [SerializeField] private Image _HealthBar;
     [SerializeField] private float _maxValue;
-    public float maxValue => _maxValue;
-    public float _value { get; private set; }
+    private float _value;
 
     [Header("BarSpeed")]
     [SerializeField] private float _healthBarSpeed;
@@ -50,7 +49,6 @@ public class EnemyHealth : MonoBehaviour, ISaveable
         _navMeshAgent = bootStrap.ResolveAll<NavMeshAgent>().FirstOrDefault(e => e.name == gameObject.name);
         _enemyController = bootStrap.ResolveAll<EnemyController>().FirstOrDefault(e => e.name == gameObject.name);
         _animator = bootStrap.ResolveAll<Animator>().FirstOrDefault(e => e.name == gameObject.name);
-        _value = _maxValue;
     }
 
     private void Start()
@@ -68,8 +66,16 @@ public class EnemyHealth : MonoBehaviour, ISaveable
         enemyData.health = _value;
         enemyData.isAlive = CheckAlive();
 
-        Debug.Log($"{name} + {enemyData.isAlive}");
-        gameData.enemies.Add(enemyData);
+        Debug.Log($" SAVE {name} + {enemyData} + {enemyData.isAlive} + {_value}");
+
+        if (gameData.enemies.Contains(enemyData))
+        {
+
+        }
+        else
+        {
+            gameData.enemies.Add(enemyData);
+        }
     }
 
     public void LoadFrom(GameData gameData)
@@ -88,6 +94,7 @@ public class EnemyHealth : MonoBehaviour, ISaveable
                     _value = 0;
                     EnemyDeath(false);
                 }
+                Debug.Log($" LOAD {name} + {enemyData.isAlive} + {enemyData.health}");
                 break;
             }
         }
@@ -113,11 +120,7 @@ public class EnemyHealth : MonoBehaviour, ISaveable
 
             _enemyController.PlayerNoticedAfterHit();
 
-            if (_inHyperarmor)
-            {
-
-            }
-            else
+            if (!_inHyperarmor)
             {
                 _animator.SetTrigger("Hit");
             }
@@ -156,13 +159,6 @@ public class EnemyHealth : MonoBehaviour, ISaveable
         _value = Mathf.Clamp(_value, 0, _maxValue);
         StartDrawBarCorutine();
     }
-
-    public void AddMaxHealth(float amount)
-    {
-        _maxValue += Mathf.Abs(amount);
-        StartDrawBarCorutine();
-    }
-
 
     private void StartDrawBarCorutine()
     {
