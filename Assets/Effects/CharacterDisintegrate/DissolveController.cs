@@ -2,7 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.VFX;
-using static UnityEditor.Experimental.AssetDatabaseExperimental.AssetDatabaseCounters;
 
 public class DissolveController : MonoBehaviour
 {
@@ -14,21 +13,25 @@ public class DissolveController : MonoBehaviour
     [SerializeField] private float _dissolveDelay = 0.025f;
 
     List<Material> _skinnedMaterials = new List<Material>();
-    void Start()
-    {
-        _VFXGraph.Stop();
 
+    public void Initialize(BootStrap bootStrap)
+    {
         if (_skinnedMeshes != null)
         {
-            foreach(SkinnedMeshRenderer skinnedMesh in _skinnedMeshes)
+            foreach (SkinnedMeshRenderer skinnedMesh in _skinnedMeshes)
             {
-                
-                foreach(Material material in skinnedMesh.materials)
+
+                foreach (Material material in skinnedMesh.materials)
                 {
                     _skinnedMaterials.Add(material);
                 }
             }
         }
+    }
+
+    void Start()
+    {
+        _VFXGraph.Stop();
     }
 
     public void Dissolve(bool _bool)

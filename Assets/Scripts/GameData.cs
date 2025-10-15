@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using UnityEditor.XR;
 using UnityEngine;
 
 [System.Serializable]
@@ -14,10 +15,13 @@ public class GameData
 
     public Vector3 playerPosition;
     public float health;
+    public float FlaskCount;
 
     public SettingsData settings;
 
     public List<EnemyData> enemies = new List<EnemyData>();
+
+    public List<LootData> lootSouls = new List<LootData>();
 }
 
 [System.Serializable]
@@ -35,4 +39,11 @@ public class SettingsData
     public float UIsize;
     public float cameraDistanse;
     public float cameraSensity;
+}
+
+[System.Serializable]
+public class LootData
+{
+    public string lootID;
+    public bool isCollected;
 }

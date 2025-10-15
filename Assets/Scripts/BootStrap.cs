@@ -45,6 +45,8 @@ public class BootStrap : MonoBehaviour
             enemyHealth.Initialize(_instance);
         foreach (EnemySword enemySword in ResolveAll<EnemySword>())
             enemySword.Initialize(_instance);
+        foreach (DissolveController disCont in ResolveAll<DissolveController>())
+            disCont.Initialize(_instance);
 
         Resolve<LootSpawner>().Initialize(_instance);
 
@@ -56,6 +58,7 @@ public class BootStrap : MonoBehaviour
         RegisterObject(new GameSettings());
         RegisterObject(new JsonSaveSystem());
         RegisterObject(new MenuesController());
+        RegisterObject(new SavesManager());
     }
 
     private void RegisterInterfases()

@@ -50476,7 +50476,7 @@ PrefabInstance:
     - target: {fileID: 7619114628150562769, guid: dac169ee2c5ce3b4fa9424ec2a798578,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 9.25
+      value: 12.62
       objectReference: {fileID: 0}
     - target: {fileID: 7619114628150562769, guid: dac169ee2c5ce3b4fa9424ec2a798578,
         type: 3}
@@ -51747,7 +51747,7 @@ PrefabInstance:
     - target: {fileID: 3886177350230625816, guid: 0c28a5231e356e34d981174612325560,
         type: 3}
       propertyPath: m_Name
-      value: LootSouls (1)
+      value: LootSouls
       objectReference: {fileID: 0}
     - target: {fileID: 3886177350230625816, guid: 0c28a5231e356e34d981174612325560,
         type: 3}
@@ -54464,6 +54464,7 @@ SceneRoots:
   - {fileID: 1579126128}
   - {fileID: 6046018844230716820}
   - {fileID: 672784380}
+  - {fileID: 1509633898}
   - {fileID: 1651939889}
   - {fileID: 63045568}
   - {fileID: 954710877}
@@ -54471,5 +54472,4 @@ SceneRoots:
   - {fileID: 2166427618429044879}
   - {fileID: 7674391045366944254}
   - {fileID: 340602425085655497}
-  - {fileID: 1509633898}
   - {fileID: 1976197796}

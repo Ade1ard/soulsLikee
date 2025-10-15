@@ -59,23 +59,18 @@ public class EnemyHealth : MonoBehaviour, ISaveable
 
     public void SaveTo(GameData gameData)
     {
-        var enemyData = new EnemyData();
+        var enemyData = gameData.enemies.FirstOrDefault(e => e.enemyID == gameObject.name);
+
+        if (enemyData == null)
+        {
+            enemyData = new EnemyData();
+            gameData.enemies.Add(enemyData);
+        }
 
         enemyData.enemyID = gameObject.name;
         enemyData.enemyPosition = transform.position;
         enemyData.health = _value;
         enemyData.isAlive = CheckAlive();
-
-        Debug.Log($" SAVE {name} + {enemyData} + {enemyData.isAlive} + {_value}");
-
-        if (gameData.enemies.Contains(enemyData))
-        {
-
-        }
-        else
-        {
-            gameData.enemies.Add(enemyData);
-        }
     }
 
     public void LoadFrom(GameData gameData)
@@ -94,7 +89,6 @@ public class EnemyHealth : MonoBehaviour, ISaveable
                     _value = 0;
                     EnemyDeath(false);
                 }
-                Debug.Log($" LOAD {name} + {enemyData.isAlive} + {enemyData.health}");
                 break;
             }
         }

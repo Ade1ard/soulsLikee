@@ -1,10 +1,12 @@
+using System.Linq;
 using UnityEngine;
 
-public class LootSouls : MonoBehaviour
+public class LootSouls : MonoBehaviour, ISaveable
 {
     [SerializeField] private string _TutCluetextString;
 
     private bool _nearLoot;
+    private bool _isCollected = false;
 
     private TutorialClueCont _tutClueCont;
     private MoneyCont _moneyCont;
@@ -17,6 +19,35 @@ public class LootSouls : MonoBehaviour
         _playerController = bootStrap.Resolve<PlayerController>();
     }
 
+    public void SaveTo(GameData gameData)
+    {
+        var lootData = gameData.lootSouls.FirstOrDefault(e => e.lootID == gameObject.name);
+
+        if (lootData == null)
+        {
+            lootData = new LootData();
+            gameData.lootSouls.Add(lootData);
+        }
+
+        lootData.lootID = gameObject.name;
+        lootData.isCollected = _isCollected;
+    }
+
+    public void LoadFrom(GameData gameData)
+    {
+        foreach (LootData lootdata in gameData.lootSouls)
+        {
+            if (lootdata.lootID == gameObject.name)
+            {
+                if (lootdata.isCollected)
+                {
+                    _isCollected = true;
+                    gameObject.SetActive(false);
+                }
+            }
+        }
+    }
+
     void Update()
     {
         if (_nearLoot)
@@ -25,7 +56,8 @@ public class LootSouls : MonoBehaviour
             {
                 _moneyCont.GetSouls(1);
                 _tutClueCont.TutorialGetUnvisible();
-                Destroy(gameObject);
+                _isCollected = true;
+                gameObject.SetActive(false);
             }
         }
     }

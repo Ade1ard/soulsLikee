@@ -8,6 +8,7 @@ public class TutorialClueCont : MonoBehaviour
     [SerializeField] private TextMeshProUGUI _tutorialClueText;
 
     private UIFader _uiFader;
+    private Coroutine _coroutine;
 
     public void Initialize(BootStrap bootStrap)
     {
@@ -22,11 +23,19 @@ public class TutorialClueCont : MonoBehaviour
     public void TutorialGetVisible(String _string)
     {
         _tutorialClueText.text = _string;
-        _uiFader.Fade(_tutorialClue, true);
+        if (_coroutine != null)
+        {
+            StopCoroutine(_coroutine);
+        }
+        _coroutine = StartCoroutine(_uiFader.Fading(_tutorialClue, true));
     }
 
     public void TutorialGetUnvisible()
     {
-        _uiFader.Fade(_tutorialClue, false);
+        if (_coroutine != null)
+        {
+            StopCoroutine(_coroutine);
+        }
+        _coroutine = StartCoroutine(_uiFader.Fading(_tutorialClue, false));
     }
 }

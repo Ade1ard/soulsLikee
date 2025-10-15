@@ -2,7 +2,7 @@ using System.Linq;
 using TMPro;
 using UnityEngine;
 
-public class Healing : MonoBehaviour
+public class Healing : MonoBehaviour, ISaveable
 {
     [SerializeField] private float _FlaskCount;
 
@@ -22,6 +22,17 @@ public class Healing : MonoBehaviour
     {
         _animator = bootStrap.ResolveAll<Animator>().FirstOrDefault(e => e.name == "Player");
         _health = bootStrap.Resolve<PlayerHealth>();
+        _FlaskCountText.text = _FlaskCount.ToString();
+    }
+
+    public void SaveTo(GameData gameData)
+    {
+        gameData.FlaskCount = _FlaskCount;
+    }
+
+    public void LoadFrom(GameData gameData)
+    {
+        _FlaskCount = gameData.FlaskCount;
         _FlaskCountText.text = _FlaskCount.ToString();
     }
 

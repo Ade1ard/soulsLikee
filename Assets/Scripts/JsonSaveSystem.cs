@@ -42,8 +42,7 @@ public class JsonSaveSystem
     {
         foreach (ISaveable saveable in _bootStrap.ResolveAll<ISaveable>())
             saveable.SaveTo(currentGameData);
-        foreach (EnemyData e in currentGameData.enemies)
-            Debug.Log($"{e} + {e.enemyID} + {currentGameData.enemies.Count}");
+
         string json = JsonUtility.ToJson(currentGameData, true);
 
         string filePath = GetSaveFilePath(saveName);
