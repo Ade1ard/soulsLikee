@@ -86,6 +86,7 @@ public class BonFireCont : MonoBehaviour
 
         _uiFader.Fade(_gamePlayUI, false);
         _bonFireMenu.SetActive(true);
+        _bonFireMenu.GetCurrentBonFire(this);
 
         _tutorialClueCont.TutorialGetUnvisible();
 

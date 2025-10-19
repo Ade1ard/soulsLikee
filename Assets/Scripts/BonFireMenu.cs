@@ -25,4 +25,13 @@ public class BonFireMenu : MonoBehaviour, IMenu
         if (_bool)
             _menuesController.SetCurrnetMenu(this);
     }
+
+    private BonFireCont _bonFireCont;
+    public void GetCurrentBonFire(BonFireCont bonFireCont) => _bonFireCont = bonFireCont;
+
+    public void QuitButton()
+    {
+        _bonFireCont.QuitBonfire();
+        _menuesController.CloseMenu();
+    }
 }
