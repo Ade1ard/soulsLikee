@@ -16,6 +16,8 @@ public class BootStrap : MonoBehaviour
 
         // initialization line
 
+        Resolve<MainMenu>().Initialize(_instance);
+
         Resolve<PlayerController>().Initialize(_instance);
         Resolve<PlayerHealth>().Initialize(_instance);
         Resolve<PlayerSword>().Initialize(_instance);

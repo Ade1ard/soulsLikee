@@ -9,6 +9,11 @@ public class SavesManager
         _saveSystem = bootStrap.Resolve<JsonSaveSystem>();
     }
 
+    public void LoadGame()
+    {
+        _saveSystem.LoadGame();
+    }
+
     public void DeleteAllSaves()
     {
         foreach (var file in _saveSystem.GetSaveFiles())
