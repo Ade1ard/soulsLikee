@@ -17,7 +17,7 @@ public class MainMenu : MonoBehaviour, IMenu
 
     private void Start()
     {
-        SetActive(true);
+        gameObject.SetActive(true);
     }
 
     public void SetActive(bool _bool)
