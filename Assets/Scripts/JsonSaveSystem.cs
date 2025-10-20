@@ -29,6 +29,8 @@ public class JsonSaveSystem
         {
             Directory.CreateDirectory(savePath);
         }
+
+        LoadGame("autosave");
     }
 
     private string GetSaveFilePath(string saveName)
