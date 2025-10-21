@@ -2,55 +2,31 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.Assertions.Must;
+using UnityEngine.SceneManagement;
 
-public class BootStrap : MonoBehaviour
+public class BootStrap
 {
     private static BootStrap _instance;
     private Dictionary<Type, List<object>> _servises = new Dictionary<Type, List<object>>();
 
-    private void Awake()
+    [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
+    private static void Initialize()
+    {
+        SceneManager.sceneLoaded += InitializeScene;
+        _instance = new BootStrap();
+    }
+
+    BootStrap()
     {
         RegisterInterfases();
-        GetServises();
         RegisterNotMonoBehObjects();
+    }
 
-        // initialization line
-
-        Resolve<PlayerController>().Initialize(_instance);
-        Resolve<PlayerHealth>().Initialize(_instance);
-        Resolve<PlayerSword>().Initialize(_instance);
-        Resolve<Healing>().Initialize(_instance);
-
-        Resolve<CameraModeChanger>().Initialize(_instance);
-
-        Resolve<GameSettings>().Initialize(_instance);
-        Resolve<GameSettingsView>().Initialize(_instance);
-
-        Resolve<BonFireCont>().Initialize(_instance);
-        Resolve<BonFireMenu>().Initialize(_instance);
-
-        Resolve<MoneyCont>().Initialize(_instance);
-        Resolve<LevelUpCont>().Initialize(_instance);
-
-        Resolve<GetSoulsUI>().Initialize(_instance);
-        Resolve<TutorialClueCont>().Initialize(_instance);
-
-        foreach (LootSouls lootSouls in ResolveAll<LootSouls>())
-            lootSouls.Initialize(_instance);
-        foreach (EnemyController enemy in ResolveAll<EnemyController>())
-            enemy.Initialize(_instance);
-        foreach (EnemyCanvasLookAtCamera enemyCanvas in ResolveAll<EnemyCanvasLookAtCamera>())
-            enemyCanvas.Initialize(_instance);
-        foreach (EnemyHealth enemyHealth in ResolveAll<EnemyHealth>())
-            enemyHealth.Initialize(_instance);
-        foreach (EnemySword enemySword in ResolveAll<EnemySword>())
-            enemySword.Initialize(_instance);
-        foreach (DissolveController disCont in ResolveAll<DissolveController>())
-            disCont.Initialize(_instance);
-
-        Resolve<LootSpawner>().Initialize(_instance);
-
-        Resolve<JsonSaveSystem>().Initialize(_instance);
+    private static void InitializeScene(Scene scene, LoadSceneMode mode)
+    {
+        _instance.GetServises();
+        _instance.ResolveAll<ISceneConfig>().FirstOrDefault(e => e._sceneName == scene.name).InitializeScene(_instance);
     }
 
     private void RegisterNotMonoBehObjects()
@@ -59,12 +35,15 @@ public class BootStrap : MonoBehaviour
         RegisterObject(new JsonSaveSystem());
         RegisterObject(new MenuesController());
         RegisterObject(new SavesManager());
+        RegisterObject(new GamePlaySceneConfig());
+        RegisterObject(new MainMenuSceneConfig());
     }
 
     private void RegisterInterfases()
     {
         _servises[typeof(ISaveable)] = new List<object>();
         _servises[typeof(IMenu)] = new List<object>();
+        _servises[typeof(ISceneConfig)] = new List<object>();
     }
 
     private void RegisterObject(object obj)
@@ -93,7 +72,7 @@ public class BootStrap : MonoBehaviour
         if (_servises.TryGetValue(typeof(T), out var list))
             return list.FirstOrDefault() as T;
 
-        Debug.Log($"[BootStrap] —ервис {typeof(T).Name} не найден");
+        Debug.Log($"[BootStrap] service {typeof(T).Name} not found");
         return null;
     }
 
@@ -107,9 +86,7 @@ public class BootStrap : MonoBehaviour
 
     private void GetServises()
     {
-        _instance = this;
-
-        var behaivors = FindObjectsOfType<Behaviour>(true);
+        var behaivors = UnityEngine.Object.FindObjectsOfType<Behaviour>();
 
         foreach (var behaivor in behaivors)
         {
@@ -132,6 +109,6 @@ public class BootStrap : MonoBehaviour
             }
         }
 
-        Debug.Log($"BootStrap зарегистрировал {_servises.Count} типов");
+        Debug.Log($"BootStrap registered {_servises.Count} types");
     }
 }

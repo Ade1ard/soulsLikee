@@ -15,6 +15,14 @@ public class MainMenu : MonoBehaviour, IMenu
         _menuesController = bootStrap.Resolve<MenuesController>();
     }
 
+    void Update()
+    {
+        if (Input.GetKeyUp(KeyCode.Tab))
+        {
+            _menuesController.CloseMenu();
+        }
+    }
+
     private void Start()
     {
         gameObject.SetActive(true);

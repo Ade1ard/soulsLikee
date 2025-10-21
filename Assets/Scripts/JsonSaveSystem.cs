@@ -50,7 +50,7 @@ public class JsonSaveSystem
 
         SaveBackup(saveName);
 
-        Debug.Log($"Игра сохранена: {filePath}");
+        Debug.Log($"Game saved: {filePath}");
     }
 
     public bool LoadGame(string saveName = "autosave")
@@ -67,19 +67,19 @@ public class JsonSaveSystem
                 foreach (ISaveable saveable in _bootStrap.ResolveAll<ISaveable>())
                     saveable.LoadFrom(currentGameData);
 
-                Debug.Log($"Игра загружена: {filePath}");
+                Debug.Log($"Game loaded: {filePath}");
                 return true;
             }
             catch (System.Exception e)
             {
-                Debug.LogError($"Ошибка загрузки: {e.Message}");
+                Debug.LogError($"load error: {e.Message}");
                 return LoadBackup(saveName);
             }
         }
         else
         {
             currentGameData = new GameData();
-            Debug.Log("Сохранение не найдено, созданы новые данные");
+            Debug.Log("Save not found, created new save");
             return false;
         }
     }
@@ -101,7 +101,7 @@ public class JsonSaveSystem
 
         if (File.Exists(backupPath))
         {
-            Debug.Log("Загружаем резервную копию...");
+            Debug.Log("Loading backup...");
             string json = File.ReadAllText(backupPath);
             currentGameData = JsonUtility.FromJson<GameData>(json);
             return true;
