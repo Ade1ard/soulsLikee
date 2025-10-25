@@ -5,5 +5,7 @@ public class MainMenuSceneConfig : ISceneConfig
     {
         bootStrap.Resolve<MainMenu>().Initialize(bootStrap);
         bootStrap.Resolve<GameSettingsView>().Initialize(bootStrap);
+        bootStrap.Resolve<JsonSaveSystem>().Initialize(bootStrap);
+        bootStrap.Resolve<SavesManager>().Initialize(bootStrap);
     }
 }

@@ -13,7 +13,7 @@ public class MenuesController
         }
     }
 
-    public bool CloseMenu()
+    public bool CloseMenu(bool CanCloseLast)
     {
         if (_MenusStack.Count > 1)
         {
@@ -24,8 +24,11 @@ public class MenuesController
         }
         else if (_MenusStack.Count > 0)
         {
+            if (CanCloseLast)
+            {
             CurrentMenu(false);
             _MenusStack.Pop();
+            }
             return true;
         }
         else

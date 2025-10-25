@@ -32,6 +32,6 @@ public class BonFireMenu : MonoBehaviour, IMenu
     public void QuitButton()
     {
         _bonFireCont.QuitBonfire();
-        _menuesController.CloseMenu();
+        _menuesController.CloseMenu(true);
     }
 }

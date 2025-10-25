@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class MainMenu : MonoBehaviour, IMenu
 {
@@ -6,6 +7,7 @@ public class MainMenu : MonoBehaviour, IMenu
 
     private UIFader _uiFader;
     private MenuesController _menuesController;
+    private SavesManager _savesManager;
 
     private Coroutine _coroutine;
 
@@ -13,19 +15,33 @@ public class MainMenu : MonoBehaviour, IMenu
     {
         _uiFader = bootStrap.Resolve<UIFader>();
         _menuesController = bootStrap.Resolve<MenuesController>();
+        _savesManager = bootStrap.Resolve<SavesManager>();
+    }
+
+    public void Play()
+    {
+        _menuesController.CloseMenu(true);
+        SceneManager.LoadScene(1);
+    }
+
+    public void NewGame()
+    {
+        _savesManager.DeleteAllSaves();
+        Play();
     }
 
     void Update()
     {
         if (Input.GetKeyUp(KeyCode.Tab))
         {
-            _menuesController.CloseMenu();
+            _menuesController.CloseMenu(false);
         }
     }
 
     private void Start()
     {
         gameObject.SetActive(true);
+        _menuesController.SetCurrnetMenu(this);
     }
 
     public void SetActive(bool _bool)
