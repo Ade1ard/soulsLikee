@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class BonFireMenu : MonoBehaviour, IMenu
 {
@@ -6,6 +7,7 @@ public class BonFireMenu : MonoBehaviour, IMenu
 
     private UIFader _uiFader;
     private MenuesController _menuesController;
+    private JsonSaveSystem _saveSystem;
 
     private Coroutine _coroutine;
 
@@ -13,6 +15,7 @@ public class BonFireMenu : MonoBehaviour, IMenu
     {
         _uiFader = bootStrap.Resolve<UIFader>();
         _menuesController = bootStrap.Resolve<MenuesController>();
+        _saveSystem = bootStrap.Resolve<JsonSaveSystem>();
     }
 
     public void SetActive(bool _bool)
@@ -33,5 +36,12 @@ public class BonFireMenu : MonoBehaviour, IMenu
     {
         _bonFireCont.QuitBonfire();
         _menuesController.CloseMenu(true);
+    }
+
+    public void MainMenuLoad()
+    {
+        _menuesController.CloseMenu(true);
+        _saveSystem.SaveGame();
+        SceneManager.LoadScene(0);
     }
 }

@@ -9,7 +9,7 @@ public class PlayerHealth : MonoBehaviour, ISaveable
     [SerializeField] private Image _mainHealthValueImage;
     [SerializeField] private Image _mediumHealthValueImage;
     public float _maxValue {  get; private set; }
-    public float _value { get; private set; }
+    public float _value { get; private set; } = 100;
 
     [Header("BarsSpeeds")]
     [SerializeField] private float _mainBarSpeed;
@@ -36,14 +36,14 @@ public class PlayerHealth : MonoBehaviour, ISaveable
 
     public void SaveTo(GameData gameData)
     {
-        gameData.playerPosition = transform.position;
+        gameData.playerPosition = gameObject.transform.position;
         gameData.health = _value;
     }
 
     public void LoadFrom(GameData gameData)
     {
         _value = gameData.health;
-        transform.position = gameData.playerPosition;
+        gameObject.transform.position = gameData.playerPosition;
     }
 
     public void DealDamage(float damage)

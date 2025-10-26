@@ -12,7 +12,7 @@ public class GamePlaySceneConfig : ISceneConfig
 
         bootStrap.Resolve<CameraModeChanger>().Initialize(bootStrap);
 
-        bootStrap.Resolve<GameSettings>().Initialize(bootStrap);
+        bootStrap.Resolve<GameSettings>().InitializeForGamePlayScene(bootStrap);
         bootStrap.Resolve<GameSettingsView>().Initialize(bootStrap);
 
         bootStrap.Resolve<BonFireCont>().Initialize(bootStrap);

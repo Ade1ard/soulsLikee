@@ -19,6 +19,6 @@ public class SavesManager
         foreach (var file in _saveSystem.GetSaveFiles())
             _saveSystem.DeleteSave(file);
 
-        Debug.Log("Сохранения удалены");
+        Debug.Log("Saves delited");
     }
 }

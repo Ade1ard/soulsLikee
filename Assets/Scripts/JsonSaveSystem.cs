@@ -61,7 +61,7 @@ public class JsonSaveSystem
             {
                 string json = File.ReadAllText(filePath);
                 currentGameData = JsonUtility.FromJson<GameData>(json);
-
+                
                 foreach (ISaveable saveable in _bootStrap.ResolveAll<ISaveable>())
                     saveable.LoadFrom(currentGameData);
 

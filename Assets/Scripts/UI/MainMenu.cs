@@ -26,6 +26,7 @@ public class MainMenu : MonoBehaviour, IMenu
 
     public void NewGame()
     {
+        _menuesController.CloseMenu(true);
         _savesManager.DeleteAllSaves();
         Play();
     }
@@ -42,6 +43,7 @@ public class MainMenu : MonoBehaviour, IMenu
     {
         gameObject.SetActive(true);
         _menuesController.SetCurrnetMenu(this);
+        _savesManager.LoadGame();
     }
 
     public void SetActive(bool _bool)

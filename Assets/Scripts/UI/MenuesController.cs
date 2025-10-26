@@ -20,7 +20,7 @@ public class MenuesController
             CurrentMenu(false);
             _MenusStack.Pop();
             CurrentMenu(true);
-            return false;
+            return false; //this is not a last menu
         }
         else if (_MenusStack.Count > 0)
         {
@@ -29,7 +29,7 @@ public class MenuesController
             CurrentMenu(false);
             _MenusStack.Pop();
             }
-            return true;
+            return true; //this is a last menu
         }
         else
         {

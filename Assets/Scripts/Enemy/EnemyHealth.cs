@@ -35,7 +35,6 @@ public class EnemyHealth : MonoBehaviour, ISaveable
     private Coroutine _drawHealthBarCorutine;
     private Coroutine _VisibleHealthBarCorutine;
 
-    private bool _isDead = false;
     private bool _inHyperarmor = false;
     private bool _isBarVisible = true;
 
@@ -49,6 +48,8 @@ public class EnemyHealth : MonoBehaviour, ISaveable
         _navMeshAgent = bootStrap.ResolveAll<NavMeshAgent>().FirstOrDefault(e => e.name == gameObject.name);
         _enemyController = bootStrap.ResolveAll<EnemyController>().FirstOrDefault(e => e.name == gameObject.name);
         _animator = bootStrap.ResolveAll<Animator>().FirstOrDefault(e => e.name == gameObject.name);
+
+        _value = _maxValue;
     }
 
     private void Start()
@@ -82,7 +83,7 @@ public class EnemyHealth : MonoBehaviour, ISaveable
                 transform.position = enemyData.enemyPosition;
                 if (enemyData.isAlive)
                 {
-                    _value = enemyData.health;
+                    AddHealt(enemyData.health);
                 }
                 else
                 {
@@ -104,7 +105,7 @@ public class EnemyHealth : MonoBehaviour, ISaveable
 
     public void TakeDamage(float damage)
     {
-        if (!_isDead)
+        if (CheckAlive())
         {
             _timeLastHit = Time.time;
             SetBarVisible(true);
@@ -119,7 +120,7 @@ public class EnemyHealth : MonoBehaviour, ISaveable
                 _animator.SetTrigger("Hit");
             }
 
-            if (_value <= 0 && !_isDead)
+            if (!CheckAlive())
             {
                 EnemyDeath(true);
             }
@@ -130,7 +131,6 @@ public class EnemyHealth : MonoBehaviour, ISaveable
 
     public void EnemyDeath(bool _bool)
     {
-        _isDead = true;
         _navMeshAgent.ResetPath();
         _enemyController.enabled = false;
         _animator.SetTrigger("Death");
