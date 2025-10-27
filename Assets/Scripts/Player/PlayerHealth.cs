@@ -127,13 +127,8 @@ public class PlayerHealth : MonoBehaviour, ISaveable
         return _invulnerability;
     }
 
-    private void StartInvulnerability() //called by events in animations, frames in roll animation
+    private void Invulnerability(int amount) //called by events in animations, frames in roll animation
     {
-        _invulnerability = true;
-    }
-    
-    private void EndInvulnerability() //called by events in animations
-    {
-        _invulnerability = false;
+        _invulnerability = amount == 1? true : false;
     }
 }

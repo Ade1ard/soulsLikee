@@ -204,7 +204,7 @@ GameObject:
   - component: {fileID: 8740009074849757760}
   m_Layer: 0
   m_Name: TowerS
-  m_TagString: Environment
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 2147483647
