@@ -44,6 +44,9 @@ public class MainMenu : MonoBehaviour, IMenu
         gameObject.SetActive(true);
         _menuesController.SetCurrnetMenu(this);
         _savesManager.LoadGame();
+
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
     }
 
     public void SetActive(bool _bool)

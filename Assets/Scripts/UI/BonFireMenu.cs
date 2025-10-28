@@ -41,6 +41,7 @@ public class BonFireMenu : MonoBehaviour, IMenu
     public void MainMenuLoad()
     {
         _menuesController.CloseMenu(true);
+        _menuesController.CloseMenu(true);
         _saveSystem.SaveGame();
         SceneManager.LoadScene(0);
     }

@@ -18,6 +18,7 @@ public class BonFireCont : MonoBehaviour
     private UIFader _uiFader;
     private MenuesController _menuesController;
     private BonFireMenu _bonFireMenu;
+    private EscapeMenu _escapeMenu;
     private JsonSaveSystem _saveSystem;
 
     private bool _NearBonFire = false;
@@ -32,6 +33,7 @@ public class BonFireCont : MonoBehaviour
         _uiFader = bootStrap.Resolve<UIFader>();
         _menuesController = bootStrap.Resolve<MenuesController>();
         _bonFireMenu = bootStrap.Resolve<BonFireMenu>();
+        _escapeMenu = bootStrap.Resolve<EscapeMenu>();
     }
 
     void Update()
@@ -63,6 +65,8 @@ public class BonFireCont : MonoBehaviour
     public void QuitBonfire()
     {
         _isSitting = false;
+        _escapeMenu.InOtherMenu(false);
+
         _playerAnimator.SetTrigger("BonFireStandUp");
 
         Cursor.lockState = CursorLockMode.Locked;
@@ -78,6 +82,9 @@ public class BonFireCont : MonoBehaviour
     private void SitBonfire()
     {
         _isSitting = true;
+        _escapeMenu.InOtherMenu(true);
+        _escapeMenu.CloseESCMenu();
+
         _playerController.IsHealing(1);
         _playerAnimator.SetTrigger("BonFireSitDown");
 

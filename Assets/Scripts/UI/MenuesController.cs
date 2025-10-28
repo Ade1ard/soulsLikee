@@ -26,8 +26,8 @@ public class MenuesController
         {
             if (CanCloseLast)
             {
-            CurrentMenu(false);
-            _MenusStack.Pop();
+                CurrentMenu(false);
+                _MenusStack.Pop();
             }
             return true; //this is a last menu
         }
@@ -42,4 +42,6 @@ public class MenuesController
         if ( _MenusStack.Count > 0)
             _MenusStack.Peek().SetActive(_bool);
     }
+
+    public bool IsThereOpenedMenu() {return _MenusStack.Count > 0;}
 }

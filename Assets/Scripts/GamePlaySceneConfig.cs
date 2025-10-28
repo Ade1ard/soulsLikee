@@ -18,6 +18,8 @@ public class GamePlaySceneConfig : ISceneConfig
         bootStrap.Resolve<BonFireCont>().Initialize(bootStrap);
         bootStrap.Resolve<BonFireMenu>().Initialize(bootStrap);
 
+        bootStrap.Resolve<EscapeMenu>().Initialize(bootStrap);
+
         bootStrap.Resolve<MoneyCont>().Initialize(bootStrap);
         bootStrap.Resolve<LevelUpCont>().Initialize(bootStrap);
 

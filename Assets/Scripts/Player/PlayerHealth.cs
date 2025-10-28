@@ -36,14 +36,16 @@ public class PlayerHealth : MonoBehaviour, ISaveable
 
     public void SaveTo(GameData gameData)
     {
-        gameData.playerPosition = gameObject.transform.position;
+        gameData.PlayerPositionX = transform.position.x;
+        gameData.PlayerPositionY = transform.position.y;
+        gameData.PlayerPositionZ = transform.position.z;
         gameData.health = _value;
     }
 
     public void LoadFrom(GameData gameData)
     {
         _value = gameData.health;
-        gameObject.transform.position = gameData.playerPosition;
+        gameObject.transform.position = new Vector3(gameData.PlayerPositionX, gameData.PlayerPositionY, gameData.PlayerPositionZ);
     }
 
     public void DealDamage(float damage)

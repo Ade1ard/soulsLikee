@@ -15,6 +15,8 @@ public class GameSettingsView : MonoBehaviour, IMenu
     private MenuesController _menuesController;
     private GameSettings _gameSettings;
 
+    private Coroutine _coroutine;
+
     public void CameraDistChanged()
     {
         _gameSettings.GetCameraDistanse(_scrollbarCameraDist.value);
@@ -46,7 +48,9 @@ public class GameSettingsView : MonoBehaviour, IMenu
     {
         if (_bool)
             _menuesController.SetCurrnetMenu(this);
-        _uiFader.Fade(_gameSettingsUI, _bool);
+        if (_coroutine != null)
+            StopCoroutine(_coroutine);
+        _coroutine = StartCoroutine(_uiFader.Fading(_gameSettingsUI, _bool));
     }
 
     public void LoadScrollBars(float cameraDist, float cameraSpeed, float uiSize)
