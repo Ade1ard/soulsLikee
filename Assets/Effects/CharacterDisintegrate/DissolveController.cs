@@ -49,6 +49,14 @@ public class DissolveController : MonoBehaviour
         }
     }
 
+    public void Reboot()
+    {
+        foreach (Material skinnedMaterial in _skinnedMaterials)
+        {
+            skinnedMaterial.SetFloat("_DissolveAmount", 0);
+        }
+    }
+
     IEnumerator DissolveCoroutine()
     {
         if (_VFXGraph != null)

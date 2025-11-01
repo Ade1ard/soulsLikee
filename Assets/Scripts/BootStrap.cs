@@ -39,6 +39,7 @@ public class BootStrap
         _globalServises.Add(new SavesManager());
         _globalServises.Add(new GamePlaySceneConfig());
         _globalServises.Add(new MainMenuSceneConfig());
+        _globalServises.Add(new SceneReboot());
     }
 
     private void RegisterInterfases()
@@ -46,6 +47,7 @@ public class BootStrap
         _servises[typeof(ISaveable)] = new List<object>();
         _servises[typeof(IMenu)] = new List<object>();
         _servises[typeof(ISceneConfig)] = new List<object>();
+        _servises[typeof(IRebootable)] = new List<object>();
     }
 
 

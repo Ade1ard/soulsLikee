@@ -2,9 +2,10 @@ using System.Linq;
 using TMPro;
 using UnityEngine;
 
-public class Healing : MonoBehaviour, ISaveable
+public class Healing : MonoBehaviour, ISaveable, IRebootable
 {
     [SerializeField] private float _FlaskCount;
+    private float _maxFlaskCount;
 
     [SerializeField] private ParticleSystem _effect;
 
@@ -23,6 +24,7 @@ public class Healing : MonoBehaviour, ISaveable
         _animator = bootStrap.ResolveAll<Animator>().FirstOrDefault(e => e.name == "Player");
         _health = bootStrap.Resolve<PlayerHealth>();
         _FlaskCountText.text = _FlaskCount.ToString();
+        _maxFlaskCount = _FlaskCount;
     }
 
     public void SaveTo(GameData gameData)
@@ -33,6 +35,12 @@ public class Healing : MonoBehaviour, ISaveable
     public void LoadFrom(GameData gameData)
     {
         _FlaskCount = gameData.FlaskCount;
+        _FlaskCountText.text = _FlaskCount.ToString();
+    }
+
+    public void Reboot()
+    {
+        _FlaskCount = _maxFlaskCount;
         _FlaskCountText.text = _FlaskCount.ToString();
     }
 

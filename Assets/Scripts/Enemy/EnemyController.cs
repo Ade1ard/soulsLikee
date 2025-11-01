@@ -232,6 +232,12 @@ public class EnemyController : MonoBehaviour
         _isPlayerNoticed = true;
     }
 
+    public void Reboot()
+    {
+        _isPlayerNoticed = false;
+        _navMeshAgent.ResetPath();
+    }
+
     public bool CheckAlive()
     {
         return !_animator.GetCurrentAnimatorStateInfo(0).IsName("Death");

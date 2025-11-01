@@ -6,9 +6,9 @@ public class GamePlaySceneConfig : ISceneConfig
         // initialization line
 
         bootStrap.Resolve<PlayerController>().Initialize(bootStrap);
-        bootStrap.Resolve<PlayerHealth>().Initialize(bootStrap);
         bootStrap.Resolve<PlayerSword>().Initialize(bootStrap);
         bootStrap.Resolve<Healing>().Initialize(bootStrap);
+        bootStrap.Resolve<PlayerHealth>().Initialize(bootStrap);
 
         bootStrap.Resolve<CameraModeChanger>().Initialize(bootStrap);
 
@@ -40,6 +40,7 @@ public class GamePlaySceneConfig : ISceneConfig
             disCont.Initialize(bootStrap);
 
         bootStrap.Resolve<LootSpawner>().Initialize(bootStrap);
+        bootStrap.Resolve<SceneReboot>().Initialize(bootStrap);
 
         bootStrap.Resolve<JsonSaveSystem>().Initialize(bootStrap);
         bootStrap.Resolve<JsonSaveSystem>().LoadGame();

@@ -20,6 +20,7 @@ public class BonFireCont : MonoBehaviour
     private BonFireMenu _bonFireMenu;
     private EscapeMenu _escapeMenu;
     private JsonSaveSystem _saveSystem;
+    private SceneReboot _sceneReboot;
 
     private bool _NearBonFire = false;
     private bool _isSitting = false;
@@ -34,6 +35,7 @@ public class BonFireCont : MonoBehaviour
         _menuesController = bootStrap.Resolve<MenuesController>();
         _bonFireMenu = bootStrap.Resolve<BonFireMenu>();
         _escapeMenu = bootStrap.Resolve<EscapeMenu>();
+        _sceneReboot = bootStrap.Resolve<SceneReboot>();
     }
 
     void Update()
@@ -87,6 +89,8 @@ public class BonFireCont : MonoBehaviour
 
         _playerController.IsHealing(1);
         _playerAnimator.SetTrigger("BonFireSitDown");
+
+        _sceneReboot.RebootScene();
 
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;

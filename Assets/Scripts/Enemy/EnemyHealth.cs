@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.AI;
 using System.Linq;
 
-public class EnemyHealth : MonoBehaviour, ISaveable
+public class EnemyHealth : MonoBehaviour, ISaveable, IRebootable
 {
     [Header("UI")]
     [SerializeField] private Image _HealthValue;
@@ -38,6 +38,8 @@ public class EnemyHealth : MonoBehaviour, ISaveable
     private bool _inHyperarmor = false;
     private bool _isBarVisible = true;
 
+    private Vector3 _startPositon;
+
     private float _timeLastHit;
 
     public void Initialize(BootStrap bootStrap)
@@ -50,6 +52,7 @@ public class EnemyHealth : MonoBehaviour, ISaveable
         _animator = bootStrap.ResolveAll<Animator>().FirstOrDefault(e => e.name == gameObject.name);
 
         _value = _maxValue;
+        _startPositon = transform.position;
     }
 
     private void Start()
@@ -93,6 +96,20 @@ public class EnemyHealth : MonoBehaviour, ISaveable
                 break;
             }
         }
+    }
+
+    public void Reboot()
+    {
+        _enemyController.enabled = true;
+        _enemyController.Reboot();
+        transform.position = _startPositon;
+        _value = _maxValue;
+
+        _animator.SetTrigger("Reboot");
+        _dissolveController.Reboot();
+        _capsuleCollider.isTrigger = false;
+
+        StartDrawBarCorutine();
     }
 
     void Update()
@@ -164,9 +181,9 @@ public class EnemyHealth : MonoBehaviour, ISaveable
 
     private IEnumerator DrawHealtBar()
     {
-        while (_HealthValue.fillAmount - (_value / _maxValue) > 0.001f)
+        while (_HealthValue.fillAmount != (_value / _maxValue))
         {
-            _HealthValue.fillAmount = Mathf.Lerp(_HealthValue.fillAmount, _value / _maxValue, _healthBarSpeed);
+            _HealthValue.fillAmount = Mathf.MoveTowards(_HealthValue.fillAmount, _value / _maxValue, _healthBarSpeed);
             yield return null;
         }
         _drawHealthBarCorutine = null;

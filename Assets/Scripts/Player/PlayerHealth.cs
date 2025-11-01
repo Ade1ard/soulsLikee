@@ -3,7 +3,7 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class PlayerHealth : MonoBehaviour, ISaveable
+public class PlayerHealth : MonoBehaviour, ISaveable, IRebootable
 {
     [Header("BarsUI")]
     [SerializeField] private Image _mainHealthValueImage;
@@ -46,6 +46,12 @@ public class PlayerHealth : MonoBehaviour, ISaveable
     {
         _value = gameData.health;
         gameObject.transform.position = new Vector3(gameData.PlayerPositionX, gameData.PlayerPositionY, gameData.PlayerPositionZ);
+    }
+
+    public void Reboot()
+    {
+        _value = _maxValue;
+        StartDrawBarCorutine();
     }
 
     public void DealDamage(float damage)
