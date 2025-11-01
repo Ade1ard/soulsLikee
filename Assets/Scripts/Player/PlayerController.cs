@@ -43,6 +43,7 @@ public class PlayerController : MonoBehaviour
     private bool _justAttacked = false;
     private bool _isSprinting = false;
     private bool _isHealing = false;
+    private bool _attackLock = false;
 
     private const string Horizontal = nameof(Horizontal);
     private const string Vertical = nameof(Vertical);
@@ -75,7 +76,8 @@ public class PlayerController : MonoBehaviour
                 LockOnMovement();
             }
 
-            Attachment();
+            if (!_attackLock)
+                Attachment();
         }
 
         PhysicsMove();
@@ -246,7 +248,10 @@ public class PlayerController : MonoBehaviour
         _inAttack = false;
     }
 
-    
+    public void AttackLock(bool _bool)
+    {
+        _attackLock = _bool;
+    }
     private void EndRoll() //called by events in animations
     {
         _isRolling = false;

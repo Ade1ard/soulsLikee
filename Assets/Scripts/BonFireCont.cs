@@ -67,7 +67,7 @@ public class BonFireCont : MonoBehaviour
     public void QuitBonfire()
     {
         _isSitting = false;
-        _escapeMenu.InOtherMenu(false);
+        Invoke("EscMenuCanOpen", 2);
 
         _playerAnimator.SetTrigger("BonFireStandUp");
 
@@ -123,4 +123,6 @@ public class BonFireCont : MonoBehaviour
             _tutorialClueCont.TutorialGetUnvisible();
         }
     }
+
+    private void EscMenuCanOpen() => _escapeMenu.InOtherMenu(false);
 }

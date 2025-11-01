@@ -9,6 +9,7 @@ public class EscapeMenu : MonoBehaviour, IMenu
 
     private UIFader _uiFader;
     private MenuesController _menuesController;
+    private PlayerController _playerController;
 
     private Coroutine _ThisUIcoroutine;
     private Coroutine _gamePlayUIcoroutine;
@@ -17,6 +18,7 @@ public class EscapeMenu : MonoBehaviour, IMenu
     {
         _uiFader = bootStrap.Resolve<UIFader>();
         _menuesController = bootStrap.Resolve<MenuesController>();
+        _playerController = bootStrap.Resolve<PlayerController>();
     }
 
     void Update()
@@ -42,6 +44,8 @@ public class EscapeMenu : MonoBehaviour, IMenu
     {
         Cursor.visible = !_bool;
         Cursor.lockState = _bool? CursorLockMode.Locked : CursorLockMode.None;
+
+        _playerController.AttackLock(!_bool);
 
         if (_gamePlayUIcoroutine != null)
             StopCoroutine(_gamePlayUIcoroutine);

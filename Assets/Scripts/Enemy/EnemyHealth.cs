@@ -146,16 +146,16 @@ public class EnemyHealth : MonoBehaviour, ISaveable, IRebootable
         }
     }
 
-    public void EnemyDeath(bool _bool)
+    public void EnemyDeath(bool NeedDropLoot)
     {
-        _navMeshAgent.ResetPath();
         _enemyController.enabled = false;
+        _navMeshAgent.ResetPath();
         _animator.SetTrigger("Death");
         SetBarVisible(false);
-        _dissolveController.Dissolve(_bool);
+        _dissolveController.Dissolve(NeedDropLoot);
         _capsuleCollider.isTrigger = true;
 
-        if (_bool)
+        if (NeedDropLoot)
             Invoke("DropLoot", _lootDrobDelay);
     }
 

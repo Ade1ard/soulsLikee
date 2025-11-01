@@ -12,9 +12,7 @@ public class GameData
     public float flaskEfficiency;
     public float oneUpgrateCost;
 
-    public float PlayerPositionX;
-    public float PlayerPositionY;
-    public float PlayerPositionZ;
+    public Vector3 PlayerPosotion;
     public float health;
     public float FlaskCount;
 

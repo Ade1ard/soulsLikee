@@ -230,6 +230,7 @@ public class EnemyController : MonoBehaviour
     public void PlayerNoticedAfterHit()
     {
         _isPlayerNoticed = true;
+        _timeLastSeen = Time.time;
     }
 
     public void Reboot()

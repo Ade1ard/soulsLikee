@@ -17,6 +17,7 @@ public class PlayerHealth : MonoBehaviour, ISaveable, IRebootable
 
     private Animator _playerAnimator;
     private PlayerController _playerController;
+    private CharacterController _characterController;
 
     private Coroutine _drawHealthBarCorutine;
 
@@ -27,6 +28,7 @@ public class PlayerHealth : MonoBehaviour, ISaveable, IRebootable
     {
         _playerController = bootStrap.Resolve<PlayerController>();
         _playerAnimator = bootStrap.ResolveAll<Animator>().FirstOrDefault(e => e.name == gameObject.name);
+        _characterController = GetComponent<CharacterController>();
     }
 
     private void Start()
@@ -36,16 +38,16 @@ public class PlayerHealth : MonoBehaviour, ISaveable, IRebootable
 
     public void SaveTo(GameData gameData)
     {
-        gameData.PlayerPositionX = transform.position.x;
-        gameData.PlayerPositionY = transform.position.y;
-        gameData.PlayerPositionZ = transform.position.z;
+        gameData.PlayerPosotion = gameObject.transform.position;
         gameData.health = _value;
     }
 
     public void LoadFrom(GameData gameData)
     {
         _value = gameData.health;
-        gameObject.transform.position = new Vector3(gameData.PlayerPositionX, gameData.PlayerPositionY, gameData.PlayerPositionZ);
+        _characterController.enabled = false;
+        gameObject.transform.position = gameData.PlayerPosotion;
+        _characterController.enabled = true;
     }
 
     public void Reboot()
