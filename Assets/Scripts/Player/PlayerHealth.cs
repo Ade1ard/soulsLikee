@@ -60,7 +60,7 @@ public class PlayerHealth : MonoBehaviour, ISaveable, IRebootable
 
     public void DealDamage(float damage)
     {
-        if (!_playerAnimator.GetCurrentAnimatorStateInfo(0).IsName("Death"))
+        if (_value > 0)
         {
             _value -= Mathf.Abs(damage);
             _value = Mathf.Clamp(_value, 0, _maxValue);
@@ -82,6 +82,7 @@ public class PlayerHealth : MonoBehaviour, ISaveable, IRebootable
     private void PlayerIsDead() 
     {
         _playerDeath.Death();
+        _invulnerability = false;
     }
 
     public void AddHealt(float amount)

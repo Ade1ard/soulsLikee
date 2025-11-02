@@ -12,7 +12,7 @@ public class PlayerDeath : MonoBehaviour
     private Vignette _vignette;
 
     [Header("Parameters")]
-    [SerializeField] float _fadeSpeed = 0.001f;
+    [SerializeField] float _fadeSpeed = 0.1f;
     [SerializeField] Color _vignetteColor;
     [SerializeField] float _vignetteIntensity;
 
@@ -22,49 +22,81 @@ public class PlayerDeath : MonoBehaviour
     private UIFader _uiFader;
     private PlayerController _playerController;
     private Animator _playerAnimator;
+    private EscapeMenu _escMenu;
+
+    private bool _isDead = false;
 
     public void Initialize(BootStrap bootStrap)
     {
         _uiFader = bootStrap.Resolve<UIFader>();
         _playerController = bootStrap.Resolve<PlayerController>();
         _playerAnimator = bootStrap.ResolveAll<Animator>().FirstOrDefault(e => e.name == "Player");
+        _escMenu = bootStrap.Resolve<EscapeMenu>();
     }
 
     private void Start()
     {
-        if (!_globalVolume.profile.TryGet<Vignette>(out _vignette));
+        if (!_globalVolume.profile.TryGet<Vignette>(out _vignette))
             Debug.Log("Vignette not found");
         _defaultVignetteColor = _vignette.color.value;
         _defaultVignetteIntensity = _vignette.intensity.value;
+    }
 
-        _uiFader.Fade(_gameOverUI, false, _fadeSpeed);
-        StartCoroutine(DeathEffect(false));
+    private void Update()
+    {
+        if (_isDead)
+        {
+            if (Input.anyKeyDown)
+            {
+                Revive();
+            }
+        }
     }
 
     public void Death()
     {
+        _escMenu.InOtherMenu(true);
         _playerController.enabled = false;
         _playerAnimator.SetTrigger("Death");
 
         _uiFader.Fade(_gamePlayUI, false);
-        _uiFader.Fade(_gameOverUI, true, _fadeSpeed);
-
-        StartCoroutine(DeathEffect(true));
+        StartCoroutine(ActivateDeathEffect());
     }
 
-    private IEnumerator DeathEffect(bool active)
+    public void Revive()
     {
-        Color targetColor = active? _vignetteColor : _defaultVignetteColor;
-        float targetIntensity = active? _vignetteIntensity : _defaultVignetteIntensity;
+        _isDead = false;
 
-        while (_vignette.intensity.value != targetIntensity)
+        _escMenu.InOtherMenu(false);
+        _playerAnimator.SetTrigger("Reboot");
+        _playerController.enabled = true;
+
+        DeactivateDeathEffects();
+    }
+
+    private void DeactivateDeathEffects()
+    {
+        _uiFader.Fade(_gamePlayUI, true);
+        _uiFader.Fade(_gameOverUI, false);
+
+        _vignette.color.value = _defaultVignetteColor;
+        _vignette.intensity.value = _defaultVignetteIntensity;
+    }
+
+    private IEnumerator ActivateDeathEffect()
+    {
+        yield return new WaitForSeconds(2);
+
+        _uiFader.Fade(_gameOverUI, true, _fadeSpeed);
+
+        while (_vignette.intensity.value != _vignetteIntensity && _vignette.color.value != _vignetteColor)
         {
-            _vignette.intensity.value = Mathf.MoveTowards(_vignette.intensity.value, targetIntensity, _fadeSpeed * Time.deltaTime);
-            _vignette.color.value = Color.Lerp(_vignette.color.value, targetColor, _fadeSpeed * Time.deltaTime);
+            _vignette.intensity.value = Mathf.MoveTowards(_vignette.intensity.value, _vignetteIntensity, _fadeSpeed * Time.deltaTime);
+            _vignette.color.value = Color.Lerp(_vignette.color.value, _vignetteColor, _fadeSpeed * Time.deltaTime);
 
             yield return null;
         }
 
-        _vignette.color.value = targetColor;
+        _isDead = true;
     }
 }
