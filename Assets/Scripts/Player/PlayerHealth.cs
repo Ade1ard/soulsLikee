@@ -18,6 +18,7 @@ public class PlayerHealth : MonoBehaviour, ISaveable, IRebootable
     private Animator _playerAnimator;
     private PlayerController _playerController;
     private CharacterController _characterController;
+    private PlayerDeath _playerDeath;
 
     private Coroutine _drawHealthBarCorutine;
 
@@ -29,6 +30,7 @@ public class PlayerHealth : MonoBehaviour, ISaveable, IRebootable
         _playerController = bootStrap.Resolve<PlayerController>();
         _playerAnimator = bootStrap.ResolveAll<Animator>().FirstOrDefault(e => e.name == gameObject.name);
         _characterController = GetComponent<CharacterController>();
+        _playerDeath = bootStrap.Resolve<PlayerDeath>();
     }
 
     private void Start()
@@ -58,33 +60,28 @@ public class PlayerHealth : MonoBehaviour, ISaveable, IRebootable
 
     public void DealDamage(float damage)
     {
-        _value -= Mathf.Abs(damage);
-        _value = Mathf.Clamp(_value, 0, _maxValue);
-
         if (!_playerAnimator.GetCurrentAnimatorStateInfo(0).IsName("Death"))
         {
-            if (_inHyperarmor)
-            {
+            _value -= Mathf.Abs(damage);
+            _value = Mathf.Clamp(_value, 0, _maxValue);
 
-            }
-            else
+            if (!_inHyperarmor)
             {
                 _playerAnimator.SetTrigger("Hit");
             }
-        }
 
-        if (_value <= 0 && !_playerAnimator.GetCurrentAnimatorStateInfo(0).IsName("Death"))
-        {
-            PlayerIsDead();
-        }
+            if (_value <= 0)
+            {
+                PlayerIsDead();
+            }
 
-        StartDrawBarCorutine();
+            StartDrawBarCorutine();
+        }
     }
 
     private void PlayerIsDead() 
     {
-        _playerAnimator.SetTrigger("Death");
-        _playerController.enabled = false;
+        _playerDeath.Death();
     }
 
     public void AddHealt(float amount)

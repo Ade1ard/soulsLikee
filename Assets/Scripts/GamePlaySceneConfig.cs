@@ -41,6 +41,7 @@ public class GamePlaySceneConfig : ISceneConfig
 
         bootStrap.Resolve<LootSpawner>().Initialize(bootStrap);
         bootStrap.Resolve<SceneReboot>().Initialize(bootStrap);
+        bootStrap.Resolve<PlayerDeath>().Initialize(bootStrap);
 
         bootStrap.Resolve<JsonSaveSystem>().Initialize(bootStrap);
         bootStrap.Resolve<JsonSaveSystem>().LoadGame();
