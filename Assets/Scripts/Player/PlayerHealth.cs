@@ -25,6 +25,8 @@ public class PlayerHealth : MonoBehaviour, ISaveable, IRebootable
     private bool _inHyperarmor = false;
     private bool _invulnerability = false;
 
+    private Vector3 _lastRevivePosition;
+
     public void Initialize(BootStrap bootStrap)
     {
         _playerController = bootStrap.Resolve<PlayerController>();
@@ -42,11 +44,13 @@ public class PlayerHealth : MonoBehaviour, ISaveable, IRebootable
     {
         gameData.PlayerPosotion = gameObject.transform.position;
         gameData.health = _value;
+        gameData.RevivePosition = _lastRevivePosition;
     }
 
     public void LoadFrom(GameData gameData)
     {
         _value = gameData.health;
+        _lastRevivePosition = gameData.RevivePosition;
         _characterController.enabled = false;
         gameObject.transform.position = gameData.PlayerPosotion;
         _characterController.enabled = true;
@@ -97,6 +101,16 @@ public class PlayerHealth : MonoBehaviour, ISaveable, IRebootable
         StartDrawBarCorutine();
     }
 
+    public void Revive()
+    {
+        _value = _maxValue;
+        StartDrawBarCorutine();
+
+        _characterController.enabled = false;
+        gameObject.transform.position = _lastRevivePosition;
+        _characterController.enabled = true;
+    }
+
     private void StartDrawBarCorutine()
     {
         if (_drawHealthBarCorutine == null)
@@ -129,13 +143,14 @@ public class PlayerHealth : MonoBehaviour, ISaveable, IRebootable
         _inHyperarmor = false;
     }
 
-    public bool CheckInvulnerability()
-    {
-        return _invulnerability;
-    }
+    public bool CheckInvulnerability() { return _invulnerability; }
+
+    public bool CheckAlive() { return _value > 0; }
 
     private void Invulnerability(int amount) //called by events in animations, frames in roll animation
     {
         _invulnerability = amount == 1? true : false;
     }
+
+    public void SetRevivePosotion(Vector3 pos) { _lastRevivePosition = pos; }
 }

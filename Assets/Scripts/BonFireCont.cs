@@ -5,6 +5,7 @@ public class BonFireCont : MonoBehaviour
     [Header("Objects")]
     [SerializeField] private Animator _playerAnimator;
     [SerializeField] private Transform _cameraLookAt;
+    [SerializeField] private Transform _revivePoint;
 
     [Header("UI")]
     [SerializeField] private CanvasGroup _gamePlayUI;
@@ -14,6 +15,7 @@ public class BonFireCont : MonoBehaviour
 
     private TutorialClueCont _tutorialClueCont;
     private PlayerController _playerController;
+    private PlayerHealth _playerHealth;
     private CameraModeChanger _cameraChanger;
     private UIFader _uiFader;
     private MenuesController _menuesController;
@@ -31,6 +33,7 @@ public class BonFireCont : MonoBehaviour
         _tutorialClueCont = bootStrap.Resolve<TutorialClueCont>();
         _cameraChanger = bootStrap.Resolve<CameraModeChanger>();
         _playerController = bootStrap.Resolve<PlayerController>();
+        _playerHealth = bootStrap.Resolve<PlayerHealth>();
         _uiFader = bootStrap.Resolve<UIFader>();
         _menuesController = bootStrap.Resolve<MenuesController>();
         _bonFireMenu = bootStrap.Resolve<BonFireMenu>();
@@ -40,7 +43,7 @@ public class BonFireCont : MonoBehaviour
 
     void Update()
     {
-        if (_NearBonFire)
+        if (_NearBonFire && _playerHealth.CheckAlive())
         {
             if (Input.GetKeyUp(KeyCode.F) && !_isSitting)
             {
@@ -86,6 +89,8 @@ public class BonFireCont : MonoBehaviour
         _isSitting = true;
         _escapeMenu.InOtherMenu(true);
         _escapeMenu.CloseESCMenu();
+
+        _playerHealth.SetRevivePosotion(_revivePoint.position);
 
         _playerController.IsHealing(1);
         _playerAnimator.SetTrigger("BonFireSitDown");

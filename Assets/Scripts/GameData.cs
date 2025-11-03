@@ -15,6 +15,7 @@ public class GameData
     public Vector3 PlayerPosotion;
     public float health;
     public float FlaskCount;
+    public Vector3 RevivePosition;
 
     public SettingsData settings;
 

@@ -21,17 +21,21 @@ public class PlayerDeath : MonoBehaviour
 
     private UIFader _uiFader;
     private PlayerController _playerController;
+    private PlayerHealth _playerHealth;
     private Animator _playerAnimator;
     private EscapeMenu _escMenu;
+    private SceneReboot _sceneReboot;
 
-    private bool _isDead = false;
+    private bool _canRevive = false;
 
     public void Initialize(BootStrap bootStrap)
     {
         _uiFader = bootStrap.Resolve<UIFader>();
         _playerController = bootStrap.Resolve<PlayerController>();
+        _playerHealth = bootStrap.Resolve<PlayerHealth>();
         _playerAnimator = bootStrap.ResolveAll<Animator>().FirstOrDefault(e => e.name == "Player");
         _escMenu = bootStrap.Resolve<EscapeMenu>();
+        _sceneReboot = bootStrap.Resolve<SceneReboot>();
     }
 
     private void Start()
@@ -44,7 +48,7 @@ public class PlayerDeath : MonoBehaviour
 
     private void Update()
     {
-        if (_isDead)
+        if (_canRevive)
         {
             if (Input.anyKeyDown)
             {
@@ -65,10 +69,12 @@ public class PlayerDeath : MonoBehaviour
 
     public void Revive()
     {
-        _isDead = false;
+        _canRevive = false;
 
         _escMenu.InOtherMenu(false);
         _playerAnimator.SetTrigger("Reboot");
+        _playerHealth.Revive();
+        _sceneReboot.RebootScene();
         _playerController.enabled = true;
 
         DeactivateDeathEffects();
@@ -98,6 +104,6 @@ public class PlayerDeath : MonoBehaviour
         }
 
         yield return new WaitWhile(() => _gameOverUI.alpha != 1);
-        _isDead = true;
+        _canRevive = true;
     }
 }
