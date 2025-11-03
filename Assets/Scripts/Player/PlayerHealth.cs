@@ -65,14 +65,13 @@ public class PlayerHealth : MonoBehaviour, ISaveable, IRebootable
             _value -= Mathf.Abs(damage);
             _value = Mathf.Clamp(_value, 0, _maxValue);
 
-            if (!_inHyperarmor)
-            {
-                _playerAnimator.SetTrigger("Hit");
-            }
-
             if (_value <= 0)
             {
                 PlayerIsDead();
+            }
+            else if (!_inHyperarmor)
+            {
+                _playerAnimator.SetTrigger("Hit");
             }
 
             StartDrawBarCorutine();

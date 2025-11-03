@@ -89,7 +89,7 @@ public class PlayerDeath : MonoBehaviour
 
         _uiFader.Fade(_gameOverUI, true, _fadeSpeed);
 
-        while (_vignette.intensity.value != _vignetteIntensity && _vignette.color.value != _vignetteColor)
+        while (_vignette.intensity.value != _vignetteIntensity && Vector4.Distance(_vignette.color.value, _vignetteColor) > 0.05f)
         {
             _vignette.intensity.value = Mathf.MoveTowards(_vignette.intensity.value, _vignetteIntensity, _fadeSpeed * Time.deltaTime);
             _vignette.color.value = Color.Lerp(_vignette.color.value, _vignetteColor, _fadeSpeed * Time.deltaTime);
@@ -97,6 +97,7 @@ public class PlayerDeath : MonoBehaviour
             yield return null;
         }
 
+        yield return new WaitWhile(() => _gameOverUI.alpha != 1);
         _isDead = true;
     }
 }
