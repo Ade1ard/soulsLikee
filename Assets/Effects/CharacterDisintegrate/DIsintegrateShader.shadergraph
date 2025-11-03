@@ -2734,7 +2734,7 @@
     "m_Title": "PRB Setttings",
     "m_Position": {
         "x": -1172.0,
-        "y": -119.0
+        "y": -118.99998474121094
     }
 }
 
@@ -3116,7 +3116,7 @@
     "hlslDeclarationOverride": 0,
     "m_Hidden": false,
     "m_Value": {
-        "m_SerializedTexture": "{\"texture\":{\"fileID\":2800000,\"guid\":\"803664046ce39bc4787bdbf1a3d35ce4\",\"type\":3}}",
+        "m_SerializedTexture": "",
         "m_Guid": ""
     },
     "isMainTexture": false,

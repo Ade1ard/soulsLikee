@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -8,21 +9,24 @@ public class BonFireMenu : MonoBehaviour, IMenu
     private UIFader _uiFader;
     private MenuesController _menuesController;
     private JsonSaveSystem _saveSystem;
+    private TransitionBGCont _transitionBGCont;
 
-    private Coroutine _coroutine;
+    private Coroutine _SetActiveCoroutine;
+    private Coroutine _MainMenuLoadingCoroutine;
 
     public void Initialize(BootStrap bootStrap)
     {
         _uiFader = bootStrap.Resolve<UIFader>();
         _menuesController = bootStrap.Resolve<MenuesController>();
         _saveSystem = bootStrap.Resolve<JsonSaveSystem>();
+        _transitionBGCont = bootStrap.Resolve<TransitionBGCont>();
     }
 
     public void SetActive(bool _bool)
     {
-        if (_coroutine != null)
-            StopCoroutine(_coroutine);
-        _coroutine = StartCoroutine(_uiFader.Fading(BonFireMenuUI, _bool));
+        if (_SetActiveCoroutine != null)
+            StopCoroutine(_SetActiveCoroutine);
+        _SetActiveCoroutine = StartCoroutine(_uiFader.Fading(BonFireMenuUI, _bool));
 
         _uiFader.Fade(BonFireMenuUI, _bool);
         if (_bool)
@@ -40,9 +44,19 @@ public class BonFireMenu : MonoBehaviour, IMenu
 
     public void MainMenuLoad()
     {
+        if (_MainMenuLoadingCoroutine == null)
+            _MainMenuLoadingCoroutine = StartCoroutine(LoadingMainMenu());
+    }
+
+    private IEnumerator LoadingMainMenu()
+    {
+        yield return StartCoroutine(_transitionBGCont.Dissolving(true));
+
         _menuesController.CloseMenu(true);
         _menuesController.CloseMenu(true);
         _saveSystem.SaveGame();
         SceneManager.LoadScene(0);
+
+        _MainMenuLoadingCoroutine = null;
     }
 }

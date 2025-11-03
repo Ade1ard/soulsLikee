@@ -25,6 +25,8 @@ public class PlayerDeath : MonoBehaviour
     private Animator _playerAnimator;
     private EscapeMenu _escMenu;
     private SceneReboot _sceneReboot;
+    private TransitionBGCont _transitionBGCont;
+    private CameraModeChanger _cameraModeChanger;
 
     private bool _canRevive = false;
 
@@ -36,6 +38,8 @@ public class PlayerDeath : MonoBehaviour
         _playerAnimator = bootStrap.ResolveAll<Animator>().FirstOrDefault(e => e.name == "Player");
         _escMenu = bootStrap.Resolve<EscapeMenu>();
         _sceneReboot = bootStrap.Resolve<SceneReboot>();
+        _transitionBGCont = bootStrap.Resolve<TransitionBGCont>();
+        _cameraModeChanger = bootStrap.Resolve<CameraModeChanger>();
     }
 
     private void Start()
@@ -52,7 +56,8 @@ public class PlayerDeath : MonoBehaviour
         {
             if (Input.anyKeyDown)
             {
-                Revive();
+                _canRevive = false;
+                StartCoroutine(Reviving());
             }
         }
     }
@@ -60,6 +65,9 @@ public class PlayerDeath : MonoBehaviour
     public void Death()
     {
         _escMenu.InOtherMenu(true);
+        if (_cameraModeChanger.IsLoocked())
+            _cameraModeChanger.ChangeCameraLookMod();
+
         _playerController.enabled = false;
         _playerAnimator.SetTrigger("Death");
 
@@ -67,10 +75,8 @@ public class PlayerDeath : MonoBehaviour
         StartCoroutine(ActivateDeathEffect());
     }
 
-    public void Revive()
+    private void Revive()
     {
-        _canRevive = false;
-
         _escMenu.InOtherMenu(false);
         _playerAnimator.SetTrigger("Reboot");
         _playerHealth.Revive();
@@ -105,5 +111,12 @@ public class PlayerDeath : MonoBehaviour
 
         yield return new WaitWhile(() => _gameOverUI.alpha != 1);
         _canRevive = true;
+    }
+
+    private IEnumerator Reviving()
+    {
+        yield return StartCoroutine(_transitionBGCont.Dissolving(true));
+        Revive();
+        yield return StartCoroutine(_transitionBGCont.Dissolving(false));
     }
 }

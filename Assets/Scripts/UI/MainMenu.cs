@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -8,20 +9,24 @@ public class MainMenu : MonoBehaviour, IMenu
     private UIFader _uiFader;
     private MenuesController _menuesController;
     private SavesManager _savesManager;
+    private TransitionBGCont _transitionBGCont;
 
-    private Coroutine _coroutine;
+    private Coroutine _setActiveCoroutine;
+    private Coroutine _gamePlayLoadingCoroutine;
 
     public void Initialize(BootStrap bootStrap)
     {
         _uiFader = bootStrap.Resolve<UIFader>();
         _menuesController = bootStrap.Resolve<MenuesController>();
         _savesManager = bootStrap.Resolve<SavesManager>();
+        _transitionBGCont = bootStrap.Resolve<TransitionBGCont>();
     }
 
     public void Play()
     {
         _menuesController.CloseMenu(true);
-        SceneManager.LoadScene(1);
+        if (_gamePlayLoadingCoroutine == null)
+            _gamePlayLoadingCoroutine = StartCoroutine(GamePlayLoading());
     }
 
     public void NewGame()
@@ -51,11 +56,19 @@ public class MainMenu : MonoBehaviour, IMenu
 
     public void SetActive(bool _bool)
     {
-        if (_coroutine != null)
-            StopCoroutine(_coroutine);
-        _coroutine = StartCoroutine(_uiFader.Fading(_mainMenuUI, _bool));
+        if (_setActiveCoroutine != null)
+            StopCoroutine(_setActiveCoroutine);
+        _setActiveCoroutine = StartCoroutine(_uiFader.Fading(_mainMenuUI, _bool));
 
         if (_bool)
             _menuesController.SetCurrnetMenu(this);
+    }
+
+    private IEnumerator GamePlayLoading()
+    {
+        yield return StartCoroutine(_transitionBGCont.Dissolving(true));
+
+        SceneManager.LoadScene(1);
+        _gamePlayLoadingCoroutine = null;
     }
 }

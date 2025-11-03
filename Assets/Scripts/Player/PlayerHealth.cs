@@ -16,7 +16,6 @@ public class PlayerHealth : MonoBehaviour, ISaveable, IRebootable
     [SerializeField] private float _mediumBarSpeed;
 
     private Animator _playerAnimator;
-    private PlayerController _playerController;
     private CharacterController _characterController;
     private PlayerDeath _playerDeath;
 
@@ -29,7 +28,6 @@ public class PlayerHealth : MonoBehaviour, ISaveable, IRebootable
 
     public void Initialize(BootStrap bootStrap)
     {
-        _playerController = bootStrap.Resolve<PlayerController>();
         _playerAnimator = bootStrap.ResolveAll<Animator>().FirstOrDefault(e => e.name == gameObject.name);
         _characterController = GetComponent<CharacterController>();
         _playerDeath = bootStrap.Resolve<PlayerDeath>();

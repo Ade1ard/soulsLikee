@@ -60,7 +60,7 @@ public class CameraModeChanger : MonoBehaviour
 
     }
 
-    private void ChangeCameraLookMod()
+    public void ChangeCameraLookMod()
     {
         if (_isCameraLocked)
         {
@@ -166,4 +166,6 @@ public class CameraModeChanger : MonoBehaviour
         }
         return closestEnemy;
     }
+
+    public bool IsLoocked() { return _isCameraLocked; } 
 }
