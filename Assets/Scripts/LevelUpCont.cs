@@ -210,6 +210,7 @@ public class LevelUpCont : MonoBehaviour, ISaveable, IMenu
         _currentFlaskEfficiencyText.text = _willBeFlaskEfficiencyText.text;
 
         _currentSoulsCount -= _levelWillUpCount;
+        _moneyCont.SpentSouls(_levelWillUpCount);
         _levelWillUpCount = 0;
         _soulsCostText.gameObject.SetActive(false);
         _currentSoulsCountText.text = _currentSoulsCount.ToString();

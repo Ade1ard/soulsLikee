@@ -36,6 +36,8 @@ public class PlayerHealth : MonoBehaviour, ISaveable, IRebootable
     private void Start()
     {
         StartDrawBarCorutine();
+        if (_lastRevivePosition == Vector3.zero)
+            _lastRevivePosition = transform.position;
     }
 
     public void SaveTo(GameData gameData)
@@ -49,6 +51,7 @@ public class PlayerHealth : MonoBehaviour, ISaveable, IRebootable
     {
         _value = gameData.health;
         _lastRevivePosition = gameData.RevivePosition;
+
         _characterController.enabled = false;
         gameObject.transform.position = gameData.PlayerPosotion;
         _characterController.enabled = true;

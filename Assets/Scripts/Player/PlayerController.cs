@@ -124,7 +124,7 @@ public class PlayerController : MonoBehaviour
 
             if (!_inAttack)
             {
-                _moveVector += _camera.transform.forward * Input.GetAxis(Vertical) + _camera.transform.right * Input.GetAxis(Horizontal);
+                _moveVector += (_camera.transform.forward * Input.GetAxis(Vertical) + _camera.transform.right * Input.GetAxis(Horizontal)).normalized;
 
                 if (!_isSprinting)
                 {

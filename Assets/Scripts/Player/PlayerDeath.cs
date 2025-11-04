@@ -16,6 +16,9 @@ public class PlayerDeath : MonoBehaviour
     [SerializeField] Color _vignetteColor;
     [SerializeField] float _vignetteIntensity;
 
+    [Header("DeathDropPrefab")]
+    [SerializeField] DeathDrop _deathDrop;
+
     private float _defaultVignetteIntensity;
     private Color _defaultVignetteColor;
 
@@ -27,11 +30,13 @@ public class PlayerDeath : MonoBehaviour
     private SceneReboot _sceneReboot;
     private TransitionBGCont _transitionBGCont;
     private CameraModeChanger _cameraModeChanger;
+    private BootStrap _bootStrap;
 
     private bool _canRevive = false;
 
     public void Initialize(BootStrap bootStrap)
     {
+        _bootStrap = bootStrap;
         _uiFader = bootStrap.Resolve<UIFader>();
         _playerController = bootStrap.Resolve<PlayerController>();
         _playerHealth = bootStrap.Resolve<PlayerHealth>();
@@ -78,8 +83,12 @@ public class PlayerDeath : MonoBehaviour
     private void Revive()
     {
         _escMenu.InOtherMenu(false);
+        DeathDrop DP =  Instantiate(_deathDrop, transform.position, Quaternion.identity);
+        DP.Initialize(_bootStrap);
+
         _playerAnimator.SetTrigger("Reboot");
         _playerHealth.Revive();
+
         _sceneReboot.RebootScene();
         _playerController.enabled = true;
 
@@ -115,8 +124,8 @@ public class PlayerDeath : MonoBehaviour
 
     private IEnumerator Reviving()
     {
-        yield return StartCoroutine(_transitionBGCont.Dissolving(true));
+        yield return _transitionBGCont.Dissolve(true);
         Revive();
-        yield return StartCoroutine(_transitionBGCont.Dissolving(false));
+        yield return _transitionBGCont.Dissolve(false);
     }
 }

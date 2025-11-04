@@ -66,9 +66,9 @@ public class MainMenu : MonoBehaviour, IMenu
 
     private IEnumerator GamePlayLoading()
     {
-        yield return StartCoroutine(_transitionBGCont.Dissolving(true));
+        yield return _transitionBGCont.Dissolve(true);
 
-        SceneManager.LoadScene(1);
         _gamePlayLoadingCoroutine = null;
+        SceneManager.LoadScene(1);
     }
 }

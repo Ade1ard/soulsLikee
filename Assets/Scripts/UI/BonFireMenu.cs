@@ -50,7 +50,7 @@ public class BonFireMenu : MonoBehaviour, IMenu
 
     private IEnumerator LoadingMainMenu()
     {
-        yield return StartCoroutine(_transitionBGCont.Dissolving(true));
+        yield return _transitionBGCont.Dissolve(true);
 
         _menuesController.CloseMenu(true);
         _menuesController.CloseMenu(true);

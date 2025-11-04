@@ -32,6 +32,7 @@ public class MoneyCont : MonoBehaviour, ISaveable
     {
         gameData.money = _currentMoneyCount;
         gameData.souls = _currentSoulsCount;
+        Debug.Log(_currentSoulsCount);
     }
 
     public void LoadFrom(GameData gameData)
@@ -92,5 +93,10 @@ public class MoneyCont : MonoBehaviour, ISaveable
         _currentMoneyCount -= Mathf.Abs(Mathf.FloorToInt(amount));
         _targetMoneyCount -= Mathf.Abs(Mathf.FloorToInt(amount));
         _MoneyText.text = _currentMoneyCount.ToString();
+    }
+
+    public void SpentSouls(float amount)
+    {
+        _currentSoulsCount -= Mathf.Abs(Mathf.FloorToInt(amount));
     }
 }

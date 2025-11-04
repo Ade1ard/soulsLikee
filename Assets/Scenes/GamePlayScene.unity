@@ -24552,7 +24552,6 @@ GameObject:
   - component: {fileID: 672784387}
   - component: {fileID: 672784388}
   - component: {fileID: 672784389}
-  - component: {fileID: 672784390}
   - component: {fileID: 672784391}
   m_Layer: 0
   m_Name: UI
@@ -24717,24 +24716,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _EscMenuUI: {fileID: 1076906523}
   _gamePlayUI: {fileID: 1733739188}
---- !u!114 &672784390
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 672784377}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 886f40ce1507e17498325d2485bda908, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _gameOverUI: {fileID: 1843399147}
-  _gamePlayUI: {fileID: 1733739188}
-  _globalVolume: {fileID: 954710876}
-  _fadeSpeed: 0.3
-  _vignetteColor: {r: 0.5320754, g: 0, b: 0, a: 0}
-  _vignetteIntensity: 0.5
 --- !u!114 &672784391
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -56132,6 +56113,7 @@ GameObject:
   - component: {fileID: 6046018844230716828}
   - component: {fileID: 6046018844230716832}
   - component: {fileID: 6046018844230716829}
+  - component: {fileID: 6046018844230716833}
   - component: {fileID: 6046018844230716826}
   - component: {fileID: 6046018844230716830}
   - component: {fileID: 6046018844230716831}
@@ -56369,6 +56351,26 @@ MonoBehaviour:
   _effect: {fileID: 8700035473269227422, guid: b21d155ec7ea5a349a0e36106f913148, type: 3}
   _healFlask: {fileID: 26415084}
   _FlaskCountText: {fileID: 768611527}
+--- !u!114 &6046018844230716833
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6046018844230716822}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 886f40ce1507e17498325d2485bda908, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _gameOverUI: {fileID: 1843399147}
+  _gamePlayUI: {fileID: 1733739188}
+  _globalVolume: {fileID: 954710876}
+  _fadeSpeed: 0.3
+  _vignetteColor: {r: 0.5320754, g: 0, b: 0, a: 0}
+  _vignetteIntensity: 0.5
+  _deathDrop: {fileID: 88013028905989752, guid: 73708dd0c91c28448841389be7c4203f,
+    type: 3}
 --- !u!4 &6046018844635725962
 Transform:
   m_ObjectHideFlags: 0
