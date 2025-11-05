@@ -53,8 +53,16 @@ public class PlayerSword : MonoBehaviour
         {
             _audioSource.PlayOneShot(_hitAtSomething);
 
-            var ContactPoint = other.ClosestPoint(transform.position);
-            Instantiate(_sparkl, ContactPoint, Quaternion.LookRotation(gameObject.transform.position));
+            if (other is MeshCollider)
+            {
+                var ContactPoint = transform.position;
+                Instantiate(_sparkl, ContactPoint, Quaternion.LookRotation(gameObject.transform.position));
+            }
+            else
+            {
+                var ContactPoint = other.ClosestPoint(transform.position);
+                Instantiate(_sparkl, ContactPoint, Quaternion.LookRotation(gameObject.transform.position));
+            }
         } 
     }
 

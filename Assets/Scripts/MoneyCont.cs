@@ -30,7 +30,7 @@ public class MoneyCont : MonoBehaviour, ISaveable
 
     public void SaveTo(GameData gameData)
     {
-        gameData.money = _currentMoneyCount;
+        gameData.money = _targetMoneyCount;
         gameData.souls = _currentSoulsCount;
         Debug.Log(_currentSoulsCount);
     }

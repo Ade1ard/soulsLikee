@@ -542,8 +542,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _material: {fileID: 2100000, guid: 3b8cad2064c18c4459a882ce9687c55b, type: 2}
-  _dissolveRate: 0.015
-  _dissolveDelay: 0.02
+  _dissolveRate: 0.02
+  _dissolveDelay: 0.015
 --- !u!1 &375301008
 GameObject:
   m_ObjectHideFlags: 0

@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using TMPro.EditorUtilities;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -237,6 +238,12 @@ public class EnemyController : MonoBehaviour
     {
         _isPlayerNoticed = false;
         _navMeshAgent.ResetPath();
+    }
+
+    private void OnDisable()
+    {
+        _animator.SetFloat("Attack", -1);
+        _animator.SetFloat("Speed", 0);
     }
 
     public bool CheckAlive()
