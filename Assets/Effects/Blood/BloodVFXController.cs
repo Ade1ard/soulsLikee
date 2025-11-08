@@ -1,6 +1,5 @@
 using UnityEngine.VFX;
 using UnityEngine;
-using Unity.Mathematics;
 
 public class BloodVFXController : MonoBehaviour
 {
@@ -11,11 +10,6 @@ public class BloodVFXController : MonoBehaviour
     [Header("Properties")]
     [SerializeField] private string _centerPropertyName;
     [SerializeField] private string _sizePropertyName;
-
-    private void Start()
-    {
-
-    }
 
     public void SpawnVFXBlood(Vector3 spawnPoint, Vector3 lookAt)
     {
@@ -30,10 +24,21 @@ public class BloodVFXController : MonoBehaviour
     {
         float spawnHeight = vfx.transform.position.y;
 
+        RaycastHit[] hits = Physics.RaycastAll(vfx.transform.position, Vector3.down);
+        foreach (RaycastHit hit in hits)
+        {
+            if (hit.collider == _targetCollider)
+            {
+                spawnHeight = hit.distance;
+            }
+        }
+
         Vector3 worldSize = Vector3.Scale(_targetCollider.size, _targetCollider.transform.lossyScale);
         Vector3 worldCenter = new Vector3(0, -(spawnHeight * 2 + worldSize.y / 2), 0);
 
         vfx.SetVector3(_sizePropertyName, worldSize);
         vfx.SetVector3(_centerPropertyName, worldCenter);
     }
+
+    public void SetCurrentCollider(BoxCollider boxCollider) {_targetCollider = boxCollider;}
 }

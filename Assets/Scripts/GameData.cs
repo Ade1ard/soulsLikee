@@ -22,6 +22,8 @@ public class GameData
     public List<EnemyData> enemies = new List<EnemyData>();
 
     public List<LootData> lootSouls = new List<LootData>();
+
+    public List<GateGata> gateDatas = new List<GateGata>();
 }
 
 [System.Serializable]
@@ -46,4 +48,11 @@ public class LootData
 {
     public string lootID;
     public bool isCollected;
+}
+
+[System.Serializable]
+public class GateGata
+{
+    public string GateID;
+    public bool IsGateOpen;
 }

@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.VFX;
 
 public class PlayerSword : MonoBehaviour
 {
@@ -25,11 +24,6 @@ public class PlayerSword : MonoBehaviour
         _audioSource = GetComponent<AudioSource>();
         _capsuleCollider = GetComponent<CapsuleCollider>();
         _capsuleCollider.enabled = false;
-    }
-
-    void Update()
-    {
-        
     }
 
     private void OnTriggerEnter(Collider other)

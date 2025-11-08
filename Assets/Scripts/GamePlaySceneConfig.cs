@@ -15,7 +15,8 @@ public class GamePlaySceneConfig : ISceneConfig
         bootStrap.Resolve<GameSettings>().InitializeForGamePlayScene(bootStrap);
         bootStrap.Resolve<GameSettingsView>().Initialize(bootStrap);
 
-        bootStrap.Resolve<BonFireCont>().Initialize(bootStrap);
+        foreach (BonFireCont bonFire in bootStrap.ResolveAll<BonFireCont>())
+            bonFire.Initialize(bootStrap);
         bootStrap.Resolve<BonFireMenu>().Initialize(bootStrap);
 
         bootStrap.Resolve<EscapeMenu>().Initialize(bootStrap);
@@ -40,6 +41,8 @@ public class GamePlaySceneConfig : ISceneConfig
             disCont.Initialize(bootStrap);
         foreach (GateOpen gateOpen in bootStrap.ResolveAll<GateOpen>())
             gateOpen.Initialize(bootStrap);
+        foreach (SetColliderVFXBlood setColliderVFXBlood in bootStrap.ResolveAll<SetColliderVFXBlood>())
+            setColliderVFXBlood.Initialize(bootStrap);
 
         bootStrap.Resolve<LootSpawner>().Initialize(bootStrap);
         bootStrap.Resolve<SceneReboot>().Initialize(bootStrap);

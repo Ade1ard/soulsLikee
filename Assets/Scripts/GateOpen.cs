@@ -1,6 +1,7 @@
+using System.Linq;
 using UnityEngine;
 
-public class GateOpen : MonoBehaviour
+public class GateOpen : MonoBehaviour, ISaveable
 {
     [SerializeField] private GameObject _gateDoor1;
     [SerializeField] private GameObject _gateDoor2;
@@ -19,6 +20,31 @@ public class GateOpen : MonoBehaviour
         _player = bootStrap.Resolve<PlayerController>().gameObject;
     }
 
+    public void SaveTo(GameData gameData)
+    {
+        var gateData = gameData.gateDatas.FirstOrDefault(e => e.GateID == gameObject.name);
+
+        if (gateData == null)
+        {
+            gateData = new GateGata();
+            gameData.gateDatas.Add(gateData);
+        }
+
+        gateData.GateID = gameObject.name;
+        gateData.IsGateOpen = _isGateOpened;
+    }
+
+    public void LoadFrom(GameData gameData)
+    {
+        var gateData = gameData.gateDatas.FirstOrDefault(e => e.GateID == gameObject.name);
+
+        if (gateData != null)
+        {
+            if (gateData.IsGateOpen)
+                OpenGate();
+        }
+    }
+
     private void Update()
     {
         if (_nearGate)
@@ -26,9 +52,6 @@ public class GateOpen : MonoBehaviour
             if (Input.GetKeyDown(KeyCode.F))
             {
                 OpenGate();
-                _isGateOpened = true;
-
-                this.enabled = false;
             }
         }
     }
@@ -39,6 +62,8 @@ public class GateOpen : MonoBehaviour
         _gateDoor2.GetComponent<Animator>().SetTrigger("Open");
 
         _tutorialClueCont.TutorialGetUnvisible();
+
+        _isGateOpened = true;
     }
 
     private void OnTriggerEnter(Collider other)
