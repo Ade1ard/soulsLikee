@@ -38,6 +38,8 @@ public class GamePlaySceneConfig : ISceneConfig
             enemySword.Initialize(bootStrap);
         foreach (DissolveController disCont in bootStrap.ResolveAll<DissolveController>())
             disCont.Initialize(bootStrap);
+        foreach (GateOpen gateOpen in bootStrap.ResolveAll<GateOpen>())
+            gateOpen.Initialize(bootStrap);
 
         bootStrap.Resolve<LootSpawner>().Initialize(bootStrap);
         bootStrap.Resolve<SceneReboot>().Initialize(bootStrap);
