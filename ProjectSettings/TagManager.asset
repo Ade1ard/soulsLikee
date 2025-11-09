@@ -9,6 +9,7 @@ TagManager:
   - Environment
   - EnemySword
   - HitBox
+  - Floor
   layers:
   - Default
   - TransparentFX

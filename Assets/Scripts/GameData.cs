@@ -24,6 +24,8 @@ public class GameData
     public List<LootData> lootSouls = new List<LootData>();
 
     public List<GateGata> gateDatas = new List<GateGata>();
+
+    public string BloodCollider;
 }
 
 [System.Serializable]

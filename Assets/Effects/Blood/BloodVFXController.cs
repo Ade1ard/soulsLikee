@@ -1,7 +1,7 @@
 using UnityEngine.VFX;
 using UnityEngine;
 
-public class BloodVFXController : MonoBehaviour
+public class BloodVFXController : MonoBehaviour, ISaveable
 {
     [Header("Objects")]
     [SerializeField] private VisualEffect _VFX_Blood;
@@ -10,6 +10,19 @@ public class BloodVFXController : MonoBehaviour
     [Header("Properties")]
     [SerializeField] private string _centerPropertyName;
     [SerializeField] private string _sizePropertyName;
+
+    public void SaveTo(GameData gameData)
+    {
+        gameData.BloodCollider = _targetCollider.name;
+    }
+
+    public void LoadFrom(GameData gameData)
+    {
+        foreach (GameObject boxCollider in GameObject.FindGameObjectsWithTag("Floor"))
+            if (boxCollider.name == gameData.BloodCollider)
+                if (boxCollider.TryGetComponent<BoxCollider>(out BoxCollider collider))
+                    _targetCollider = collider;
+    }
 
     public void SpawnVFXBlood(Vector3 spawnPoint, Vector3 lookAt)
     {
