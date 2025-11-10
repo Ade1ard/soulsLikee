@@ -70,6 +70,7 @@ public class PlayerDeath : MonoBehaviour
     public void Death()
     {
         _escMenu.InOtherMenu(true);
+        _cameraModeChanger.SetCanChangeMode(false);
         if (_cameraModeChanger.IsLoocked())
             _cameraModeChanger.ChangeCameraLookMod();
 
@@ -86,11 +87,12 @@ public class PlayerDeath : MonoBehaviour
         DeathDrop DP =  Instantiate(_deathDrop, transform.position, Quaternion.identity);
         DP.Initialize(_bootStrap);
 
-        _playerAnimator.SetTrigger("Reboot");
+        _playerAnimator.Rebind();
         _playerHealth.Revive();
 
         _sceneReboot.RebootScene();
         _playerController.enabled = true;
+        _cameraModeChanger.SetCanChangeMode(true);
 
         DeactivateDeathEffects();
     }

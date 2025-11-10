@@ -25,6 +25,7 @@ public class CameraModeChanger : MonoBehaviour
 
     private bool _isCameraLocked = false;
     private bool _isCameraOnBonfire = false;
+    private bool _canChangeMode = true;
 
     public void Initialize(BootStrap bootStrap)
     {
@@ -47,7 +48,7 @@ public class CameraModeChanger : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetMouseButtonDown(2) && !_isCameraOnBonfire)
+        if (Input.GetMouseButtonDown(2) && !_isCameraOnBonfire && _canChangeMode)
         {
             ChangeCameraLookMod();
         }
@@ -167,5 +168,7 @@ public class CameraModeChanger : MonoBehaviour
         return closestEnemy;
     }
 
-    public bool IsLoocked() { return _isCameraLocked; } 
+    public bool IsLoocked() { return _isCameraLocked; }
+
+    public void SetCanChangeMode(bool _bool) { _canChangeMode = _bool; }
 }

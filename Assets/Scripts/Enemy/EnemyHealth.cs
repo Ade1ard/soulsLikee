@@ -105,7 +105,7 @@ public class EnemyHealth : MonoBehaviour, ISaveable, IRebootable
         transform.position = _startPositon;
         _value = _maxValue;
 
-        _animator.SetTrigger("Reboot");
+        _animator.Rebind();
         _dissolveController.Reboot();
         _capsuleCollider.isTrigger = false;
 

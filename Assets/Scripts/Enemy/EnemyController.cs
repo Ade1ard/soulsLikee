@@ -46,14 +46,13 @@ public class EnemyController : MonoBehaviour
     public Transform _cameraLookAt => _CameraLookAt;
     public Transform _enemySpine { get; private set; }
 
-
     public void Initialize(BootStrap bootStrap)
     {
         _player = bootStrap.Resolve<PlayerController>();
         _audioSource = bootStrap.ResolveAll<AudioSource>().FirstOrDefault(e => e.name == gameObject.name);
         _navMeshAgent = bootStrap.ResolveAll<NavMeshAgent>().FirstOrDefault(e => e.name == gameObject.name);
         _animator = bootStrap.ResolveAll<Animator>().FirstOrDefault(e => e.name == gameObject.name);
-        _enemySword = bootStrap.ResolveAll<EnemySword>().FirstOrDefault(e => e.transform.root.name == gameObject.name);
+        _enemySword = GetComponentInChildren<EnemySword>();
 
         _enemySpine = _animator.GetBoneTransform(HumanBodyBones.Spine);
     }

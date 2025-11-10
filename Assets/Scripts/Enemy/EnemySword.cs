@@ -30,11 +30,6 @@ public class EnemySword : MonoBehaviour
         _capsuleCollider.enabled = false;
     }
 
-    void Update()
-    {
-        
-    }
-
     private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.CompareTag("HitBox") && !_hasAttacked && !_playerHealth.CheckInvulnerability())
