@@ -11,12 +11,14 @@ public class DeathDrop : MonoBehaviour
     private TutorialClueCont _tutClueCont;
     private MoneyCont _moneyCont;
     private PlayerController _playerController;
+    private PlayerDeath _playerDeath;
 
     public void Initialize(BootStrap bootStrap)
     {
         _tutClueCont = bootStrap.Resolve<TutorialClueCont>();
         _moneyCont = bootStrap.Resolve<MoneyCont>();
         _playerController = bootStrap.Resolve<PlayerController>();
+        _playerDeath = bootStrap.Resolve<PlayerDeath>();
     }
 
     private void Start()
@@ -33,6 +35,7 @@ public class DeathDrop : MonoBehaviour
             {
                 _moneyCont.GetMoney(_dropedMoneyAmount);
                 _tutClueCont.TutorialGetUnvisible();
+                _playerDeath.ClearDeathDrop();
                 Destroy(gameObject);
             }
         }

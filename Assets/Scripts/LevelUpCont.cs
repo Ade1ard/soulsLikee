@@ -49,7 +49,8 @@ public class LevelUpCont : MonoBehaviour, ISaveable, IMenu
 
     private int _levelWillUpCount = 0;
 
-    private Coroutine _changeColorCorutine;
+    private Coroutine _moneyChangeColorCorutine;
+    private Coroutine _soulsChangeColorCorutine;
 
 
     public void Initialize(BootStrap bootStrap)
@@ -257,13 +258,18 @@ public class LevelUpCont : MonoBehaviour, ISaveable, IMenu
 
     private void StartChangeColorCorutine(TextMeshProUGUI Curriens)
     {
-        if (_changeColorCorutine == null)
+        if (Curriens == _currentMoneyCountText)
         {
-            _changeColorCorutine = StartCoroutine(NotEnoughtCurriencies(Curriens));
+            _moneyChangeColorCorutine = StartCoroutine(NotEnoughtCurriencies(Curriens, _moneyChangeColorCorutine));
+        }
+
+        if (Curriens = _currentSoulsCountText)
+        {
+            _soulsChangeColorCorutine = StartCoroutine(NotEnoughtCurriencies(Curriens, _soulsChangeColorCorutine));
         }
     }
 
-    private IEnumerator NotEnoughtCurriencies(TextMeshProUGUI Curriens)
+    private IEnumerator NotEnoughtCurriencies(TextMeshProUGUI Curriens, Coroutine currnetCoroutine)
     {
         while (Curriens.color.g != 0.3f)
         {
@@ -279,7 +285,7 @@ public class LevelUpCont : MonoBehaviour, ISaveable, IMenu
             Curriens.color = new Color(Curriens.color.r, newAlpha, newAlpha, Curriens.color.a);
             yield return null;
         }
-        _changeColorCorutine = null;
+        currnetCoroutine = null;
     }
 
     public void SetActive(bool _bool)

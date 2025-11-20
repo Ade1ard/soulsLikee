@@ -3,6 +3,7 @@ using UnityEngine.UI;
 using UnityEngine;
 using UnityEngine.AI;
 using System.Linq;
+using Unity.Mathematics;
 
 public class EnemyHealth : MonoBehaviour, ISaveable, IRebootable
 {
@@ -39,6 +40,7 @@ public class EnemyHealth : MonoBehaviour, ISaveable, IRebootable
     private bool _isBarVisible = true;
 
     private Vector3 _startPositon;
+    private quaternion _startRotation;
 
     private float _timeLastHit;
 
@@ -53,6 +55,7 @@ public class EnemyHealth : MonoBehaviour, ISaveable, IRebootable
 
         _value = _maxValue;
         _startPositon = transform.position;
+        _startRotation = transform.rotation;
     }
 
     private void Start()
@@ -103,6 +106,7 @@ public class EnemyHealth : MonoBehaviour, ISaveable, IRebootable
         _enemyController.enabled = true;
         _enemyController.Reboot();
         transform.position = _startPositon;
+        transform.rotation = _startRotation;
         _value = _maxValue;
 
         _animator.Rebind();

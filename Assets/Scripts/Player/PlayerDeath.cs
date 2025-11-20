@@ -17,7 +17,9 @@ public class PlayerDeath : MonoBehaviour
     [SerializeField] float _vignetteIntensity;
 
     [Header("DeathDropPrefab")]
-    [SerializeField] DeathDrop _deathDrop;
+    [SerializeField] DeathDrop _deathDropPrefab;
+
+    private DeathDrop _deathDrop;
 
     private float _defaultVignetteIntensity;
     private Color _defaultVignetteColor;
@@ -84,8 +86,11 @@ public class PlayerDeath : MonoBehaviour
     private void Revive()
     {
         _escMenu.InOtherMenu(false);
-        DeathDrop DP =  Instantiate(_deathDrop, transform.position, Quaternion.identity);
-        DP.Initialize(_bootStrap);
+
+        if (_deathDrop != null)
+            Destroy(_deathDrop.gameObject);
+        _deathDrop =  Instantiate(_deathDropPrefab, transform.position, Quaternion.identity);
+        _deathDrop.Initialize(_bootStrap);
 
         _playerAnimator.Rebind();
         _playerHealth.Revive();
@@ -130,4 +135,6 @@ public class PlayerDeath : MonoBehaviour
         Revive();
         yield return _transitionBGCont.Dissolve(false);
     }
+
+    public void ClearDeathDrop() { _deathDrop = null; }
 }
