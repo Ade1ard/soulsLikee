@@ -71,7 +71,7 @@ ModelImporter:
         floatParameter: 0
         intParameter: 1
         messageOptions: 0
-      - time: 0.3636066
+      - time: 0.35990292
         functionName: Invulnerability
         data: 
         objectReferenceParameter: {instanceID: 0}

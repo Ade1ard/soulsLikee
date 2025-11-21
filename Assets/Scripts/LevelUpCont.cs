@@ -168,10 +168,12 @@ public class LevelUpCont : MonoBehaviour, ISaveable, IMenu
             {
                 StartChangeColorCorutine(_currentMoneyCountText);
             }
+
             if (_currentSoulsCount < _levelWillUpCount + 1)
             {
                 StartChangeColorCorutine(_currentSoulsCountText);
             }
+
             return false;
         }
     }
@@ -263,7 +265,7 @@ public class LevelUpCont : MonoBehaviour, ISaveable, IMenu
             _moneyChangeColorCorutine = StartCoroutine(NotEnoughtCurriencies(Curriens, _moneyChangeColorCorutine));
         }
 
-        if (Curriens = _currentSoulsCountText)
+        if (Curriens == _currentSoulsCountText)
         {
             _soulsChangeColorCorutine = StartCoroutine(NotEnoughtCurriencies(Curriens, _soulsChangeColorCorutine));
         }

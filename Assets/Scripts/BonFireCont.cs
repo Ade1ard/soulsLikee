@@ -90,7 +90,7 @@ public class BonFireCont : MonoBehaviour
         _escapeMenu.InOtherMenu(true);
         _escapeMenu.CloseESCMenu();
 
-        _playerHealth.SetRevivePosotion(_revivePoint.position);
+        _playerHealth.SetRevivePosition(_revivePoint.position);
 
         _playerController.IsHealing(1);
         _playerAnimator.SetTrigger("BonFireSitDown");

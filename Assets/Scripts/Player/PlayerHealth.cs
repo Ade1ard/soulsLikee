@@ -153,5 +153,5 @@ public class PlayerHealth : MonoBehaviour, ISaveable, IRebootable
         _invulnerability = amount == 1? true : false;
     }
 
-    public void SetRevivePosotion(Vector3 pos) { _lastRevivePosition = pos; }
+    public void SetRevivePosition(Vector3 pos) { _lastRevivePosition = pos; }
 }
