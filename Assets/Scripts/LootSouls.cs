@@ -3,6 +3,15 @@ using UnityEngine;
 
 public class LootSouls : MonoBehaviour, ISaveable
 {
+    [SerializeField] private LootType _lootType;
+
+    [SerializeField]
+    [Tooltip("Money count")]
+    private int _moneyCount = 10000;
+
+    public bool ShowSoulAmount => _lootType == LootType.Soul;
+    public bool ShowMoneyAmount => _lootType == LootType.Money;
+
     [SerializeField] private string _TutCluetextString;
 
     private bool _nearLoot;
@@ -54,7 +63,16 @@ public class LootSouls : MonoBehaviour, ISaveable
         {
             if (Input.GetKeyDown(KeyCode.F))
             {
-                _moneyCont.GetSouls(1);
+                switch (_lootType)
+                {
+                    case LootType.Soul:
+                        _moneyCont.GetSouls(1);
+                        break;
+
+                    case LootType.Money:
+                        _moneyCont.GetMoney(_moneyCount);
+                        break;
+                }
                 _tutClueCont.TutorialGetUnvisible();
                 _isCollected = true;
                 gameObject.SetActive(false);
@@ -79,4 +97,10 @@ public class LootSouls : MonoBehaviour, ISaveable
             _nearLoot = false;
         }
     }
+}
+
+public enum LootType
+{
+    Soul,
+    Money
 }
