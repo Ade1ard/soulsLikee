@@ -43,7 +43,7 @@ public class CameraModeChanger : MonoBehaviour
         _freeLookCamera.Priority = 20;
         _lockOnCamera.Priority = 0;
 
-        InvokeRepeating("CheckDistanceToLockEnemy", 2f, 2f);
+        InvokeRepeating("CheckDistanceToLockEnemy", 3f, 3f);
     }
 
     void Update()
@@ -171,4 +171,6 @@ public class CameraModeChanger : MonoBehaviour
     public bool IsLoocked() { return _isCameraLocked; }
 
     public void SetCanChangeMode(bool _bool) { _canChangeMode = _bool; }
+
+    public bool CheckLookedEnemy(EnemyController enemy) { return enemy == _enemyLockedOn; }
 }

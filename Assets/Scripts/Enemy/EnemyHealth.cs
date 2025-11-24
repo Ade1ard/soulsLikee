@@ -30,6 +30,7 @@ public class EnemyHealth : MonoBehaviour, ISaveable, IRebootable
     private DissolveController _dissolveController;
     private CapsuleCollider _capsuleCollider;
     private LootSpawner _lootSpawner;
+    private CameraModeChanger _cameraModeChanger;
 
     private NavMeshAgent _navMeshAgent;
 
@@ -48,6 +49,7 @@ public class EnemyHealth : MonoBehaviour, ISaveable, IRebootable
     {
         _lootSpawner = bootStrap.Resolve<LootSpawner>();
         _capsuleCollider = GetComponent<CapsuleCollider>();
+        _cameraModeChanger = bootStrap.Resolve<CameraModeChanger>();
         _dissolveController = bootStrap.ResolveAll<DissolveController>().FirstOrDefault(e => e.name == gameObject.name);
         _navMeshAgent = bootStrap.ResolveAll<NavMeshAgent>().FirstOrDefault(e => e.name == gameObject.name);
         _enemyController = bootStrap.ResolveAll<EnemyController>().FirstOrDefault(e => e.name == gameObject.name);
@@ -158,6 +160,9 @@ public class EnemyHealth : MonoBehaviour, ISaveable, IRebootable
         SetBarVisible(false);
         _dissolveController.Dissolve(NeedDropLoot);
         _capsuleCollider.isTrigger = true;
+
+        if (_cameraModeChanger.CheckLookedEnemy(_enemyController))
+            _cameraModeChanger.ChangeCameraLookMod();
 
         if (NeedDropLoot)
             Invoke("DropLoot", _lootDrobDelay);
