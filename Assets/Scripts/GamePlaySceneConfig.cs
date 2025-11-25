@@ -27,6 +27,8 @@ public class GamePlaySceneConfig : ISceneConfig
         bootStrap.Resolve<GetSoulsUI>().Initialize(bootStrap);
         bootStrap.Resolve<TutorialClueCont>().Initialize(bootStrap);
 
+        bootStrap.Resolve<MessageUI>().Initialize(bootStrap);
+
         foreach (LootSouls lootSouls in bootStrap.ResolveAll<LootSouls>())
             lootSouls.Initialize(bootStrap);
         foreach (EnemyController enemy in bootStrap.ResolveAll<EnemyController>())
@@ -43,6 +45,8 @@ public class GamePlaySceneConfig : ISceneConfig
             gateOpen.Initialize(bootStrap);
         foreach (SetColliderVFXBlood setColliderVFXBlood in bootStrap.ResolveAll<SetColliderVFXBlood>())
             setColliderVFXBlood.Initialize(bootStrap);
+        foreach (MessageTut messageTut in bootStrap.ResolveAll<MessageTut>())
+            messageTut.Initialize(bootStrap);
 
         bootStrap.Resolve<LootSpawner>().Initialize(bootStrap);
         bootStrap.Resolve<SceneReboot>().Initialize(bootStrap);
