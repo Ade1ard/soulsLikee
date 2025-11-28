@@ -262,7 +262,7 @@ public class PlayerController : MonoBehaviour
         _isHealing = (_int == 1) ? true : false;
     }
 
-    private void AllFlagsReload() ////called by event in hit animation
+    public void AllFlagsReload() ////called by event in hit animation
     {
         _inAttack = false;
         _isRolling = false;

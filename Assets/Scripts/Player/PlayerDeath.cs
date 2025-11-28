@@ -97,6 +97,7 @@ public class PlayerDeath : MonoBehaviour
 
         _sceneReboot.RebootScene();
         _playerController.enabled = true;
+        _playerController.AllFlagsReload();
         _cameraModeChanger.SetCanChangeMode(true);
 
         DeactivateDeathEffects();
