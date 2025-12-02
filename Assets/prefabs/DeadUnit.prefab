@@ -204,6 +204,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: c8be8bb32f81dd3409817edde8c4100d,
+        type: 3}
+      propertyPath: m_ConstrainProportionsScale
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: -8183481454299698827, guid: c8be8bb32f81dd3409817edde8c4100d,
         type: 3}
       propertyPath: m_StaticEditorFlags
@@ -528,6 +533,16 @@ PrefabInstance:
       propertyPath: m_Controller
       value: 
       objectReference: {fileID: 9100000, guid: 0ec81a18a577d924c9fe4c0896980d53, type: 2}
+    - target: {fileID: 5866666021909216657, guid: c8be8bb32f81dd3409817edde8c4100d,
+        type: 3}
+      propertyPath: m_UpdateMode
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5866666021909216657, guid: c8be8bb32f81dd3409817edde8c4100d,
+        type: 3}
+      propertyPath: m_CullingMode
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 6240733294840144465, guid: c8be8bb32f81dd3409817edde8c4100d,
         type: 3}
       propertyPath: m_StaticEditorFlags
