@@ -26,6 +26,8 @@ public class EnemyHealth : MonoBehaviour, ISaveable, IRebootable
     [SerializeField] private float _lootDropChanse = 0.05f;
     [SerializeField] private float _lootDrobDelay = 2;
 
+    [SerializeField] private bool _thisIsBoss;
+
     private EnemyController _enemyController;
     private DissolveController _dissolveController;
     private CapsuleCollider _capsuleCollider;
@@ -63,7 +65,8 @@ public class EnemyHealth : MonoBehaviour, ISaveable, IRebootable
     private void Start()
     {
         StartDrawBarCorutine();
-        SetBarVisible(false);
+        _HealthBar.color = new Color(_HealthBar.color.r, _HealthBar.color.g, _HealthBar.color.b, 0);
+        _HealthValue.color = new Color(_HealthValue.color.r, _HealthValue.color.g, _HealthValue.color.g, 0);
     }
 
     public void SaveTo(GameData gameData)
@@ -120,7 +123,7 @@ public class EnemyHealth : MonoBehaviour, ISaveable, IRebootable
 
     void Update()
     {
-        if (Time.time - _timeLastHit > _barFadeDelay)
+        if (Time.time - _timeLastHit > _barFadeDelay && !_thisIsBoss)
         {
             SetBarVisible(false);
         }
@@ -131,7 +134,8 @@ public class EnemyHealth : MonoBehaviour, ISaveable, IRebootable
         if (CheckAlive())
         {
             _timeLastHit = Time.time;
-            SetBarVisible(true);
+            if (!_thisIsBoss)
+                SetBarVisible(true);
 
             _value -= Mathf.Abs(damage);
             _value = Mathf.Clamp(_value, 0, _maxValue);
@@ -164,7 +168,7 @@ public class EnemyHealth : MonoBehaviour, ISaveable, IRebootable
         if (_cameraModeChanger.CheckLookedEnemy(_enemyController))
             _cameraModeChanger.ChangeCameraLookMod();
 
-        if (NeedDropLoot)
+        if (NeedDropLoot && !_thisIsBoss)
             Invoke("DropLoot", _lootDrobDelay);
     }
 
