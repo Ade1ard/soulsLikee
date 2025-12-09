@@ -65,8 +65,11 @@ public class EnemyHealth : MonoBehaviour, ISaveable, IRebootable
     private void Start()
     {
         StartDrawBarCorutine();
-        _HealthBar.color = new Color(_HealthBar.color.r, _HealthBar.color.g, _HealthBar.color.b, 0);
-        _HealthValue.color = new Color(_HealthValue.color.r, _HealthValue.color.g, _HealthValue.color.g, 0);
+        if (!_thisIsBoss)
+        {
+            _HealthBar.color = new Color(_HealthBar.color.r, _HealthBar.color.g, _HealthBar.color.b, 0);
+            _HealthValue.color = new Color(_HealthValue.color.r, _HealthValue.color.g, _HealthValue.color.g, 0);
+        }
     }
 
     public void SaveTo(GameData gameData)

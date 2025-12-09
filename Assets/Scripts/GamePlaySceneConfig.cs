@@ -29,6 +29,8 @@ public class GamePlaySceneConfig : ISceneConfig
 
         bootStrap.Resolve<MessageUI>().Initialize(bootStrap);
 
+        bootStrap.Resolve<BossArenaCont>().Initialize(bootStrap);
+
         foreach (LootSouls lootSouls in bootStrap.ResolveAll<LootSouls>())
             lootSouls.Initialize(bootStrap);
         foreach (EnemyController enemy in bootStrap.ResolveAll<EnemyController>())
