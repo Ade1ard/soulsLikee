@@ -38,7 +38,7 @@ public class MainMenu : MonoBehaviour, IMenu
 
     void Update()
     {
-        if (Input.GetKeyUp(KeyCode.Tab))
+        if (Input.GetKeyUp(KeyCode.Tab) || Input.GetKeyUp(KeyCode.Escape))
         {
             _menuesController.CloseMenu(false);
         }

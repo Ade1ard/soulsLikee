@@ -23,7 +23,7 @@ public class EscapeMenu : MonoBehaviour, IMenu
 
     void Update()
     {
-        if (Input.GetKeyUp(KeyCode.Tab) && !_inOtherMenu)
+        if (Input.GetKeyUp(KeyCode.Tab) && !_inOtherMenu || Input.GetKeyUp(KeyCode.Escape) && !_inOtherMenu)
         {
             if (_menuesController.IsThereOpenedMenu())
             {

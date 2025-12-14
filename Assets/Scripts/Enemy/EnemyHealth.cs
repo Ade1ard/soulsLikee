@@ -216,9 +216,9 @@ public class EnemyHealth : MonoBehaviour, ISaveable, IRebootable
             _isBarVisible = _bool;
             if (_VisibleHealthBarCorutine != null)
             {
-                StopCoroutine(BarVisible(0));
+                StopCoroutine(_VisibleHealthBarCorutine);
             }
-            StartCoroutine(BarVisible(_bool ? 1:0));
+            _VisibleHealthBarCorutine = StartCoroutine(BarVisible(_bool ? 1:0));
         }
     }
 

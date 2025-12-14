@@ -50,7 +50,7 @@ public class BonFireCont : MonoBehaviour
                 SitBonfire();
             }
 
-            if (Input.GetKeyUp(KeyCode.Tab) && _isSitting)
+            if (Input.GetKeyUp(KeyCode.Tab) && _isSitting || Input.GetKeyUp(KeyCode.Escape) && _isSitting)
             {
                 if (_menuesController.CloseMenu(true))
                 {
