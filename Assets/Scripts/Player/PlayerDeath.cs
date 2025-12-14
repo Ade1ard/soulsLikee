@@ -33,6 +33,7 @@ public class PlayerDeath : MonoBehaviour
     private TransitionBGCont _transitionBGCont;
     private CameraModeChanger _cameraModeChanger;
     private BootStrap _bootStrap;
+    private JsonSaveSystem _saveSystem;
 
     private bool _canRevive = false;
 
@@ -47,6 +48,7 @@ public class PlayerDeath : MonoBehaviour
         _sceneReboot = bootStrap.Resolve<SceneReboot>();
         _transitionBGCont = bootStrap.Resolve<TransitionBGCont>();
         _cameraModeChanger = bootStrap.Resolve<CameraModeChanger>();
+        _saveSystem = bootStrap.Resolve<JsonSaveSystem>();
     }
 
     private void Start()
@@ -99,6 +101,8 @@ public class PlayerDeath : MonoBehaviour
         _playerController.enabled = true;
         _playerController.AllFlagsReload();
         _cameraModeChanger.SetCanChangeMode(true);
+
+        _saveSystem.SaveGame();
 
         DeactivateDeathEffects();
     }

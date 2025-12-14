@@ -10,5 +10,5 @@ public class FogCollider : MonoBehaviour
         _fogCollider.isTrigger = true;
     }
 
-    public void ActivateCollider() { _fogCollider.isTrigger = false; }
+    public void ActivateCollider(bool _bool) { _fogCollider.isTrigger = !_bool; }
 }

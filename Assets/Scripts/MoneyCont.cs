@@ -72,10 +72,23 @@ public class MoneyCont : MonoBehaviour, ISaveable
         }
         yield return new WaitForSeconds(2);
 
+        int offset = 1;
+        int offsetCounter = 0;
+
         while (_MoneyText.text != _targetMoneyCount.ToString())
         {
-            _MoneyText.text = (_currentMoneyCount += 1).ToString();
-            _getMoneyCountText.text = "+" + (_getMoneyCount -= 1).ToString();
+            if (offset > _getMoneyCount)
+                offset = _getMoneyCount;
+
+            _MoneyText.text = (_currentMoneyCount += offset).ToString();
+            _getMoneyCountText.text = "+" + (_getMoneyCount -= offset).ToString();
+            offsetCounter++;
+
+            if (offsetCounter >= 20)
+            {
+                offset++;
+                offsetCounter = 0;
+            }
             yield return null;
         }
 

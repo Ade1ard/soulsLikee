@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class BossArenaCont : MonoBehaviour
+public class BossArenaCont : MonoBehaviour, IRebootable
 {
     [Header("BossUI")]
     [SerializeField] private CanvasGroup _bossHealthBar;
@@ -23,11 +23,20 @@ public class BossArenaCont : MonoBehaviour
         _healthBarCoroutine = StartCoroutine(_uiFader.Fading(_bossHealthBar, false));
     }
 
+    public void Reboot()
+    {
+        if (_healthBarCoroutine != null)
+            StopCoroutine(_healthBarCoroutine);
+        _healthBarCoroutine = StartCoroutine(_uiFader.Fading(_bossHealthBar, false));
+
+        _fogCollider.ActivateCollider(false);
+    }
+
     private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject == _player)
         {
-            _fogCollider.ActivateCollider();
+            _fogCollider.ActivateCollider(true);
 
             if (_healthBarCoroutine != null)
                 StopCoroutine(_healthBarCoroutine);

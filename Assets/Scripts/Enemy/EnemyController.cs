@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using UnityEditor.Build;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -30,6 +31,7 @@ public class EnemyController : MonoBehaviour
     private float _attackDelay;
 
     private bool _inAggression = false;
+    private bool _inAttack = false;
     private float _timeLastAttack;
     private float _timeLastSeen;
     private Animator _animator;
@@ -130,19 +132,23 @@ public class EnemyController : MonoBehaviour
         if (Time.time - _timeLastAttack > _attackDelay)
         {
             _navMeshAgent.destination = _player.transform.position;
-            if(Vector3.Distance(transform.position, _player.transform.position) <= _navMeshAgent.stoppingDistance + 0.15f)
+
+            if (!_inAttack)
             {
-                _attackDelay = Random.Range(_lowRangeAttackDelay, _highRangeAttackDelay);
-                _timeLastAttack = Time.time;
-                _navMeshAgent.ResetPath();
-                _animator.SetFloat("Attack", Random.Range(0.1f, _AttacksAnimationCount + 1));
-                _animator.SetFloat("Speed", Mathf.Lerp(_animator.GetFloat("Speed"), 0, _changeAnimationsSpeed * Time.deltaTime));
-            }
-            else
-            {
-                _animator.SetFloat("Speed", Mathf.Lerp(_animator.GetFloat("Speed"), 2, _changeAnimationsSpeed * Time.deltaTime));
-                _navMeshAgent.destination = _player.transform.position;
-                _navMeshAgent.speed = _runToPlayerSpeed;
+                if (Vector3.Distance(transform.position, _player.transform.position) <= _navMeshAgent.stoppingDistance + 0.15f)
+                {
+                    _attackDelay = Random.Range(_lowRangeAttackDelay, _highRangeAttackDelay);
+                    _timeLastAttack = Time.time;
+                    _navMeshAgent.ResetPath();
+                    _animator.SetFloat("Attack", Random.Range(0.1f, _AttacksAnimationCount));
+                    _animator.SetFloat("Speed", Mathf.Lerp(_animator.GetFloat("Speed"), 0, _changeAnimationsSpeed * Time.deltaTime));
+                }
+                else
+                {
+                    _animator.SetFloat("Speed", Mathf.Lerp(_animator.GetFloat("Speed"), 2, _changeAnimationsSpeed * Time.deltaTime));
+                    _navMeshAgent.destination = _player.transform.position;
+                    _navMeshAgent.speed = _runToPlayerSpeed;
+                }
             }
         }
         else
@@ -210,7 +216,9 @@ public class EnemyController : MonoBehaviour
     private void StartAttack() //called by events in animations
     {
         _enemySword.StartAttack();
+        _inAttack = true;
         _animator.speed = 1.2f;
+        _navMeshAgent.speed = 1.5f;
         _audioSource.PlayOneShot(_swordSwingSounds[Random.Range(0, _swordSwingSounds.Count)]);
     }
 
@@ -220,10 +228,12 @@ public class EnemyController : MonoBehaviour
         _audioSource.PlayOneShot(_swordSwingSounds[Random.Range(0, _swordSwingSounds.Count)]);
     }
 
-    private void EndAttack() //called by events in animations
+    public void EndAttack() //called by events in animations
     {
         _enemySword.EndAttack();
+        _inAttack = false;
         _animator.speed = 1f;
+        _navMeshAgent.speed = _WalkSpeed;
     }
 
     public void PlayerNoticedAfterHit()

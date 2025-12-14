@@ -144,11 +144,14 @@ public class EnemyHealth : MonoBehaviour, ISaveable, IRebootable
             _value = Mathf.Clamp(_value, 0, _maxValue);
 
             _enemyController.PlayerNoticedAfterHit();
+            _enemyController.EndAttack();
 
             if (!_inHyperarmor)
             {
                 _animator.SetTrigger("Hit");
             }
+
+            StartHyperArmor();
 
             if (!CheckAlive())
             {
@@ -161,6 +164,7 @@ public class EnemyHealth : MonoBehaviour, ISaveable, IRebootable
 
     public void EnemyDeath(bool NeedDropLoot)
     {
+        _enemyController.EndAttack();
         _enemyController.enabled = false;
         _navMeshAgent.ResetPath();
         _animator.SetTrigger("Death");
