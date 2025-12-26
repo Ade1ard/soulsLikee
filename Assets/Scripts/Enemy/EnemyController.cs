@@ -41,6 +41,7 @@ public class EnemyController : MonoBehaviour
     private NavMeshAgent _navMeshAgent;
 
     private PlayerController _player;
+    private PlayerHealth _playerHealth;
     private bool _isPlayerNoticed;
 
     [Header("Objects for camera")]
@@ -51,17 +52,13 @@ public class EnemyController : MonoBehaviour
     public void Initialize(BootStrap bootStrap)
     {
         _player = bootStrap.Resolve<PlayerController>();
+        _playerHealth = bootStrap.Resolve<PlayerHealth>();
         _audioSource = bootStrap.ResolveAll<AudioSource>().FirstOrDefault(e => e.name == gameObject.name);
         _navMeshAgent = bootStrap.ResolveAll<NavMeshAgent>().FirstOrDefault(e => e.name == gameObject.name);
         _animator = bootStrap.ResolveAll<Animator>().FirstOrDefault(e => e.name == gameObject.name);
         _enemySword = GetComponentInChildren<EnemySword>();
 
         _enemySpine = _animator.GetBoneTransform(HumanBodyBones.Spine);
-    }
-
-    private void Start()
-    {
-        PickNewTarget();
     }
 
     void Update()
@@ -86,7 +83,7 @@ public class EnemyController : MonoBehaviour
             RaycastHit hit;
             if (Physics.Raycast(transform.position + Vector3.up, direction, out hit, _noticeDistance))
             {
-                if (hit.collider.gameObject == _player.gameObject)
+                if (hit.collider.gameObject == _player.gameObject && _playerHealth.CheckAlive())
                 {
                     _isPlayerNoticed = true;
                     _timeLastSeen = Time.time;
@@ -192,19 +189,15 @@ public class EnemyController : MonoBehaviour
     {
         _inAggression = false;
         _navMeshAgent.speed = _WalkSpeed;
-        _animator.SetFloat("Speed", Mathf.Lerp(_animator.GetFloat("Speed"), 1, _changeAnimationsSpeed * Time.deltaTime));
 
-        if (_navMeshAgent.remainingDistance <= _navMeshAgent.stoppingDistance)
-        {
-            PickNewTarget();
-        }
-    }
-
-    private void PickNewTarget()
-    {
         if (_targetPoints.Count != 0)
         {
-            _navMeshAgent.destination = _targetPoints[Random.Range(0, _targetPoints.Count)].position;
+            _animator.SetFloat("Speed", Mathf.Lerp(_animator.GetFloat("Speed"), 1, _changeAnimationsSpeed * Time.deltaTime));
+
+            if (_navMeshAgent.remainingDistance <= _navMeshAgent.stoppingDistance)
+            {
+                _navMeshAgent.destination = _targetPoints[Random.Range(0, _targetPoints.Count)].position;
+            }
         }
         else
         {

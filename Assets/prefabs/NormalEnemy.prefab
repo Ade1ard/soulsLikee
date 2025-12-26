@@ -5712,8 +5712,7 @@ MonoBehaviour:
   _maxMoneyDrop: 500
   _lootDropChanse: 0.05
   _lootDrobDelay: 5
-  _lootSouls: {fileID: 7511332836381665387, guid: 0c28a5231e356e34d981174612325560,
-    type: 3}
+  _thisIsBoss: 0
 --- !u!114 &9080341938645975321
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5814,7 +5813,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 0
-  m_Volume: 0.2
+  m_Volume: 0.55
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -5822,10 +5821,10 @@ AudioSource:
   SpatializePostEffects: 0
   Priority: 50
   DopplerLevel: 1
-  MinDistance: 0.1
-  MaxDistance: 500
+  MinDistance: 10
+  MaxDistance: 20
   Pan2D: 0
-  rolloffMode: 0
+  rolloffMode: 1
   BypassEffects: 0
   BypassListenerEffects: 0
   BypassReverbZones: 0
@@ -5858,7 +5857,7 @@ AudioSource:
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 0
+      value: 1
       inSlope: 0
       outSlope: 0
       tangentMode: 0

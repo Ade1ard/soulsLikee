@@ -721,7 +721,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2c1203a2e961bb34bafd1d46bbbb31a9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _cameraTransform: {fileID: 0}
 --- !u!1 &1509499936232659319
 GameObject:
   m_ObjectHideFlags: 0
@@ -8260,7 +8259,6 @@ MonoBehaviour:
   _lowRangeAttackDelay: 2
   _highRangeAttackDelay: 7
   _AttacksAnimationCount: 5
-  _enemySword: {fileID: 9585007730063058}
   _swordSwingSounds:
   - {fileID: 8300000, guid: 46bdd9ca88d498f49a8228c9bd3cc50a, type: 3}
   - {fileID: 8300000, guid: ce688dad37759714994f2f85381e0745, type: 3}
@@ -8283,14 +8281,11 @@ MonoBehaviour:
   _healthBarSpeed: 0.01
   _healthBarFadeSpeed: 1
   _barFadeDelay: 5
-  _animator: {fileID: 3792684881857558861}
-  _playerAnimator: {fileID: 0}
   _minMoneyDrop: 3000
   _maxMoneyDrop: 5000
   _lootDropChanse: 0.1
   _lootDrobDelay: 5
-  _lootSouls: {fileID: 7511332836381665387, guid: 0c28a5231e356e34d981174612325560,
-    type: 3}
+  _thisIsBoss: 0
 --- !u!114 &8487906690387355222
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8391,7 +8386,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 0
-  m_Volume: 0.2
+  m_Volume: 0.55
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -8399,10 +8394,10 @@ AudioSource:
   SpatializePostEffects: 0
   Priority: 50
   DopplerLevel: 1
-  MinDistance: 0.1
-  MaxDistance: 500
+  MinDistance: 10
+  MaxDistance: 20
   Pan2D: 0
-  rolloffMode: 0
+  rolloffMode: 1
   BypassEffects: 0
   BypassListenerEffects: 0
   BypassReverbZones: 0
@@ -8435,7 +8430,7 @@ AudioSource:
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 0
+      value: 1
       inSlope: 0
       outSlope: 0
       tangentMode: 0

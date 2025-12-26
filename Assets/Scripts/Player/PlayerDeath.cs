@@ -19,6 +19,9 @@ public class PlayerDeath : MonoBehaviour
     [Header("DeathDropPrefab")]
     [SerializeField] DeathDrop _deathDropPrefab;
 
+    [Header("Sound")]
+    [SerializeField] AudioClip _deathSound;
+
     private DeathDrop _deathDrop;
 
     private float _defaultVignetteIntensity;
@@ -34,6 +37,7 @@ public class PlayerDeath : MonoBehaviour
     private CameraModeChanger _cameraModeChanger;
     private BootStrap _bootStrap;
     private JsonSaveSystem _saveSystem;
+    private AudioSource _audioSource;
 
     private bool _canRevive = false;
 
@@ -49,6 +53,8 @@ public class PlayerDeath : MonoBehaviour
         _transitionBGCont = bootStrap.Resolve<TransitionBGCont>();
         _cameraModeChanger = bootStrap.Resolve<CameraModeChanger>();
         _saveSystem = bootStrap.Resolve<JsonSaveSystem>();
+
+        _audioSource = GetComponent<AudioSource>();
     }
 
     private void Start()
@@ -81,6 +87,8 @@ public class PlayerDeath : MonoBehaviour
         _playerController.enabled = false;
         _playerAnimator.SetTrigger("Death");
 
+        _audioSource.PlayOneShot(_deathSound);
+
         _uiFader.Fade(_gamePlayUI, false);
         StartCoroutine(ActivateDeathEffect());
     }
@@ -91,7 +99,7 @@ public class PlayerDeath : MonoBehaviour
 
         if (_deathDrop != null)
             Destroy(_deathDrop.gameObject);
-        _deathDrop =  Instantiate(_deathDropPrefab, transform.position, Quaternion.identity);
+        _deathDrop = Instantiate(_deathDropPrefab, transform.position, Quaternion.identity);
         _deathDrop.Initialize(_bootStrap);
 
         _playerAnimator.Rebind();

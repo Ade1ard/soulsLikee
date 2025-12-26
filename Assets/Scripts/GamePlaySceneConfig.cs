@@ -45,8 +45,6 @@ public class GamePlaySceneConfig : ISceneConfig
             disCont.Initialize(bootStrap);
         foreach (GateOpen gateOpen in bootStrap.ResolveAll<GateOpen>())
             gateOpen.Initialize(bootStrap);
-        foreach (SetColliderVFXBlood setColliderVFXBlood in bootStrap.ResolveAll<SetColliderVFXBlood>())
-            setColliderVFXBlood.Initialize(bootStrap);
         foreach (MessageTut messageTut in bootStrap.ResolveAll<MessageTut>())
             messageTut.Initialize(bootStrap);
 

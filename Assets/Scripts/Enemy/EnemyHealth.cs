@@ -244,15 +244,5 @@ public class EnemyHealth : MonoBehaviour, ISaveable, IRebootable
         _inHyperarmor = false;
     }
 
-    public bool CheckAlive()
-    {
-        if (_value <= 0)
-        {
-            return false;
-        }
-        else
-        {
-            return true;
-        }
-    }
+    public bool CheckAlive() {return _value > 0;}
 }

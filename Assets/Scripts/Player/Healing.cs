@@ -12,12 +12,15 @@ public class Healing : MonoBehaviour, ISaveable, IRebootable
     [SerializeField] private GameObject _healFlask;
     [SerializeField] private TextMeshProUGUI _FlaskCountText;
 
+    [SerializeField] private AudioClip _healSound;
+
     private float _healHPCount;
 
     private bool _isHealing = false;
 
     private Animator _animator;
     private PlayerHealth _health;
+    private AudioSource _audioSource;
 
     public void Initialize(BootStrap bootStrap)
     {
@@ -25,6 +28,8 @@ public class Healing : MonoBehaviour, ISaveable, IRebootable
         _health = bootStrap.Resolve<PlayerHealth>();
         _FlaskCountText.text = _FlaskCount.ToString();
         _maxFlaskCount = _FlaskCount;
+
+        _audioSource = GetComponent<AudioSource>();
     }
 
     public void SaveTo(GameData gameData)
@@ -62,6 +67,7 @@ public class Healing : MonoBehaviour, ISaveable, IRebootable
     {
         if (_FlaskCount > 0)
         {
+            _audioSource.PlayOneShot(_healSound);
             _health.AddHealt(_healHPCount);
             _FlaskCount -= 1;
             _FlaskCountText.text = _FlaskCount.ToString();

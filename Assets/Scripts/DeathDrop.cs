@@ -19,10 +19,7 @@ public class DeathDrop : MonoBehaviour
         _moneyCont = bootStrap.Resolve<MoneyCont>();
         _playerController = bootStrap.Resolve<PlayerController>();
         _playerDeath = bootStrap.Resolve<PlayerDeath>();
-    }
 
-    private void Start()
-    {
         _dropedMoneyAmount = _moneyCont._targetMoneyCount;
         _moneyCont.SpentMoney(_dropedMoneyAmount);
     }
