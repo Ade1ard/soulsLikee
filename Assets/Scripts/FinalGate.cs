@@ -9,6 +9,8 @@ public class FinalGate : GateOpen
 
     [Header("Game Final Settings")]
     [SerializeField] private CanvasGroup _gamePlayUI;
+    [SerializeField] private RectTransform _finalFlash;
+    [SerializeField] private CanvasGroup _finalText;
 
     public override void Initialize(BootStrap bootStrap)
     {
@@ -16,6 +18,11 @@ public class FinalGate : GateOpen
 
         _uiFader = bootStrap.Resolve<UIFader>();
         _bgCont = bootStrap.Resolve<TransitionBGCont>();
+    }
+
+    private void Start()
+    {
+        _uiFader.Fade(_finalText, false, 50);
     }
 
     public override void OpenGate()
@@ -28,8 +35,24 @@ public class FinalGate : GateOpen
     private IEnumerator FinalEffects()
     {
         _uiFader.Fade(_gamePlayUI, false);
+
+        yield return new WaitForSeconds(1f);
+        StartCoroutine(FinalFlash());
+
         yield return new WaitForSeconds(1.5f);
         _bgCont.Dissolve(true, 0.015f, 0.0050f);
+
+        yield return new WaitForSeconds(3.2f);
+        _uiFader.Fade(_finalText, true, 2);
+    }
+
+    private IEnumerator FinalFlash()
+    {
+        while (_finalFlash.lossyScale.x <= 30)
+        {
+            _finalFlash.localScale = new Vector3(_finalFlash.lossyScale.x + 0.07f, _finalFlash.lossyScale.y + 0.07f, _finalFlash.lossyScale.z + 0.07f);
+            yield return null;
+        }
     }
 
     public override void OnTriggerEnter(Collider other)
