@@ -12,25 +12,29 @@ public class TransitionBGCont : MonoBehaviour
 
     private void Start()
     {
-        _coroutine = StartCoroutine(Dissolving(false));
+        Dissolve(false);
     }
 
-    public Coroutine Dissolve(bool active)
+    public Coroutine Dissolve(bool active, float ? dissolveDelay = null, float ? dissolveRate = null)
     {
+        float actualDissolveRate = dissolveRate ?? _dissolveRate;
+        float actualDissolveDelay = dissolveDelay ?? _dissolveDelay;
+
+
         if (_coroutine != null)
             StopCoroutine(_coroutine);
-        return _coroutine = StartCoroutine(Dissolving(active));
+        return _coroutine = StartCoroutine(Dissolving(active, actualDissolveRate, actualDissolveDelay));
     }
 
-    private IEnumerator Dissolving(bool active)
+    private IEnumerator Dissolving(bool active, float dissolveRate, float dissolveDelay)
     {
         float target = active? 0 : 1;
 
         while (_material.GetFloat("_DissolveAmount") != target)
         {
-            _material.SetFloat("_DissolveAmount", Mathf.MoveTowards(_material.GetFloat("_DissolveAmount"), target, _dissolveRate));
+            _material.SetFloat("_DissolveAmount", Mathf.MoveTowards(_material.GetFloat("_DissolveAmount"), target, dissolveRate));
 
-            yield return new WaitForSeconds(_dissolveDelay);
+            yield return new WaitForSeconds(dissolveDelay);
         }
     }
 }

@@ -350,6 +350,7 @@ GameObject:
   - component: {fileID: 7104102298913897791}
   - component: {fileID: 2106074533057065782}
   - component: {fileID: 5306711629943374738}
+  - component: {fileID: 7261461987662478419}
   m_Layer: 0
   m_Name: EnemyHealth
   m_TagString: Untagged
@@ -415,6 +416,18 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!225 &7261461987662478419
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5896141939860687217}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 0
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &7265291669396650159
 GameObject:
   m_ObjectHideFlags: 0
@@ -5846,8 +5859,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 52de7f0d91bcdae468f038958ca23347, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _HealthValue: {fileID: 7621888416615647433}
-  _HealthBar: {fileID: 5306711629943374738}
+  _healthValue: {fileID: 7621888416615647433}
+  _healthBar: {fileID: 7261461987662478419}
   _maxValue: 100
   _healthBarSpeed: 0.01
   _healthBarFadeSpeed: 1

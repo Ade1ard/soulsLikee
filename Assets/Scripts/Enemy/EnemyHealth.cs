@@ -8,8 +8,8 @@ using Unity.Mathematics;
 public class EnemyHealth : MonoBehaviour, ISaveable, IRebootable
 {
     [Header("UI")]
-    [SerializeField] private Image _HealthValue;
-    [SerializeField] private Image _HealthBar;
+    [SerializeField] private Image _healthValue;
+    [SerializeField] private CanvasGroup _healthBar;
     [SerializeField] private float _maxValue;
     private float _value;
 
@@ -33,6 +33,9 @@ public class EnemyHealth : MonoBehaviour, ISaveable, IRebootable
     private CapsuleCollider _capsuleCollider;
     private LootSpawner _lootSpawner;
     private CameraModeChanger _cameraModeChanger;
+    private UIFader _uiFader;
+
+    private BossArenaCont _bossArenaCont;
 
     private NavMeshAgent _navMeshAgent;
 
@@ -52,10 +55,14 @@ public class EnemyHealth : MonoBehaviour, ISaveable, IRebootable
         _lootSpawner = bootStrap.Resolve<LootSpawner>();
         _capsuleCollider = GetComponent<CapsuleCollider>();
         _cameraModeChanger = bootStrap.Resolve<CameraModeChanger>();
+        _uiFader = bootStrap.Resolve<UIFader>();
         _dissolveController = bootStrap.ResolveAll<DissolveController>().FirstOrDefault(e => e.name == gameObject.name);
         _navMeshAgent = bootStrap.ResolveAll<NavMeshAgent>().FirstOrDefault(e => e.name == gameObject.name);
         _enemyController = bootStrap.ResolveAll<EnemyController>().FirstOrDefault(e => e.name == gameObject.name);
         _animator = bootStrap.ResolveAll<Animator>().FirstOrDefault(e => e.name == gameObject.name);
+
+        if (_thisIsBoss)
+            _bossArenaCont = bootStrap.Resolve<BossArenaCont>();
 
         _value = _maxValue;
         _startPositon = transform.position;
@@ -67,8 +74,7 @@ public class EnemyHealth : MonoBehaviour, ISaveable, IRebootable
         StartDrawBarCorutine();
         if (!_thisIsBoss)
         {
-            _HealthBar.color = new Color(_HealthBar.color.r, _HealthBar.color.g, _HealthBar.color.b, 0);
-            _HealthValue.color = new Color(_HealthValue.color.r, _HealthValue.color.g, _HealthValue.color.g, 0);
+            SetBarVisible(false);
         }
     }
 
@@ -177,6 +183,9 @@ public class EnemyHealth : MonoBehaviour, ISaveable, IRebootable
 
         if (NeedDropLoot && !_thisIsBoss)
             Invoke("DropLoot", _lootDrobDelay);
+
+        if (_thisIsBoss)
+            _bossArenaCont.BossIsDead();
     }
 
     private void DropLoot()
@@ -201,9 +210,9 @@ public class EnemyHealth : MonoBehaviour, ISaveable, IRebootable
 
     private IEnumerator DrawHealtBar()
     {
-        while (_HealthValue.fillAmount != (_value / _maxValue))
+        while (_healthValue.fillAmount != (_value / _maxValue))
         {
-            _HealthValue.fillAmount = Mathf.MoveTowards(_HealthValue.fillAmount, _value / _maxValue, _healthBarSpeed);
+            _healthValue.fillAmount = Mathf.MoveTowards(_healthValue.fillAmount, _value / _maxValue, _healthBarSpeed);
             yield return null;
         }
         _drawHealthBarCorutine = null;
@@ -218,20 +227,8 @@ public class EnemyHealth : MonoBehaviour, ISaveable, IRebootable
             {
                 StopCoroutine(_VisibleHealthBarCorutine);
             }
-            _VisibleHealthBarCorutine = StartCoroutine(BarVisible(_bool ? 1:0));
+            _VisibleHealthBarCorutine = StartCoroutine(_uiFader.Fading(_healthBar, _bool));
         }
-    }
-
-    private IEnumerator BarVisible(float amount)
-    {
-        while (_HealthBar.color.a != amount)
-        {
-            float newAlpha = Mathf.MoveTowards(_HealthBar.color.a, amount, _healthBarFadeSpeed * Time.deltaTime);
-            _HealthBar.color = new Color(_HealthBar.color.r, _HealthBar.color.g, _HealthBar.color.b, newAlpha);
-            _HealthValue.color = new Color(_HealthValue.color.r, _HealthValue.color.g, _HealthValue.color.g, newAlpha);
-            yield return null;
-        }
-        _VisibleHealthBarCorutine = null;
     }
 
     private void StartHyperArmor() //called by events in animations

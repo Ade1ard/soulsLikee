@@ -32,7 +32,8 @@ public class PlayerSword : MonoBehaviour
         {
             if (enemyHealth.CheckAlive())
             {
-                enemyHealth.TakeDamage(_damage);
+                //enemyHealth.TakeDamage(_damage);
+                enemyHealth.TakeDamage(700);
 
                 var ContactPoint = other.ClosestPoint(transform.position);
                 _Blood.SpawnVFXBlood(ContactPoint, transform.position);

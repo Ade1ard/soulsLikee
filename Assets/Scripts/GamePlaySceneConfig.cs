@@ -45,6 +45,7 @@ public class GamePlaySceneConfig : ISceneConfig
             disCont.Initialize(bootStrap);
         foreach (GateOpen gateOpen in bootStrap.ResolveAll<GateOpen>())
             gateOpen.Initialize(bootStrap);
+        bootStrap.Resolve<FinalGate>().Initialize(bootStrap);
         foreach (MessageTut messageTut in bootStrap.ResolveAll<MessageTut>())
             messageTut.Initialize(bootStrap);
 

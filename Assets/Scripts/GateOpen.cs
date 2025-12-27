@@ -14,7 +14,7 @@ public class GateOpen : MonoBehaviour, ISaveable
     private bool _nearGate = false;
     private bool _isGateOpened = false;
     
-    public void Initialize(BootStrap bootStrap)
+    public virtual void Initialize(BootStrap bootStrap)
     {
         _tutorialClueCont = bootStrap.Resolve<TutorialClueCont>();
         _player = bootStrap.Resolve<PlayerController>().gameObject;
@@ -56,7 +56,7 @@ public class GateOpen : MonoBehaviour, ISaveable
         }
     }
 
-    public void OpenGate()
+    public virtual void OpenGate()
     {
         _gateDoor1.GetComponent<Animator>().SetTrigger("Open");
         _gateDoor2.GetComponent<Animator>().SetTrigger("Open");
@@ -66,7 +66,7 @@ public class GateOpen : MonoBehaviour, ISaveable
         _isGateOpened = true;
     }
 
-    private void OnTriggerEnter(Collider other)
+    public virtual void OnTriggerEnter(Collider other)
     {
         if (other.gameObject == _player && !_isGateOpened)
         {
