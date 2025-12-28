@@ -45,7 +45,7 @@ public class GateOpen : MonoBehaviour, ISaveable
         }
     }
 
-    private void Update()
+    protected virtual void Update()
     {
         if (_nearGate)
         {
@@ -56,7 +56,7 @@ public class GateOpen : MonoBehaviour, ISaveable
         }
     }
 
-    public virtual void OpenGate()
+    protected virtual void OpenGate()
     {
         _gateDoor1.GetComponent<Animator>().SetTrigger("Open");
         _gateDoor2.GetComponent<Animator>().SetTrigger("Open");
@@ -66,7 +66,7 @@ public class GateOpen : MonoBehaviour, ISaveable
         _isGateOpened = true;
     }
 
-    public virtual void OnTriggerEnter(Collider other)
+    protected virtual void OnTriggerEnter(Collider other)
     {
         if (other.gameObject == _player && !_isGateOpened)
         {

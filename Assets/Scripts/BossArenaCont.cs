@@ -12,6 +12,8 @@ public class BossArenaCont : MonoBehaviour, IRebootable
 
     private Coroutine _healthBarCoroutine;
 
+    private bool _bossIsDead;
+
     public void Initialize(BootStrap bootStrap)
     {
         _fogCollider = bootStrap.Resolve<FogCollider>();
@@ -28,6 +30,7 @@ public class BossArenaCont : MonoBehaviour, IRebootable
     public void BossIsDead()
     {
         _gate.BossIsDead();
+        _bossIsDead = true;
     }
 
     public void Reboot()
@@ -41,7 +44,7 @@ public class BossArenaCont : MonoBehaviour, IRebootable
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject == _player)
+        if (other.gameObject == _player && !_bossIsDead)
         {
             _fogCollider.ActivateCollider(true);
 

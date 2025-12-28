@@ -6,9 +6,11 @@ using UnityEngine.Rendering.Universal;
 
 public class PlayerDeath : MonoBehaviour
 {
-    [SerializeField] CanvasGroup _gameOverUI;
-    [SerializeField] CanvasGroup _gamePlayUI;
-    [SerializeField] Volume _globalVolume;
+    [SerializeField] private CanvasGroup _gameOverUI;
+    [SerializeField] private CanvasGroup _gamePlayUI;
+    [SerializeField] private CanvasGroup _pressAnyKey;
+    [SerializeField] private CanvasGroup _bossHealthBar;
+    [SerializeField] private Volume _globalVolume;
     private Vignette _vignette;
 
     [Header("Parameters")]
@@ -38,6 +40,8 @@ public class PlayerDeath : MonoBehaviour
     private BootStrap _bootStrap;
     private JsonSaveSystem _saveSystem;
     private AudioSource _audioSource;
+
+    private Coroutine _anyKeyCoroutine;
 
     private bool _canRevive = false;
 
@@ -72,6 +76,7 @@ public class PlayerDeath : MonoBehaviour
             if (Input.anyKeyDown)
             {
                 _canRevive = false;
+                AnyKeyActive(false);
                 StartCoroutine(Reviving());
             }
         }
@@ -79,6 +84,7 @@ public class PlayerDeath : MonoBehaviour
 
     public void Death()
     {
+        _uiFader.Fade(_bossHealthBar, false);
         _escMenu.InOtherMenu(true);
         _cameraModeChanger.SetCanChangeMode(false);
         if (_cameraModeChanger.IsLoocked())
@@ -139,6 +145,7 @@ public class PlayerDeath : MonoBehaviour
         }
 
         yield return new WaitWhile(() => _gameOverUI.alpha != 1);
+        AnyKeyActive(true);
         _canRevive = true;
     }
 
@@ -147,6 +154,13 @@ public class PlayerDeath : MonoBehaviour
         yield return _transitionBGCont.Dissolve(true);
         Revive();
         yield return _transitionBGCont.Dissolve(false);
+    }
+
+    private void AnyKeyActive(bool active)
+    {
+        if (_anyKeyCoroutine != null)
+            StopCoroutine(_anyKeyCoroutine);
+        _anyKeyCoroutine = StartCoroutine(_uiFader.Fading(_pressAnyKey, active));
     }
 
     public void ClearDeathDrop() { _deathDrop = null; }
