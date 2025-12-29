@@ -68,6 +68,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a2ca6244dfe40524199e93a612581cee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _lootType: 0
+  _itemCollectSound: {fileID: 8300000, guid: ded93f913609f264ebade32acbf5d21c, type: 3}
+  _moneyCount: 10000
   _TutCluetextString: Press F to collect
 --- !u!54 &105708002721282070
 Rigidbody:

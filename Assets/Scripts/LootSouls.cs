@@ -4,6 +4,7 @@ using UnityEngine;
 public class LootSouls : MonoBehaviour, ISaveable
 {
     [SerializeField] private LootType _lootType;
+    [SerializeField] private AudioClip _itemCollectSound;
 
     [SerializeField]
     [Tooltip("Money count")]
@@ -20,12 +21,15 @@ public class LootSouls : MonoBehaviour, ISaveable
     private TutorialClueCont _tutClueCont;
     private MoneyCont _moneyCont;
     private PlayerController _playerController;
+    private AudioSource _audioSource;
 
     public void Initialize(BootStrap bootStrap)
     {
         _tutClueCont = bootStrap.Resolve<TutorialClueCont>();
         _moneyCont = bootStrap.Resolve<MoneyCont>();
         _playerController = bootStrap.Resolve<PlayerController>();
+
+        _audioSource = bootStrap.ResolveAll<AudioSource>().FirstOrDefault(e => e.name == "Player");
     }
 
     public void SaveTo(GameData gameData)
@@ -73,6 +77,8 @@ public class LootSouls : MonoBehaviour, ISaveable
                         _moneyCont.GetMoney(_moneyCount);
                         break;
                 }
+
+                _audioSource.PlayOneShot(_itemCollectSound);
                 _tutClueCont.TutorialGetUnvisible();
                 _isCollected = true;
                 gameObject.SetActive(false);
