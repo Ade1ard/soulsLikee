@@ -9,6 +9,7 @@ public class BossArenaCont : MonoBehaviour, IRebootable
     private GameObject _player;
     private UIFader _uiFader;
     private FinalGate _gate;
+    private MusicCont _musicCont;
 
     private Coroutine _healthBarCoroutine;
 
@@ -20,6 +21,7 @@ public class BossArenaCont : MonoBehaviour, IRebootable
         _player = bootStrap.Resolve<PlayerController>().gameObject;
         _uiFader = bootStrap.Resolve<UIFader>();
         _gate = bootStrap.Resolve<FinalGate>();
+        _musicCont = bootStrap.Resolve<MusicCont>();
     }
 
     private void Start()
@@ -31,6 +33,7 @@ public class BossArenaCont : MonoBehaviour, IRebootable
     {
         _gate.BossIsDead();
         _bossIsDead = true;
+        _musicCont.ChangeCurrentSoundtrec(_musicCont._standartSoundtrec);
     }
 
     public void Reboot()
@@ -51,6 +54,8 @@ public class BossArenaCont : MonoBehaviour, IRebootable
             if (_healthBarCoroutine != null)
                 StopCoroutine(_healthBarCoroutine);
             _healthBarCoroutine = StartCoroutine(_uiFader.Fading(_bossHealthBar, true));
+
+            _musicCont.ChangeCurrentSoundtrec(_musicCont._bossFigthSoundtrec);
         }
     }
 }

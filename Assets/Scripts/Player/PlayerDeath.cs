@@ -40,6 +40,7 @@ public class PlayerDeath : MonoBehaviour
     private BootStrap _bootStrap;
     private JsonSaveSystem _saveSystem;
     private AudioSource _audioSource;
+    private MusicCont _musicCont;
 
     private Coroutine _anyKeyCoroutine;
 
@@ -57,6 +58,7 @@ public class PlayerDeath : MonoBehaviour
         _transitionBGCont = bootStrap.Resolve<TransitionBGCont>();
         _cameraModeChanger = bootStrap.Resolve<CameraModeChanger>();
         _saveSystem = bootStrap.Resolve<JsonSaveSystem>();
+        _musicCont = bootStrap.Resolve<MusicCont>();
 
         _audioSource = GetComponent<AudioSource>();
     }
@@ -94,6 +96,7 @@ public class PlayerDeath : MonoBehaviour
         _playerAnimator.SetTrigger("Death");
 
         _audioSource.PlayOneShot(_deathSound);
+        _musicCont.ChangeCurrentSoundtrec(_musicCont._standartSoundtrec);
 
         _uiFader.Fade(_gamePlayUI, false);
         StartCoroutine(ActivateDeathEffect());
