@@ -10,6 +10,7 @@ public class MainMenu : MonoBehaviour, IMenu
     private MenuesController _menuesController;
     private SavesManager _savesManager;
     private TransitionBGCont _transitionBGCont;
+    private MusicCont _musicCont;
 
     private Coroutine _setActiveCoroutine;
     private Coroutine _gamePlayLoadingCoroutine;
@@ -20,6 +21,7 @@ public class MainMenu : MonoBehaviour, IMenu
         _menuesController = bootStrap.Resolve<MenuesController>();
         _savesManager = bootStrap.Resolve<SavesManager>();
         _transitionBGCont = bootStrap.Resolve<TransitionBGCont>();
+        _musicCont = bootStrap.Resolve<MusicCont>();
     }
 
     public void Play()
@@ -66,7 +68,11 @@ public class MainMenu : MonoBehaviour, IMenu
 
     private IEnumerator GamePlayLoading()
     {
-        yield return _transitionBGCont.Dissolve(true);
+        Coroutine coroutine1 = _transitionBGCont.Dissolve(true);
+        Coroutine coroutine2 = StartCoroutine(_musicCont.FadeCurrentSoundtrec());
+
+        yield return coroutine1;
+        yield return coroutine2;
 
         _gamePlayLoadingCoroutine = null;
         SceneManager.LoadScene(1);

@@ -11,7 +11,8 @@ public class MusicCont : MonoBehaviour
     public AudioClip _standartSoundtrec;
 
     private AudioSource _audioSource;
-    private Coroutine _coroutine;
+    private Coroutine _FadeCoroutine;
+    private Coroutine _IncreaseCoroutine;
 
     private void Start()
     {
@@ -20,25 +21,35 @@ public class MusicCont : MonoBehaviour
 
     public void ChangeCurrentSoundtrec(AudioClip clip)
     {
-        if (_coroutine != null)
-            StopCoroutine(_coroutine);
-        _coroutine = StartCoroutine(ChangingCurrentSoundtrec(clip));
+        if (_FadeCoroutine != null)
+            StopCoroutine(_FadeCoroutine);
+        _FadeCoroutine = StartCoroutine(FadeCurrentSoundtrec());
+
+        _audioSource.clip = clip;
+        _audioSource.Play();
+
+        if (_IncreaseCoroutine != null)
+            StopCoroutine(_IncreaseCoroutine);
+        _IncreaseCoroutine = StartCoroutine(IncreaseCurrentSoundtrec());
     }
 
-    private IEnumerator ChangingCurrentSoundtrec(AudioClip clip)
+    public IEnumerator FadeCurrentSoundtrec()
     {
         while (_audioSource.volume > 0)
         {
-            _audioSource.volume = Mathf.MoveTowards(_audioSource.volume, 0, 0.4f * Time.deltaTime);
+            _audioSource.volume = Mathf.MoveTowards(_audioSource.volume, 0, 0.3f * Time.deltaTime);
             yield return null;
         }
-        _audioSource.clip = clip;
-        _audioSource.Play();
+        _FadeCoroutine = null;
+    }
+
+    public IEnumerator IncreaseCurrentSoundtrec()
+    {
         while (_audioSource.volume < _targetVolume)
         {
-            _audioSource.volume = Mathf.MoveTowards(_audioSource.volume, _targetVolume, 0.4f * Time.deltaTime);
+            _audioSource.volume = Mathf.MoveTowards(_audioSource.volume, _targetVolume, 0.3f * Time.deltaTime);
             yield return null;
         }
-        _coroutine = null;
+        _IncreaseCoroutine = null;
     }
 }

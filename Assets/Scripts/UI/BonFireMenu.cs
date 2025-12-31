@@ -10,6 +10,7 @@ public class BonFireMenu : MonoBehaviour, IMenu
     private MenuesController _menuesController;
     private JsonSaveSystem _saveSystem;
     private TransitionBGCont _transitionBGCont;
+    private MusicCont _musicCont;
 
     private Coroutine _SetActiveCoroutine;
     private Coroutine _MainMenuLoadingCoroutine;
@@ -20,6 +21,7 @@ public class BonFireMenu : MonoBehaviour, IMenu
         _menuesController = bootStrap.Resolve<MenuesController>();
         _saveSystem = bootStrap.Resolve<JsonSaveSystem>();
         _transitionBGCont = bootStrap.Resolve<TransitionBGCont>();
+        _musicCont = bootStrap.Resolve<MusicCont>();
     }
 
     public void SetActive(bool _bool)
@@ -50,7 +52,11 @@ public class BonFireMenu : MonoBehaviour, IMenu
 
     private IEnumerator LoadingMainMenu()
     {
-        yield return _transitionBGCont.Dissolve(true);
+        Coroutine coroutine1 = _transitionBGCont.Dissolve(true);
+        Coroutine coroutine2 = StartCoroutine(_musicCont.FadeCurrentSoundtrec());
+
+        yield return coroutine1;
+        yield return coroutine2;
 
         _menuesController.CloseMenu(true);
         _menuesController.CloseMenu(true);

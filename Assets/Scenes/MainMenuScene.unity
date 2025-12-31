@@ -4582,8 +4582,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7ab6f30c313998e4cb47a203156e0998, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _targetVolume: 0.5
-  _bossFigthSoundtrec: {fileID: 8300000, guid: ac0f2753b585ae645824c00ccda0d5fb, type: 3}
+  _targetVolume: 0.45
+  _bossFigthSoundtrec: {fileID: 8300000, guid: 39c8ae9c9a70eea48b6913651cc67b47, type: 3}
   _standartSoundtrec: {fileID: 8300000, guid: 5c9f4e45f106ea949bd395d35c09fdfb, type: 3}
 --- !u!82 &1857479296
 AudioSource:
@@ -4597,7 +4597,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: 5c9f4e45f106ea949bd395d35c09fdfb, type: 3}
   m_PlayOnAwake: 1
-  m_Volume: 0.5
+  m_Volume: 0.45
   m_Pitch: 1
   Loop: 1
   Mute: 0
