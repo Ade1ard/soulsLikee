@@ -22,6 +22,8 @@ public class BonFireMenu : MonoBehaviour, IMenu
         _saveSystem = bootStrap.Resolve<JsonSaveSystem>();
         _transitionBGCont = bootStrap.Resolve<TransitionBGCont>();
         _musicCont = bootStrap.Resolve<MusicCont>();
+
+        _uiFader.Fade(BonFireMenuUI, false, 50);
     }
 
     public void SetActive(bool _bool)

@@ -17,6 +17,7 @@ public class GamePlaySceneConfig : ISceneConfig
 
         foreach (BonFireCont bonFire in bootStrap.ResolveAll<BonFireCont>())
             bonFire.Initialize(bootStrap);
+
         bootStrap.Resolve<BonFireMenu>().Initialize(bootStrap);
 
         bootStrap.Resolve<EscapeMenu>().Initialize(bootStrap);
@@ -29,23 +30,34 @@ public class GamePlaySceneConfig : ISceneConfig
 
         bootStrap.Resolve<MessageUI>().Initialize(bootStrap);
 
+        foreach (ButtonSounds buttonSounds in bootStrap.ResolveAll<ButtonSounds>())
+            buttonSounds.Initialize(bootStrap);
+
         bootStrap.Resolve<BossArenaCont>().Initialize(bootStrap);
 
         foreach (LootSouls lootSouls in bootStrap.ResolveAll<LootSouls>())
             lootSouls.Initialize(bootStrap);
+
         foreach (EnemyController enemy in bootStrap.ResolveAll<EnemyController>())
             enemy.Initialize(bootStrap);
+
         foreach (EnemyCanvasLookAtCamera enemyCanvas in bootStrap.ResolveAll<EnemyCanvasLookAtCamera>())
             enemyCanvas.Initialize(bootStrap);
+
         foreach (EnemyHealth enemyHealth in bootStrap.ResolveAll<EnemyHealth>())
             enemyHealth.Initialize(bootStrap);
+
         foreach (EnemySword enemySword in bootStrap.ResolveAll<EnemySword>())
             enemySword.Initialize(bootStrap);
+
         foreach (DissolveController disCont in bootStrap.ResolveAll<DissolveController>())
             disCont.Initialize(bootStrap);
+
         foreach (GateOpen gateOpen in bootStrap.ResolveAll<GateOpen>())
             gateOpen.Initialize(bootStrap);
+
         bootStrap.Resolve<FinalGate>().Initialize(bootStrap);
+
         foreach (MessageTut messageTut in bootStrap.ResolveAll<MessageTut>())
             messageTut.Initialize(bootStrap);
 

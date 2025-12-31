@@ -11,6 +11,8 @@ public class NewGameMenu : MonoBehaviour, IMenu
     {
         _uifader = bootStrap.Resolve<UIFader>();
         _menuesController = bootStrap.Resolve<MenuesController>();
+
+        _uifader.Fade(_newGameMenuUI, false, 50);
     }
 
     public void CloseMenu()

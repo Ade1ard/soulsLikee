@@ -19,6 +19,8 @@ public class EscapeMenu : MonoBehaviour, IMenu
         _uiFader = bootStrap.Resolve<UIFader>();
         _menuesController = bootStrap.Resolve<MenuesController>();
         _playerController = bootStrap.Resolve<PlayerController>();
+
+        _uiFader.Fade(_EscMenuUI, false, 50);
     }
 
     void Update()

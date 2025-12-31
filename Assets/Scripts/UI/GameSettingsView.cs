@@ -37,6 +37,8 @@ public class GameSettingsView : MonoBehaviour, IMenu
         _gameSettings = bootStrap.Resolve<GameSettings>();
         _uiFader = bootStrap.Resolve<UIFader>();
         _menuesController = bootStrap.Resolve<MenuesController>();
+
+        _uiFader.Fade(_gameSettingsUI, false, 50);
     }
 
     void Start()

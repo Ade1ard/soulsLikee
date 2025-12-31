@@ -65,6 +65,8 @@ public class LevelUpCont : MonoBehaviour, ISaveable, IMenu
         _willBeHealth = _currentMaxHealth;
         _willBeDamage = _currentDamage;
         _willBeFlaskEfficiency = _currentFlaskEfficiency;
+
+        _uiFader.Fade(_levelUpUI, false, 50);
     }
 
     private void Start()

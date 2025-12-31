@@ -9,6 +9,9 @@ public class MainMenuSceneConfig : ISceneConfig
         bootStrap.Resolve<NewGameMenu>().Initialize(bootStrap);
         bootStrap.Resolve<SavesManager>().Initialize(bootStrap);
 
+        foreach (ButtonSounds buttonSounds in bootStrap.ResolveAll<ButtonSounds>())
+            buttonSounds.Initialize(bootStrap);
+
         bootStrap.Resolve<JsonSaveSystem>().Initialize(bootStrap);
     }
 }
