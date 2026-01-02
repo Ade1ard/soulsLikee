@@ -67,8 +67,6 @@ public class MusicCont : MonoBehaviour
         }
 
         WaitForEnd();
-
-        Debug.Log("soundtrac changed");
     }
 
     public IEnumerator FadeCurrentSoundtrac()

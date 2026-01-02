@@ -54,7 +54,7 @@ public class GameSettings : ISaveable
         _view = bootStrap.Resolve<GameSettingsView>();
         _transposer = bootStrap.Resolve<CinemachineFramingTransposer>();
         _freeLookCamera = bootStrap.Resolve<CinemachineFreeLook>();
-        _playerCanvas = bootStrap.ResolveAll<CanvasScaler>().FirstOrDefault(e => e.name == "Canvas");
+        _playerCanvas = bootStrap.ResolveAll<CanvasScaler>().FirstOrDefault(e => e.name == "CanvasPlayer");
     }
     
     public void InitializeForMainMenuScene(BootStrap bootStrap)
