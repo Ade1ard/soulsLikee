@@ -33,7 +33,8 @@ public class BossArenaCont : MonoBehaviour, IRebootable
     {
         _gate.BossIsDead();
         _bossIsDead = true;
-        _musicCont.ChangeCurrentSoundtrec(_musicCont._standartSoundtrec);
+        _musicCont.ChangeCurrentSoundtrac(_musicCont._standartSoundtrac[Random.Range(0, _musicCont._standartSoundtrac.Count)]);
+        _musicCont._inBossFight = false;
     }
 
     public void Reboot()
@@ -55,7 +56,8 @@ public class BossArenaCont : MonoBehaviour, IRebootable
                 StopCoroutine(_healthBarCoroutine);
             _healthBarCoroutine = StartCoroutine(_uiFader.Fading(_bossHealthBar, true));
 
-            _musicCont.ChangeCurrentSoundtrec(_musicCont._bossFigthSoundtrec);
+            _musicCont.ChangeCurrentSoundtrac(_musicCont._bossFigthSoundtrac);
+            _musicCont._inBossFight = true;
         }
     }
 }

@@ -96,7 +96,8 @@ public class PlayerDeath : MonoBehaviour
         _playerAnimator.SetTrigger("Death");
 
         _audioSource.PlayOneShot(_deathSound);
-        _musicCont.ChangeCurrentSoundtrec(_musicCont._standartSoundtrec);
+        _musicCont.ChangeCurrentSoundtrac(_musicCont._standartSoundtrac[Random.Range(0, _musicCont._standartSoundtrac.Count)]);
+        _musicCont._inBossFight = false;
 
         _uiFader.Fade(_gamePlayUI, false);
         StartCoroutine(ActivateDeathEffect());

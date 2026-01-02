@@ -55,7 +55,7 @@ public class BonFireMenu : MonoBehaviour, IMenu
     private IEnumerator LoadingMainMenu()
     {
         Coroutine coroutine1 = _transitionBGCont.Dissolve(true);
-        Coroutine coroutine2 = StartCoroutine(_musicCont.FadeCurrentSoundtrec());
+        Coroutine coroutine2 = StartCoroutine(_musicCont.FadeCurrentSoundtrac());
 
         yield return coroutine1;
         yield return coroutine2;

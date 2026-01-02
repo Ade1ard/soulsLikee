@@ -38,6 +38,15 @@ public class MainMenu : MonoBehaviour, IMenu
         Play();
     }
 
+    public void Exit()
+    {
+        #if UNITY_EDITOR
+            UnityEditor.EditorApplication.isPlaying = false;
+        #else
+            Application.Quit();
+        #endif
+    }
+
     void Update()
     {
         if (Input.GetKeyUp(KeyCode.Tab) || Input.GetKeyUp(KeyCode.Escape))
@@ -69,7 +78,7 @@ public class MainMenu : MonoBehaviour, IMenu
     private IEnumerator GamePlayLoading()
     {
         Coroutine coroutine1 = _transitionBGCont.Dissolve(true);
-        Coroutine coroutine2 = StartCoroutine(_musicCont.FadeCurrentSoundtrec());
+        Coroutine coroutine2 = StartCoroutine(_musicCont.FadeCurrentSoundtrac());
 
         yield return coroutine1;
         yield return coroutine2;
