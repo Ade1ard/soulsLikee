@@ -12,7 +12,7 @@ public class GameSettings : ISaveable
 
     private float _UISize = 2f;
 
-    private float _freeLookCameraSpeedOffset_X = 1000f;
+    private float _freeLookCameraSpeedOffset_X = 900f;
     private float _freeLookCameraSpeedOffset_Y = 15f;
 
     private float _lockOnCameraDistanseOffset = 8f;
